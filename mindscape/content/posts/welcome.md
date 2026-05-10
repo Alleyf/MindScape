@@ -2,7 +2,7 @@
 title: "欢迎来到 MindScape"
 date: "2024-01-15"
 tags: ["intro", "welcome", "getting-started"]
-personality: "guide"
+personality: "引路人"
 description: "探索你的创意知识库之旅"
 ---
 

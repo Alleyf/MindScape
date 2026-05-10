@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { ParticleField } from './components/ParticleField';
 import { MouseGlow } from './components/MouseGlow';
 import { NoteCard } from './components/NoteCard';
@@ -94,7 +94,7 @@ function HomePage() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <NoteCard note={note} />
+                <NoteCard note={note} index={index} />
               </motion.div>
             ))}
           </div>
@@ -138,7 +138,7 @@ function NotesPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
             >
-              <NoteCard note={note} />
+              <NoteCard note={note} index={index} />
             </motion.div>
           ))}
         </div>
@@ -149,11 +149,12 @@ function NotesPage() {
 
 function NotePage() {
   const { slug } = useParams<{ slug: string }>();
-  const note = slug ? getNoteBySlug(slug) : null;
+  const navigate = useNavigate();
+  const note = useMemo(() => (slug ? getNoteBySlug(slug) : null), [slug]);
   const [randomNote, setRandomNote] = useState<Note | null>(null);
   
   useEffect(() => {
-    if (slug && note) {
+    if (slug) {
       const allNotes = getNotes();
       const otherNotes = allNotes.filter(n => n.id !== slug);
       if (otherNotes.length > 0) {
@@ -161,7 +162,7 @@ function NotePage() {
         setRandomNote(otherNotes[randomIndex]);
       }
     }
-  }, [slug, note]);
+  }, [slug]);
   
   if (!note) {
     return (
@@ -215,19 +216,19 @@ function NotePage() {
             {note.title}
           </h1>
           
-          {note.description && (
+          {note.excerpt && (
             <motion.p 
               className="text-xl text-nebula-accent italic mb-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              {note.description}
+              {note.excerpt}
             </motion.p>
           )}
           
           <div className="flex items-center gap-6 text-sm text-gray-400">
-            <span>📅 {note.date}</span>
+            <span>📅 {note.createdAt}</span>
             <span className="capitalize">{note.personality}</span>
           </div>
         </motion.header>
@@ -252,7 +253,7 @@ function NotePage() {
             transition={{ delay: 1 }}
             className="mt-12"
           >
-            <RandomWalkButton randomNote={randomNote} />
+            <RandomWalkButton onClick={() => navigate(`/note/${randomNote.slug}`)} />
           </motion.div>
         )}
       </div>

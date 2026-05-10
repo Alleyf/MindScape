@@ -2,7 +2,7 @@
 title: "React Hooks 深度探索"
 date: "2024-01-20"
 tags: ["react", "javascript", "hooks", "frontend"]
-personality: "owl"
+personality: "沉思者"
 description: "深入理解 React Hooks 的设计哲学与实践"
 ---
 
