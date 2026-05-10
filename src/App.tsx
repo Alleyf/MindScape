@@ -7,6 +7,7 @@ import { NoteCard } from './components/NoteCard';
 import { AIPanel } from './components/AIPanel';
 import { RandomWalkButton } from './components/RandomWalkButton';
 import { MarkdownContent } from './components/MarkdownContent';
+import { ThemeToggle } from './components/ThemeToggle';
 import { getNotes, getNoteBySlug, getRandomNote } from './utils/noteLoader';
 import { Note } from './utils/noteLoader';
 
@@ -291,6 +292,7 @@ function App() {
                 关于
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </a>
+              <ThemeToggle />
             </div>
           </div>
         </nav>
