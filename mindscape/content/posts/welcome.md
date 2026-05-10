@@ -1,6 +1,6 @@
 ---
 title: "欢迎来到 MindScape"
-date: "2024-01-15"
+date: "2026-01-15"
 tags: ["intro", "welcome", "getting-started"]
 personality: "引路人"
 description: "探索你的创意知识库之旅"
@@ -38,7 +38,7 @@ description: "探索你的创意知识库之旅"
 ```yaml
 ---
 title: "我的第一篇笔记"
-date: "2024-01-15"
+date: "2026-01-15"
 tags: ["learning", "notes"]
 personality: "owl"
 description: "关于学习的思考"

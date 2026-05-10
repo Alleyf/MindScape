@@ -1,8 +1,8 @@
 import { Note } from '../types';
 
 // 使用 Vite 的 import.meta.glob 动态导入 content/posts 下的所有 .md 文件
-// as: 'raw' 表示以原始文本形式加载
-const markdownModules = import.meta.glob('../../content/posts/*.md', { eager: true, as: 'raw' });
+// query: '?raw', import: 'default' 表示以原始文本形式加载（替代已弃用的 as: 'raw'）
+const markdownModules = import.meta.glob('../../content/posts/*.md', { eager: true, query: '?raw', import: 'default' });
 
 /**
  * 解析 Front Matter 和正文

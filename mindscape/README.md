@@ -71,8 +71,8 @@ npm run dev -- --port 5173
   content: `# 你的内容\n\n正文...`,
   excerpt: '简短摘要...',
   tags: ['标签 1', '标签 2'],
-  createdAt: '2024-01-01',
-  updatedAt: '2024-01-01',
+  createdAt: '2026-01-01',
+  updatedAt: '2026-01-01',
   mood: '🌟',
   personality: '沉思者', // 可选：沉思者/引路人/园丁/未来主义者/陪伴者
   aiSubtitle: 'AI 生成的副标题'
@@ -135,16 +135,16 @@ theme: {
 
 ## 🌟 下一步计划
 
-- [ ] 集成真实 Markdown 解析（当前为模拟数据）
+- [x] 集成真实 Markdown 解析（当前为模拟数据）
 - [ ] 接入 AI API 实时生成内容分析
 - [ ] 添加双向链接图谱可视化
 - [ ] 支持用户自定义主题
-- [ ] 移动端优化
+- [x] 移动端优化
 - [ ] 暗黑/明亮模式切换
 
 ## 📄 License
 
-MIT © 2024 MindScape
+MIT © 2026 MindScape
 
 ---
 

@@ -39,7 +39,7 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
           ),
           code: ({node, inline, ...props}: any) => (
             inline ? (
-              <code className="bg-purple-900/50 px-2 py-1 rounded text-pink-300 text-sm" {...props} />
+              <code className="bg-purple-900/50 px-2 py-1 rounded text-pink-300 text-sm whitespace-nowrap" {...props} />
             ) : (
               <code className="block bg-gray-900/80 p-4 rounded-lg overflow-x-auto text-sm text-green-300 font-mono" {...props} />
             )

@@ -18,7 +18,7 @@ content/posts/typescript-basics.md
 ```yaml
 ---
 title: "TypeScript 入门指南"
-date: "2024-01-25"
+date: "2026-01-25"
 tags: ["typescript", "javascript", "tutorial", "frontend"]
 personality: "guide"
 description: "从零开始学习 TypeScript 的核心概念"
@@ -30,7 +30,7 @@ description: "从零开始学习 TypeScript 的核心概念"
 | 字段 | 必填 | 说明 | 示例 |
 |------|------|------|------|
 | `title` | ✅ | 笔记标题 | `"React Hooks 深度探索"` |
-| `date` | ✅ | 发布日期 (YYYY-MM-DD) | `"2024-01-25"` |
+| `date` | ✅ | 发布日期 (YYYY-MM-DD) | `"2026-01-25"` |
 | `tags` | ✅ | 标签数组（用于智能联想） | `["react", "hooks"]` |
 | `personality` | ❌ | 笔记人格（默认 owl） | `owl`, `guide`, `gardener`, `futurist`, `companion` |
 | `description` | ❌ | 简短描述（显示在标题下方） | `"深入理解 Hooks 的设计哲学"` |

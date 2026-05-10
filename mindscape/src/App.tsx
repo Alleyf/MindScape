@@ -117,7 +117,7 @@ function NotesPage() {
   const notes = getNotes();
   
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4 relative z-10">
+    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
         <motion.h1 
           className="text-5xl font-bold mb-4 gradient-text"
@@ -178,7 +178,7 @@ function NotePage() {
   }
   
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4 relative z-10">
+    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
       <div className="max-w-4xl mx-auto">
         {/* Back button */}
         <motion.div
@@ -256,10 +256,17 @@ function NotePage() {
             <RandomWalkButton onClick={() => navigate(`/note/${randomNote.slug}`)} />
           </motion.div>
         )}
+
+        {/* Mobile AI Panel */}
+        <div className="lg:hidden mt-12 mb-8">
+          <AIPanel note={note} isMobile={true} />
+        </div>
       </div>
       
-      {/* AI Panel */}
-      <AIPanel note={note} />
+      {/* Desktop AI Panel */}
+      <div className="hidden lg:block">
+        <AIPanel note={note} />
+      </div>
     </div>
   );
 }
@@ -269,18 +276,20 @@ function App() {
     <Router>
       <div className="bg-nebula-dark min-h-screen text-white overflow-x-hidden">
         {/* Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
+        <nav className="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-            <Link to="/" className="text-2xl font-bold gradient-text">
+            <Link to="/" className="text-2xl font-bold gradient-text hover:scale-105 transition-transform">
               MindScape
             </Link>
             
-            <div className="flex items-center gap-6">
-              <Link to="/notes" className="text-gray-300 hover:text-white transition-colors">
+            <div className="flex items-center gap-6 md:gap-10">
+              <Link to="/notes" className="text-gray-300 hover:text-white transition-colors relative group">
                 笔记
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
+              <a href="#" className="text-gray-300 hover:text-white transition-colors relative group">
                 关于
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </a>
             </div>
           </div>
@@ -295,7 +304,7 @@ function App() {
         
         {/* Footer */}
         <footer className="py-8 text-center text-gray-500 text-sm relative z-10">
-          <p>MindScape © 2024 — 用 AI 增强人类创造力</p>
+          <p>MindScape © 2026 — 用 AI 增强人类创造力</p>
         </footer>
       </div>
     </Router>

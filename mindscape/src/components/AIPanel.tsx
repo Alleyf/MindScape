@@ -5,6 +5,7 @@ import { Note } from '../types';
 
 interface AIPanelProps {
   note: Note;
+  isMobile?: boolean;
 }
 
 const aiMetaphors = [
@@ -22,15 +23,19 @@ const aiConnections = [
   "此处的情绪基调，与「独处的力量」中描述的宁静感不谋而合。",
 ];
 
-export function AIPanel({ note }: AIPanelProps) {
+export function AIPanel({ note, isMobile = false }: AIPanelProps) {
   const [activeTab, setActiveTab] = useState<'metaphor' | 'connections' | 'personality'>('metaphor');
+
+  const containerClasses = isMobile 
+    ? "w-full glass-card p-6" 
+    : "fixed right-0 top-1/4 w-80 glass-card p-6";
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
+      initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: 50 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
       transition={{ delay: 0.5, duration: 0.6 }}
-      className="fixed right-0 top-1/4 w-80 glass-card p-6 hidden lg:block"
+      className={containerClasses}
     >
       {/* Tab headers */}
       <div className="flex gap-2 mb-6 border-b border-white/10 pb-4">
