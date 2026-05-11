@@ -1127,53 +1127,205 @@ function GraphPage() {
 function AboutPage() {
   const notes = getNotes();
   const tags = getAllTags(notes);
+  const tagCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    notes.forEach(n => n.tags.forEach(t => counts.set(t, (counts.get(t) ?? 0) + 1)));
+    return Array.from(counts.entries()).sort((a, b) => b[1] - a[1]);
+  }, [notes]);
+  const months = useMemo(() => {
+    const m = new Set<string>();
+    notes.forEach(n => {
+      const d = n.createdAt?.match(/(\d{4})[年-](\d{1,2})/);
+      if (d) m.add(`${d[1]}.${d[2].padStart(2, '0')}`);
+    });
+    return Array.from(m).sort();
+  }, [notes]);
+
+  const features = [
+    { icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5', title: '数字花园', desc: '笔记像植物一样生长，随学习持续修订，不追求一次性完成。' },
+    { icon: 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM5 21h14', title: '知识关联', desc: '通过标签和图谱发现笔记间的隐藏连接，让知识网络自然浮现。' },
+    { icon: 'M12 3c-1.5 2-5 4-8 4 0 5 2 11 8 14 6-3 8-9 8-14-3 0-6.5-2-8-4z', title: 'AI 共振', desc: 'AI 为每篇笔记生成隐喻、联想和人格，带来意料之外的阅读体验。' },
+    { icon: 'M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z', title: '沉浸阅读', desc: '无干扰的沉浸模式、可调字号、PDF 导出，让深度阅读随时开始。' },
+  ];
 
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
       <div className="max-w-5xl mx-auto">
+        {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-12"
+          className="mb-16 text-center"
         >
-          <h1 className="text-5xl font-bold mb-6 gradient-text">关于 MindScape</h1>
-          <p className="text-xl theme-muted leading-relaxed max-w-3xl">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 gradient-text">关于 MindScape</h1>
+          <p className="text-xl theme-muted leading-relaxed max-w-3xl mx-auto">
             MindScape 是一个 AI-Native 的创意知识空间，用来收纳技术学习、思维模型、工作流实践和长期生长的个人笔记。
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="glass-card p-6">
-            <p className="text-3xl font-bold text-nebula-accent mb-2">{notes.length}</p>
-            <p className="theme-muted">篇公开笔记</p>
+        {/* Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
+        >
+          <div className="glass-card p-5 text-center">
+            <p className="text-3xl font-bold text-nebula-accent mb-1">{notes.length}</p>
+            <p className="text-sm theme-subtle">篇笔记</p>
           </div>
-          <div className="glass-card p-6">
-            <p className="text-3xl font-bold text-nebula-accent mb-2">{tags.length}</p>
-            <p className="theme-muted">个知识标签</p>
+          <div className="glass-card p-5 text-center">
+            <p className="text-3xl font-bold text-nebula-accent mb-1">{tags.length}</p>
+            <p className="text-sm theme-subtle">个标签</p>
           </div>
-          <div className="glass-card p-6">
-            <p className="text-3xl font-bold text-nebula-accent mb-2">AI</p>
-            <p className="theme-muted">辅助整理与联想</p>
+          <div className="glass-card p-5 text-center">
+            <p className="text-3xl font-bold text-nebula-accent mb-1">{months.length}</p>
+            <p className="text-sm theme-subtle">覆盖月份</p>
           </div>
-        </div>
+          <div className="glass-card p-5 text-center">
+            <p className="text-3xl font-bold text-nebula-accent mb-1">
+              {notes.reduce((sum, n) => sum + n.content.replace(/[#>*_`\[\]()\-]/g, '').replace(/\s+/g, '').length, 0)}
+            </p>
+            <p className="text-sm theme-subtle">总字数</p>
+          </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Features */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl font-bold mb-8 gradient-text">设计理念</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {features.map((f, i) => (
+              <div key={f.title} className="glass-card p-6 flex gap-4 items-start">
+                <div className="shrink-0 w-10 h-10 rounded-xl bg-nebula-accent/10 flex items-center justify-center mt-0.5">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-nebula-accent" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d={f.icon} />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold theme-text mb-1">{f.title}</h3>
+                  <p className="text-sm theme-muted leading-relaxed">{f.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Top Tags */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl font-bold mb-6 gradient-text">热门标签</h2>
+          <div className="glass-card p-6">
+            <div className="flex flex-wrap gap-3">
+              {tagCounts.slice(0, 15).map(([tag, count]) => {
+                const size = count >= 4 ? 'text-lg' : count >= 2 ? 'text-base' : 'text-sm';
+                const weight = count >= 4 ? 'font-bold' : count >= 2 ? 'font-semibold' : 'font-normal';
+                return (
+                  <Link
+                    key={tag}
+                    to={`/notes?tag=${encodeURIComponent(tag)}`}
+                    className={`${size} ${weight} px-3 py-1.5 rounded-full border border-white/10 hover:border-nebula-accent hover:text-nebula-accent transition-colors theme-muted`}
+                  >
+                    #{tag}
+                    <span className="ml-1.5 text-xs opacity-50">({count})</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Content Areas */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
           <section className="glass-card p-8">
-            <h2 className="text-2xl font-semibold theme-text mb-4">这里记录什么</h2>
+            <div className="flex items-center gap-3 mb-5">
+              <span className="text-xl">🌱</span>
+              <h2 className="text-2xl font-bold theme-text">这里记录什么</h2>
+            </div>
             <div className="space-y-4 theme-muted leading-relaxed">
               <p>这里更像一座数字花园，而不是一次性写完的文章仓库。笔记会随着学习、实践和复盘持续更新。</p>
-              <p>内容会覆盖 AI 编程、前端工程、知识管理、生产力方法、个人成长，以及一些正在形成中的想法。</p>
+              <p>内容覆盖 AI 编程、前端工程、知识管理、生产力方法、个人成长，以及一些正在形成中的想法。</p>
             </div>
           </section>
 
           <section className="glass-card p-8">
-            <h2 className="text-2xl font-semibold theme-text mb-4">如何浏览</h2>
-            <div className="space-y-4 theme-muted leading-relaxed">
-              <p>你可以从最新笔记开始，也可以进入笔记页通过标签筛选主题。长文页面左侧会显示目录，方便快速跳转。</p>
-              <p>每篇笔记保留标签、日期和人格化气质，让知识不只是被存放，也能被重新发现。</p>
+            <div className="flex items-center gap-3 mb-5">
+              <span className="text-xl">🧭</span>
+              <h2 className="text-2xl font-bold theme-text">如何浏览</h2>
             </div>
+            <ul className="space-y-3 theme-muted leading-relaxed">
+              <li className="flex gap-3">
+                <span className="text-nebula-accent shrink-0">→</span>
+                <span>从<a href="/notes" className="text-nebula-accent hover:underline">最新笔记</a>开始，或按标签筛选主题。</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-nebula-accent shrink-0">→</span>
+                <span>长文页面左侧目录支持快速跳转，右侧图谱展示知识关联。</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-nebula-accent shrink-0">→</span>
+                <span>使用<a href="/graph" className="text-nebula-accent hover:underline">笔记图谱</a>可视化探索笔记网络。</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-nebula-accent shrink-0">→</span>
+                <span>开启沉浸模式或调整字号，获得更舒适的阅读体验。</span>
+              </li>
+            </ul>
           </section>
         </div>
+
+        {/* Tech stack */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-10"
+        >
+          <h2 className="text-3xl font-bold mb-6 gradient-text">技术栈</h2>
+          <div className="glass-card p-6">
+            <div className="flex flex-wrap gap-3">
+              {[
+                'React 19', 'TypeScript', 'Vite 8', 'Tailwind CSS', 'Framer Motion',
+                'React Router', 'react-markdown', 'D3.js', 'highlight.js', 'Vercel',
+              ].map(item => (
+                <span key={item} className="px-3 py-1.5 rounded-full border border-white/10 text-sm theme-subtle">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Timeline */}
+        {months.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-10"
+          >
+            <h2 className="text-3xl font-bold mb-6 gradient-text">写作时间线</h2>
+            <div className="glass-card p-6">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                {months.map((m, i) => (
+                  <span key={m} className="flex items-center gap-1.5">
+                    <span className={`w-2 h-2 rounded-full ${i === months.length - 1 ? 'bg-nebula-accent' : 'bg-nebula-accent/40'}`} />
+                    <span className="text-sm theme-muted">{m}</span>
+                    {i < months.length - 1 && <span className="w-4 h-px bg-border-soft" />}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );
