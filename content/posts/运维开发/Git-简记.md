@@ -1,0 +1,587 @@
+---
+title: "Git-简记"
+date: "2023-11-21"
+tags: ["Git", "版本控制"]
+personality: "guide"
+description: "Git 常用操作简记"
+---
+
+![](https://picsum.photos/800/250)
+
+# Git 简介
+
+Git 是由 Linus Torvalds 于2005年创立的分布式版本控制系统。与集中式版本控制系统不同，Git 允许每个开发者在本地拥有完整的代码仓库，从而提高了分布式[团队协作](https://cloud.tencent.com/product/prowork?from_column=20065&from=20065)的效率。Git 的设计理念是速度快、灵活性强，使其成为开源社区和企业中的首选版本控制系统。
+
+## 专业词汇解释
+
+在学习 Git 的原理和命令之前，我们先来了解一些 Git 的基本概念：
+1. **仓库（Repository）：** Git 仓库是存储项目历史和当前状态的地方。它包含了项目的所有文件和文件夹，以及与之相关的版本信息。
+2. **分支（Branch）：** 分支是项目的一个独立线条，可以在上面进行开发，不影响主线。分支的使用使得团队可以同时进行多个功能的开发，而不会相互干扰。
+3. **提交（Commit）：** 提交是将更改保存到 Git 仓库的操作。每次提交都会生成一个唯一的标识符（SHA-1 哈希值），用于标记这个提交。
+4. **远程仓库（Remote Repository）：** 远程仓库是位于网络上的 Git 仓库，可以与之交换代码。常见的远程仓库服务有 GitHub、GitLab、Bitbucket 等。
+5. **克隆（Clone）：** 克隆是从远程仓库复制整个代码库到本地的操作。这通常是项目的开始阶段。
+6. **拉取（Pull）：** 拉取是从远程仓库获取最新的代码并合并到本地仓库的操作。
+7. **推送（Push）：** 推送是将本地仓库的更改上传到远程仓库的操作。
+
+# 原理解析
+
+## 工作流程
+
+git 分为三个区，工作流程如下：
+![|675](https://telegra.ph/file/6214322fe06366c305abd.png)
+![image.png|675](https://qnpicmap.csfan.fun/pics/202311162202035.png)
+
+## 文件状态
+
+git 文件有四种状态：
+1. 未跟踪：创建但未被 git 管理的文件
+2. 未修改：被管理但未修改的文件
+3. 已修改：修改后未添加到暂存区的文件
+4. 已暂存：添加到暂存区的文件
+![image.png](http://img.fcs.cloudns.ch/pics/202311162206125.png)
+![](https://qnpicmap.csfan.fun/pics/202312022334491.png)
+
+# 安装和初始化配置
+
+## 安装
+
+> [git官方地址](https://git-scm.com/)：按需下载对应自己**电脑操作系统**的版本。
+
+## 初始化
+
+查看 git 版本：
+
+```git
+git -v
+```
+
+![image.png|500](https://qnpicmap.csfan.fun/pics/202311162135814.png)
+首次安装 git 使用以下命令配置全局仓库用户名和邮箱信息：
+
+```sh
+git config --global user.name "Jasper Yang"  #设置用户名
+git config --global user.email geekhall.cn@gmail.com #设置密码
+git config --global credential.helper store #保存上述信息
+```
+
+查看/清除全局配置信息：
+
+```sh
+git config --global --list #查看
+git config --global --unset <entry-name> #清除全局配置
+```
+
+![image.png](https://qnpicmap.csfan.fun/pics/202311162140448.png)
+查看隐藏的. git 文件：
+![](https://qnpicmap.csfan.fun/pics/202311162146376.png)
+清除隐藏的. git 文件则 git 仓库将被清除：
+![image.png](https://qnpicmap.csfan.fun/pics/202311162149713.png)
+
+## 指令别名
+
+在用户文件目录下找到.gitconfig 文件，在 `[alias]` 下为常用指令设置别名简称方便操作：
+
+```.gitconfig
+[user]
+	name = xxx
+	email = xxx@qq.com
+[http]
+	sslverify = false
+	proxy = http://127.0.0.1:7890 //github代理
+[credential "http://59.69.101.35:9099"] //gitlab登录地址
+	provider = generic
+[core]
+	autocrlf = true
+[difftool "sourcetree"]
+	cmd = "'' "
+[mergetool "sourcetree"]
+	cmd = "'' "
+	trustExitCode = true
+[color]
+	ui = auto
+[https]
+	proxy = http://127.0.0.1:7890
+[alias]
+	gp = log --graph --oneline --decorate --all
+	lg = log --pretty=oneline --abbrev-commit
+	co = checkout		
+    st = status			
+    sw = switch
+    ad = add
+    cm = commit -m		
+    br = branch			
+    dif = diff			
+    pl = pull			
+    ps = push			
+```
+
+![](https://qnpicmap.csfan.fun/pics/202312031150807.png)
+
+# 基础操作
+
+## 创建 Git 仓库
+
+### 本地初始化
+
+在本地需要创建 git 仓库的文件夹下打开 **git bash** 执行以下命令：
+
+```git
+git init （init_repo_dir_name）#后面可选在当前目录新建目录作为git仓库
+```
+
+### 远程克隆
+
+git clone 克隆远程仓库前需要先配置 ssh 密钥，本地生成私钥和公钥，再将公钥添加至 github 上。
+
+```git
+git clone https://github.com/Alleyf/linux-tutorial.git
+```
+
+![image.png](https://qnpicmap.csfan.fun/pics/202311162159698.png)
+
+## 查看仓库状态
+
+```shell
+git status #查看工作状态
+git ls-files #查看暂存区的文件
+```
+
+查看状态：
+![image.png|575](https://qnpicmap.csfan.fun/pics/202311162220832.png)
+查看暂存区内容：
+![|575](https://qnpicmap.csfan.fun/pics/202311180014236.png)
+
+## 连接云端仓库
+
+![image.png|575](https://qnpicmap.csfan.fun/pics/202311162229748.png)
+添加一个 `git URL` 作为别名
+
+```shell
+git remote add [alias] [url]
+```
+
+显示您设置的远程存储库的名称
+
+```shell
+git remote
+```
+
+显示远程存储库的名称和 URL
+
+```shell
+git remote -v
+```
+
+删除远程存储库
+
+```shell
+git remote rm [remote repo name]
+```
+
+更改 git repo 的 URL
+
+```shell
+git remote set-url origin [git_url]
+```
+
+## 同步仓库文件
+
+### 拉取仓库
+
+pull 拉取远程仓库时会自动对进行冲突检测，如果不存在冲突则进行文件合并保存到本地，否则需要用户进行冲突处理后才能进行拉取合并，一般先将本地修改的文件 commit 后 stash 保存，等 pull 后再 pop 回来。
+
+```shell
+git pull origin main
+git pull origin main –allow-unrelated-histories #当不是clone远程仓库时，本地和远程仓库是独立的两个仓库，需要设置允许未关联的仓库进行pull
+git pull --rebase origin main #如果上面参数设置还是没用就变基远程内容到本地，手动合并冲突
+```
+
+### 提交文件
+
+```shell
+git add fileName/.  #"."代表添加当前文件夹下的全部文件到存储区
+```
+
+![image.png](https://qnpicmap.csfan.fun/pics/202311162233770.png)
+
+```shell
+git commit -m "提交时的备注信息" 
+git commit -am <message> # 将已被跟踪的文件提交的本地库中
+```
+
+git commit 只会提交**存储区中的文件到仓库**，**未跟踪即未添加到存储区的文件不会被提交**到仓库，如下 file 2.md 是新增未跟踪的文件不会被同 file1.md 提交到仓库:
+![image.png](https://qnpicmap.csfan.fun/pics/202311162235693.png)
+
+```shell
+git push "远程库名" 
+git push -u origin main –allow-unrelated-histories # -u为指定上传目的地分支upstream的缩写
+```
+
+## 查看记录
+
+查看提交记录：
+
+```shell
+git log #查看详细记录信息
+git log --oneline #查看概要信息
+```
+
+![|525](https://qnpicmap.csfan.fun/pics/202311162257259.png)
+![image.png|525](https://qnpicmap.csfan.fun/pics/202311192240526.png)
+查看历史记录：
+
+```shell
+git reflog
+```
+
+![image.png|525](https://qnpicmap.csfan.fun/pics/202311180021976.png)
+
+## 查看差异
+
+1. 查看**工作区和暂存区**的差别：
+
+```shell
+git diff
+```
+
+![](https://qnpicmap.csfan.fun/pics/202311192246423.png)
+2. 查看 **工作区和仓库区**的差别：
+
+```shell
+git diff head
+```
+
+![image.png|550](https://qnpicmap.csfan.fun/pics/202311192251998.png)
+3. 查看 **暂存区和仓库区**的差别：
+
+```shell
+git diff --cached
+```
+
+![image.png|550](https://qnpicmap.csfan.fun/pics/202311192255196.png)
+4. 比较**两个特定版本**之间的差异：
+
+```shell
+git diff ec64d23 1406deb #比较对象为版本id，通过git log查看
+git diff c088350 head #比较head最新版本与指定版本
+git diff head~ head #比较上一版本（head~）与最新版本
+git diff head~ head file1.md #比较指定文件版本之间的差异
+```
+
+![image.png](https://qnpicmap.csfan.fun/pics/202311202236964.png)
+比较**head 最新版本**与特定版本
+![image.png|450](https://qnpicmap.csfan.fun/pics/202311202239878.png)
+比较**最新版本与上一版本**的区别
+![image.png](https://qnpicmap.csfan.fun/pics/202311202242529.png)
+
+> 1. `head~/head^`：最新版本的前一个版本
+> 2. `head~2`：前两个版本
+> 3. `head~N`：前 N 个版本
+
+5. 比较**两个分支**之间的差异：
+
+```shell
+git diff main master #比较main和master分支的差异
+```
+
+![image.png](https://qnpicmap.csfan.fun/pics/202311202255763.png)
+
+## 删除文件
+
+```shell
+git rm filename #删除指定文件（包括工作区和暂存区）
+git rm -r -f --cached openlaw/__pycache__/ #删除已经提交跟踪的python编译文件
+```
+
+![image.png](https://qnpicmap.csfan.fun/pics/202311202300549.png)
+
+## 忽略文件
+
+***.gitignore***
+需要忽略的文件（*系统或者软件自动生成的文件，编译产生的中间文件和结果文件，运行时生成日志文件、缓存文件、临时文件，涉及身份、密码、口令、秘钥等敏感信息文件*）：
+
+> - 忽略日志文件和文件夹
+> - 忽略所有.class 文件
+> - 忽略所有.0 文件
+> - 忽略所有.env 文件
+> - 忽略所有.zip 和 tar 文件
+> - 忽略所有.pem 文件
+
+1. 只需要将要忽略的文件的**文件名或文件夹/** 添加到 `.gitignore` 文件中即可。
+2. `.gitignore` 文件中可使用**通配符**进行匹配（eg：*.log）
+![image.png](https://qnpicmap.csfan.fun/pics/202311202320021.png)
+
+**取消忽略**
+
+1. 首先查看已经被忽略的所有文件
+
+```shell
+git status --ignored
+```
+
+2. 取消忽略的文件
+
+```shell
+git add -f path/file(被忽略的文件)
+```
+
+**.gitignore 模糊匹配规则**
+![](https://qnpicmap.csfan.fun/pics/202312021622490.png)
+
+# 分支
+
+## 查询/切换/新建分支
+
+1. 查询分支，使用以下指令：
+
+```shell
+git branch #查询本地分支
+git branch -r #查询远程分支
+git branch -m/M main #修改当前分支名 ，m 为软修改，M 为强制修改
+```
+
+2. 切换或新建分支，使用以下指令：
+
+```shell
+git chechout "branchName" #切换分支 （不推荐，可能会与回滚版本造成歧义）
+git switch "branchName" #切换分支 （推荐）
+git checkout -b "branchName" #新建分支并切换到该分支
+git switch -c "branchName" #新建分支并切换到该分支 （推荐）
+```
+
+3. 查看分支图：
+
+```sh
+git log --graph --oneline --decorate --all
+git config --global alias.gp "log --pretty=oneline --all --graph --abbrev-commit" # 为命令取别名简化为 git gp 执行
+```
+
+![](https://qnpicmap.csfan.fun/pics/202312030019209.png)
+
+## 分支合并
+
+新建分支修改分支内容后，新分支与原分支内容不一致，需要经过合并到主分支上。
+![](https://qnpicmap.csfan.fun/pics/202312030003070.png)
+将 dev 子分支合并到主分支上：
+
+```sh
+git merge dev #dev为被合并的子分支
+```
+
+![](https://qnpicmap.csfan.fun/pics/202312030016516.png)
+
+### 合并冲突
+
+当合并的分支都修改了同一行代码，则 git 就不知道采用谁的了，就会产生冲突，需要手动解决冲突才能继续合并。
+![](https://qnpicmap.csfan.fun/pics/202312030025651.png)
+对 feat 分支和 main 分支中分别修改 main1.txt 文件添加第二行内容后，然后将 feat 分支合并到 main，由于两个分支修改的是同一行内容因此出现合并冲突：
+![](https://qnpicmap.csfan.fun/pics/202312030045721.png)
+手动修改 `main1.txt` 冲突内容后继续进行提交以解决合并冲突：
+![|500](https://qnpicmap.csfan.fun/pics/202312030047261.png)
+解决冲突后的可视化分支图：
+![|480](https://qnpicmap.csfan.fun/pics/202312030050471.png)
+
+## 删除分支
+
+1. 删除**本地分支**，删除前会进行检查是否*本分支内容是否已经合并到主分支*，使用以下指令：
+
+```shell
+git branch -d "branchName"
+```
+
+强制删除分支使用 `-D` 参数。
+2. 删除**远程分支**，使用以下指令：
+
+```shell
+git push "远程库名" -d "branch name" 
+```
+
+强制删除分支使用 `-D` 参数。
+
+# 回退和变基
+
+## 变基
+
+![](https://qnpicmap.csfan.fun/pics/202312031027245.png)
+新建 rebase1 和 rebase2 两个仓库，rebase1 中将 dev 分支变基到 main 上，rebase2 将 main 分支变基到 dev 上：
+![](https://qnpicmap.csfan.fun/pics/202312031329158.png)
+
+> 由此可见，被变基的分支会将与目标分支公共提交节点后面的所有提交迁移到目标分支后面。
+![](https://qnpicmap.csfan.fun/pics/202312031336740.png)
+
+## 回退/溯版本
+
+### 回滚
+
+> [!tip] IDEA 文件颜色
+> 1. 工作区：红色
+> 2. 暂存区：绿色
+> 3. 版本库：灰色
+
+#### 本地未 Commit
+
+变更文件：- roll back
+新增文件：- delete
+
+#### Commit 未 Push
+
+##### Undo Commit
+
+撤消当前分支中的最后一次提交
+
+##### Drop Commit
+
+删除任意 commit 记录，注意会有冲突！ 不留痕迹
+
+##### Revert Commit（不推荐，可能出现冲突需要手动合并，并且会多出一条记录用于抵消回滚的提交+-）
+
+删除任意 commit 记录，注意会有冲突！ 多一个提交记录
+
+##### Reset（推荐，不会出现冲突）
+
+- **soft**
+    在选定提交之后所做的所有更改都在暂存区 commit 的内容都会保留，其新增文件+文件变更都在暂存区
+- **mixed**
+    在选定提交之后所做的更改将被保留，但不会暂存以进行提交。 commit 的内容都会保留，新增文件在工作区，文件变更在暂存区
+- **hard**
+    在选定提交之后所做的所有更改都将被丢弃（暂存和已提交） commit 的内容+暂存区的内容全部被丢弃
+- **keep**
+    在选定提交之后的已 commit 内容将被丢弃，但未 commit 的部分将保留
+    commit 部分内容被丢弃，未 commit 部分保留
+
+#### Commit && Push
+
+##### Reset + Force Push
+
+### 找回代码
+
+右键项目-Local History
+
+### 重置
+
+git reset 有三种模式：
+
+```shell
+git reset --soft 版本号 #回退版本后的内容保留工作区和暂存区
+git reset --hard 版本号 #都不保留
+git reset --mixed 版本号 #仅保留工作区内容
+```
+
+![image.png](http://img.fcs.cloudns.ch/pics/202311180007484.png)
+不同模式，工作区和暂存区的内容会不同。
+
+## 合并与变基对比
+
+1. **Merge**
+   - `优点`：不会破坏原分支的提交历史，方便回溯和查看。
+   - `缺点`：会产生额外的提交节点，分支图比较复杂。
+2. **Rebase**
+   - `优点`：不会新增额外的提交记录，形成线性历史，比较直观和干净.
+   - `缺点`：会改变提交历史，改变了当前分支 branch out 的节点；避免在共享分支使用。
+
+# 分支管理和工作流模型
+
+## GitHub Flow
+
+GitHub flow 就是 GitHub 所推崇的 Workflow，GitHub flow 具有很高的通用性。
+其官网的描述为：
+
+> GitHub flow is a lightweight, branch-based workflow that supports teams and projects where deployments are made regularly.
+ GitHub flow 的流程图如下图所示：
+![](https://qnpicmap.csfan.fun/pics/202312031349018.png)
+![](https://pic3.zhimg.com/80/v2-bafaef976e8842a50403d61912239b52_720w.webp)
+Github flow 的工作流程：
+
+- 新建分支（Create a branch）；
+- 提交修改（Add commits）；
+- 创建 PR（Open a Pull Request）；
+- 代码评审（Discuss and review your code）；
+- 部署（Deploy）；
+- 合并（Merge）；
+GitHub flow 最大的亮点在于**部署（Deploy）发生在 合并（Merge）** 之前，这是 GitHub flow 的核心，**非阻塞式集成** —— 在产生任何副作用之前得知当前修改的所有集成效果，达到真正的持续集成。
+1. **分支命名**（*推荐使用带有意义的描述性名称来命名分支*）
+	- 版本发布分支/Tag 示例：`v1.0.0`
+	- 功能分支示例：`feature-login-page`
+	- 修复分支示例：`hotfix- #issueid -desc`
+2. **分支管理**
+	- 定期合并已经成功验证的分支，及时删除已经合并的分支
+	- 保持合适的分支数量
+	- 为分支设置合适的管理权限
+
+# 常见问题
+
+## 项目过大拉取超时
+
+通过git拉取GitHub上的项目失败报错信息如下
+
+```shell
+fetch-pack: unexpected disconnect while reading sideband packet
+fatal: early EOF
+fatal: fetch-pack: invalid index-pack output
+```
+
+**原因：** 因为拉取的项目过大导致失败
+**解决：**
+1. 利用镜像网站
+
+> *将链接中的 github.com 替换为 github.com.cnpmjs.org* 
+> 如果方法1报以下错误
+> Could not resolve host: github.com.cnpmjs.org
+> 在git控制台上输入下面这句，然后在正常去拉取，它会使你默认使用镜像
+
+```shell
+git config --global url."https://hub.fastgit.xyz/".insteadOf https://github.com/
+```
+
+2. 拉取最近提交的一次提交，然后再拉取全部
+
+```shell
+git clone --depth 1 [链接] 
+git fetch --unshallow
+```
+
+3. 延长克隆的时间
+
+```shell
+git config --global http.postBuffer 600000
+```
+
+4. 通过将github项目导入码云，然后再拉取
+
+# 参考文献
+
+1. [【GeekHour】一小时Git教程\_哔哩哔哩\_bilibili](https://www.bilibili.com/video/BV1HM411377j/)
+2. [Git 备忘清单 & git cheatsheet & Quick Reference](https://wangchujiang.com/reference/docs/git.html)
+3. [深入理解Git：版本控制的魔法-腾讯云开发者社区-腾讯云](https://cloud.tencent.com/developer/article/2364066)
+4. [真正的敏捷工作流 —— GitHub flow - 知乎](https://zhuanlan.zhihu.com/p/81396787)
+
+```cardlink
+url: https://www.bilibili.com/video/BV1HM411377j/
+title: "【GeekHour】一小时 Git 教程_哔哩哔哩_bilibili"
+description: "【GeekHour】一小时 Git 教程共计 19 条视频，包括：01.课程简介、02.安装和初始化配置、03.新建仓库等，UP 主更多精彩视频，请关注 UP 账号。"
+host: www.bilibili.com
+image: //i0.hdslb.com/bfs/archive/ be265386c6db1da0e1233e9743e02b252ea07b53.jpg@100w_100h_1c.png
+```
+
+```cardlink
+url: https://wangchujiang.com/reference/docs/git.html
+title: "Git 备忘清单 &  git cheatsheet &  Quick Reference"
+host: wangchujiang.com
+favicon: data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2F www.w3.org%2F2000%2Fsvg%22%20height%3D%221em%22%20width%3D%221em%22%3E%20%3Cpath%20d%3D%22m21.66%2010.44-.98%204.18c-.84%203.61-2.5%205.07-5.62%204.77-.5-.04-1.04-.13-1.62-.27l-1.68-.4c-4.17-.99-5.46-3.05-4.48-7.23l.98-4.19c.2-.85.44-1.59.74-2.2%201.17-2.42%203.16-3.07%206.5-2.28l1.67.39c4.19.98%205.47%203.05%204.49%207.23Z%22%20fill%3D%22%23c9d1d9%22%2F%3E%20%3Cpath%20d%3D%22M15.06%2019.39c-.62.42-1.4.77-2.35%201.08l-1.58.52c-3.97%201.28-6.06.21-7.35-3.76L2.5%2013.28c-1.28-3.97-.22-6.07%203.75-7.35l1.58-.52c.41-.13.8-.24%201.17-.31-.3.61-.54%201.35-.74%202.2l-.98%204.19c-.98%204.18.31%206.24%204.48%207.23l1.68.4c.58.14%201.12.23%201.62.27Zm2.43-8.88c-.06%200-.12-.01-.19-.02l-4.85-1.23a.75.75%200%200%201%20.37-1.45l4.85%201.23a.748.748%200%200%201-.18%201.47Z%22%20fill%3D%22%23228e6c%22%20%2F%3E%20%3Cpath%20d%3D%22M14.56%2013.89c-.06%200-.12-.01-.19-.02l-2.91-.74a.75.75%200%200%201%20.37-1.45l2.91.74c.4.1.64.51.54.91-.08.34-.38.56-.72.56Z%22%20fill%3D%22%23228e6c%22%20%2F%3E%20%3C%2Fsvg%3E
+```
+
+```cardlink
+url: https://cloud.tencent.com/developer/article/2364066
+title: "深入理解 Git：版本控制的魔法-腾讯云开发者社区-腾讯云"
+description: "在软件开发领域，版本控制是一个至关重要的概念。它不仅帮助开发者跟踪项目的演变历史，还提供了协同工作和团队管理的强大工具。Git，作为最流行的分布式版本控制系统之一，为开发者提供了一套强大而灵活的工具。本文将深入探讨 Git 的命令及其背后的原理，带你走进版本控制的魔法世界。"
+host: cloud.tencent.com
+image: https://cloudcache.tencentcs.com/open_proj/proj_qcloud_v2/gateway/shareicons/cloud.png
+```
+
+```cardlink
+url: https://zhuanlan.zhihu.com/p/81396787
+title: "真正的敏捷工作流 —— GitHub flow"
+description: "7991 年，随着极限编程（Extreme programming）方法论的提出，持续集成（Continuous integration）也随之成为一项标准化的敏捷实践，被逐步应用于各类软件的开发流程中。 9102 年的今天，持续集成的概念已经在软件…"
+host: zhuanlan.zhihu.com
+image: https://picx.zhimg.com/v2-bca21dddbb1b20c206c1c2c512374a76_720w.jpg?source=172ae18b
+```

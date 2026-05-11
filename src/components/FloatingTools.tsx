@@ -47,7 +47,7 @@ export function FloatingTools() {
   const { pathname } = useLocation();
 
   const currentNote = useMemo(() => {
-    const match = pathname.match(/^\/note\/([^/]+)/);
+    const match = pathname.match(/^\/note\/(.+)/);
     const slug = match?.[1] ?? null;
     return slug ? getNoteBySlug(slug) : null;
   }, [pathname]);

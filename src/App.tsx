@@ -1037,7 +1037,8 @@ function SearchPage() {
 }
 
 function NotePage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { '*': slugParam } = useParams<{ '*'?: string }>();
+  const slug = slugParam ?? undefined;
   const navigate = useNavigate();
   const note = useMemo(() => (slug ? getNoteBySlug(slug) : null), [slug]);
   const allNotes = useMemo(() => getNotes(), []);
@@ -1767,7 +1768,7 @@ function App() {
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/tags" element={<TagsPage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/note/:slug" element={<NotePage />} />
+          <Route path="/note/*" element={<NotePage />} />
           <Route path="/roadmap" element={<RoadmapPage />} />
           <Route path="/graph" element={<GraphPage />} />
           <Route path="/resources" element={<ResourcesPage />} />

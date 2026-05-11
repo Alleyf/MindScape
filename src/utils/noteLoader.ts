@@ -65,17 +65,16 @@ export function getNotes(): Note[] {
     if (!match) return;
     const rawSlug = match[1]; // e.g. "后端开发/Java常用新特性" or "Vue"
 
-    // use filename only as slug to keep URLs clean (backward-compatible)
-    const fileName = rawSlug.split('/').pop() || rawSlug;
-
+    // use full slug (with subdir path) for both id and slug — required for
+    // NoteGraph/d3 id matching and FloatingTools slug extraction to stay in sync
     const { data, content: body } = parseFrontMatter(content as string);
     const date = data.date || new Date().toISOString().split('T')[0];
     const excerpt = body.trim().slice(0, 150) + (body.length > 150 ? '...' : '');
 
     notes.push({
-      id: fileName,
-      slug: fileName,
-      title: data.title || fileName,
+      id: rawSlug,
+      slug: rawSlug,
+      title: data.title || rawSlug.split('/').pop() || rawSlug,
       content: body.trim(),
       excerpt: data.description || excerpt,
       tags: Array.isArray(data.tags) ? data.tags : [],
