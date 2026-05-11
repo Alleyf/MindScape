@@ -9,9 +9,9 @@
 ## Status
 
 - [x] 分析需求和 GIF 制作方案
-- [ ] 录制 GIF（或提供录制指引）
-- [ ] 放置 GIF 到 public/images/
-- [ ] 更新 README 引用 GIF
+- [x] 更新 README 引用 GIF（public/images/demo.gif）
+- [x] 录制 GIF 并放置到 public/images/demo.gif
+- [ ] 提交 GIF 文件
 
 ## Notes
 
