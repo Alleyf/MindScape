@@ -49,7 +49,10 @@ export function FloatingTools() {
   const currentNote = useMemo(() => {
     const match = pathname.match(/^\/note\/(.+)/);
     const slug = match?.[1] ?? null;
-    return slug ? getNoteBySlug(slug) : null;
+    if (!slug) return null;
+    // URL-decode the slug (handles Chinese chars and special chars in subdir paths)
+    const decodedSlug = decodeURIComponent(slug);
+    return getNoteBySlug(decodedSlug);
   }, [pathname]);
 
   useEffect(() => {
