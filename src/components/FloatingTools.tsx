@@ -1,46 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getNoteBySlug } from '../utils/noteLoader';
-import { useThemeColors } from '../hooks/useThemeColors';
-
-// HSL color conversion utilities
-function hexToHsl(hex: string): { h: number; s: number; l: number } {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  if (!result) return { h: 0, s: 100, l: 50 };
-
-  let r = parseInt(result[1], 16) / 255;
-  let g = parseInt(result[2], 16) / 255;
-  let b = parseInt(result[3], 16) / 255;
-
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  let h = 0, s = 0;
-  const l = (max + min) / 2;
-
-  if (max !== min) {
-    const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    switch (max) {
-      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
-      case g: h = ((b - r) / d + 2) / 6; break;
-      case b: h = ((r - g) / d + 4) / 6; break;
-    }
-  }
-
-  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
-}
-
-function hslToHex(h: number, s: number, l: number): string {
-  s /= 100;
-  l /= 100;
-  const a = s * Math.min(l, 1 - l);
-  const f = (n: number) => {
-    const k = (n + h / 30) % 12;
-    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color).toString(16).padStart(2, '0');
-  };
-  return `#${f(0)}${f(8)}${f(4)}`;
-}
 
 function getScrollContainers(): Array<Window | HTMLElement> {
   return [
@@ -78,33 +38,17 @@ function getScrollMetrics() {
   })[0] || { target: window, scrollTop: 0, maxScroll: 0 };
 }
 
-export function FloatingTools() {
+interface FloatingToolsProps {
+  onOpenThemeDrawer?: () => void;
+}
+
+export function FloatingTools({ onOpenThemeDrawer }: FloatingToolsProps) {
   const [notice, setNotice] = useState('');
   const [immersive, setImmersive] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
-  const [colorOpen, setColorOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const moreRef = useRef<HTMLDivElement>(null);
-  const colorRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
-  const {
-    darkColors,
-    lightColors,
-    isLight,
-    updateDarkColors,
-    updateLightColors,
-    resetToDefault,
-  } = useThemeColors();
-
-  const colors = isLight ? lightColors : darkColors;
-  const updateColors = isLight ? updateLightColors : updateDarkColors;
-
-  const updateAccentFromHsl = (hsl: { h: number; s: number; l: number }) => {
-    const accent = hslToHex(hsl.h, hsl.s, hsl.l);
-    // Glow is slightly darker
-    const glow = hslToHex(hsl.h, hsl.s, Math.max(0, hsl.l - 10));
-    updateColors({ accent, glow });
-  };
 
   const currentNote = useMemo(() => {
     const match = pathname.match(/^\/note\/(.+)/);
@@ -172,17 +116,6 @@ export function FloatingTools() {
     document.addEventListener('mousedown', onClick);
     return () => document.removeEventListener('mousedown', onClick);
   }, [moreOpen]);
-
-  useEffect(() => {
-    if (!colorOpen) return;
-    const onClick = (e: MouseEvent) => {
-      if (colorRef.current && !colorRef.current.contains(e.target as Node)) {
-        setColorOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', onClick);
-    return () => document.removeEventListener('mousedown', onClick);
-  }, [colorOpen]);
 
   const backToTop = () => {
     const scrollTargets = [
@@ -508,7 +441,7 @@ export function FloatingTools() {
                 </>
               )}
               <div className="floating-popover-sep" />
-              <button type="button" onClick={() => { setColorOpen(true); setMoreOpen(false); }} title="主题颜色">
+              <button type="button" onClick={() => { onOpenThemeDrawer?.(); setMoreOpen(false); }} title="主题颜色">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="12" r="3" />
                   <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
@@ -518,73 +451,6 @@ export function FloatingTools() {
             </div>
           )}
         </div>
-
-        {colorOpen && (
-          <div className="floating-color-panel" ref={colorRef}>
-            <div className="floating-color-header">
-              <span>主题色</span>
-              <span className="floating-color-mode">{isLight ? '☀️' : '🌙'}</span>
-            </div>
-
-            {/* Color Preview */}
-            <div className="floating-color-preview">
-              <div className="color-preview-swatch" style={{ background: colors.accent }} />
-              <span className="color-preview-hex">{colors.accent}</span>
-            </div>
-
-            {/* Presets */}
-            <div className="floating-color-presets">
-              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#d97757' } as React.CSSProperties} onClick={() => updateColors({ accent: '#d97757', glow: '#c96442' })} />
-              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#f43f5e' } as React.CSSProperties} onClick={() => updateColors({ accent: '#f43f5e', glow: '#e11d48' })} />
-              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#10b981' } as React.CSSProperties} onClick={() => updateColors({ accent: '#10b981', glow: '#059669' })} />
-              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#0ea5e9' } as React.CSSProperties} onClick={() => updateColors({ accent: '#0ea5e9', glow: '#0284c7' })} />
-              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#8b5cf6' } as React.CSSProperties} onClick={() => updateColors({ accent: '#8b5cf6', glow: '#7c3aed' })} />
-              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#f59e0b' } as React.CSSProperties} onClick={() => updateColors({ accent: '#f59e0b', glow: '#d97706' })} />
-            </div>
-
-            {/* HSL Sliders */}
-            <div className="floating-color-sliders">
-              <div className="slider-row">
-                <span className="slider-label">H</span>
-                <input
-                  type="range"
-                  min="0"
-                  max="360"
-                  value={hexToHsl(colors.accent).h}
-                  onChange={(e) => updateAccentFromHsl({ ...hexToHsl(colors.accent), h: parseInt(e.target.value) })}
-                  className="hsl-slider hue-slider"
-                />
-                <span className="slider-value">{hexToHsl(colors.accent).h}°</span>
-              </div>
-              <div className="slider-row">
-                <span className="slider-label">S</span>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={hexToHsl(colors.accent).s}
-                  onChange={(e) => updateAccentFromHsl({ ...hexToHsl(colors.accent), s: parseInt(e.target.value) })}
-                  className="hsl-slider saturation-slider"
-                  style={{ '--slider-bg': `hsl(${hexToHsl(colors.accent).h}, 100%, 50%)` } as React.CSSProperties}
-                />
-                <span className="slider-value">{hexToHsl(colors.accent).s}%</span>
-              </div>
-              <div className="slider-row">
-                <span className="slider-label">L</span>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={hexToHsl(colors.accent).l}
-                  onChange={(e) => updateAccentFromHsl({ ...hexToHsl(colors.accent), l: parseInt(e.target.value) })}
-                  className="hsl-slider lightness-slider"
-                  style={{ '--slider-bg': `hsl(${hexToHsl(colors.accent).h}, ${hexToHsl(colors.accent).s}%, 50%)` } as React.CSSProperties}
-                />
-                <span className="slider-value">{hexToHsl(colors.accent).l}%</span>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
       {immersive && (

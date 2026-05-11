@@ -12,6 +12,7 @@ import { LearningRoadmapFlow, type LearningRoute } from './components/LearningRo
 import { NoteGraph } from './components/NoteGraph';
 import { NoteGraphSidebar } from './components/NoteGraphSidebar';
 import { FloatingTools } from './components/FloatingTools';
+import { ThemeDrawer } from './components/ThemeDrawer';
 import { getNotes, getNoteBySlug, getRandomNote } from './utils/noteLoader';
 import { Note } from './utils/noteLoader';
 import { RESOURCE_CATEGORIES, LEARNING_ROUTES, MICROLINK_API_URL, FAVICON_YANDEX_URL } from './config/resources';
@@ -1735,6 +1736,7 @@ function AboutPage() {
 
 function App() {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [themeDrawerOpen, setThemeDrawerOpen] = useState(false);
 
   return (
     <Router>
@@ -1841,7 +1843,12 @@ function App() {
             </div>
           </div>
         </footer>
-        <FloatingTools />
+        <FloatingTools onOpenThemeDrawer={() => setThemeDrawerOpen(true)} />
+        <ThemeDrawer
+          isOpen={themeDrawerOpen}
+          onClose={() => setThemeDrawerOpen(false)}
+          onToggleTheme={() => {}}
+        />
         <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
       </div>
     </Router>
