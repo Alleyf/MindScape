@@ -3175,6 +3175,110 @@ button.nav-link {
   flex-shrink: 0;
 }
 
+.floating-popover-sep {
+  height: 1px;
+  background: var(--border-soft);
+  margin: 0.25rem 0;
+}
+
+.floating-color-panel {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 0.5rem;
+  width: 180px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border-soft);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.floating-color-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.floating-color-hint {
+  font-size: 0.9rem;
+}
+
+.floating-color-presets {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.color-preset {
+  width: 24px;
+  height: 24px;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-soft);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.color-preset:hover {
+  transform: scale(1.15);
+}
+
+.floating-color-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.floating-color-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.floating-color-row input[type="color"] {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+}
+
+.floating-color-row input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.floating-color-row input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 0.25rem;
+}
+
+.floating-color-reset {
+  width: 100%;
+  padding: 0.35rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.floating-color-reset:hover {
+  border-color: var(--nebula-accent);
+  color: var(--nebula-accent);
+}
+
 .immersive-exit-btn {
   position: fixed;
   top: 1rem;

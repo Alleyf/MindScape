@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getNoteBySlug } from '../utils/noteLoader';
+import { useThemeColors } from '../hooks/useThemeColors';
 
 function getScrollContainers(): Array<Window | HTMLElement> {
   return [
@@ -42,9 +43,22 @@ export function FloatingTools() {
   const [notice, setNotice] = useState('');
   const [immersive, setImmersive] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+  const [colorOpen, setColorOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const moreRef = useRef<HTMLDivElement>(null);
+  const colorRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
+  const {
+    darkColors,
+    lightColors,
+    isLight,
+    updateDarkColors,
+    updateLightColors,
+    resetToDefault,
+  } = useThemeColors();
+
+  const colors = isLight ? lightColors : darkColors;
+  const updateColors = isLight ? updateLightColors : updateDarkColors;
 
   const currentNote = useMemo(() => {
     const match = pathname.match(/^\/note\/(.+)/);
@@ -112,6 +126,17 @@ export function FloatingTools() {
     document.addEventListener('mousedown', onClick);
     return () => document.removeEventListener('mousedown', onClick);
   }, [moreOpen]);
+
+  useEffect(() => {
+    if (!colorOpen) return;
+    const onClick = (e: MouseEvent) => {
+      if (colorRef.current && !colorRef.current.contains(e.target as Node)) {
+        setColorOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onClick);
+    return () => document.removeEventListener('mousedown', onClick);
+  }, [colorOpen]);
 
   const backToTop = () => {
     const scrollTargets = [
@@ -436,9 +461,45 @@ export function FloatingTools() {
                   </button>
                 </>
               )}
+              <div className="floating-popover-sep" />
+              <button type="button" onClick={() => { setColorOpen(true); setMoreOpen(false); }} title="主题颜色">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                </svg>
+                <span>主题色</span>
+              </button>
             </div>
           )}
         </div>
+
+        {colorOpen && (
+          <div className="floating-color-panel" ref={colorRef}>
+            <div className="floating-color-header">
+              <span>主题颜色</span>
+              <span className="floating-color-hint">{isLight ? '☀️' : '🌙'}</span>
+            </div>
+            <div className="floating-color-presets">
+              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #d97757, #8f4f32)' }} onClick={() => updateColors({ accent: '#d97757', glow: '#c96442', purple: '#8f4f32', blue: '#6f7669' })} title="默认" />
+              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #f43f5e, #9d174d)' }} onClick={() => updateColors({ accent: '#f43f5e', glow: '#e11d48', purple: '#be185d', blue: '#9d174d' })} title="玫瑰" />
+              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #10b981, #065f46)' }} onClick={() => updateColors({ accent: '#10b981', glow: '#059669', purple: '#047857', blue: '#065f46' })} title="翡翠" />
+              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #0ea5e9, #075985)' }} onClick={() => updateColors({ accent: '#0ea5e9', glow: '#0284c7', purple: '#0369a1', blue: '#075985' })} title="天蓝" />
+              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #8b5cf6, #5b21b6)' }} onClick={() => updateColors({ accent: '#8b5cf6', glow: '#7c3aed', purple: '#6d28d9', blue: '#5b21b6' })} title="紫罗兰" />
+              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #f59e0b, #92400e)' }} onClick={() => updateColors({ accent: '#f59e0b', glow: '#d97706', purple: '#b45309', blue: '#92400e' })} title="琥珀" />
+            </div>
+            <div className="floating-color-inputs">
+              <div className="floating-color-row">
+                <span>强调</span>
+                <input type="color" value={colors.accent} onChange={(e) => updateColors({ accent: e.target.value })} />
+              </div>
+              <div className="floating-color-row">
+                <span>光晕</span>
+                <input type="color" value={colors.glow} onChange={(e) => updateColors({ glow: e.target.value })} />
+              </div>
+            </div>
+            <button type="button" className="floating-color-reset" onClick={resetToDefault}>重置</button>
+          </div>
+        )}
       </div>
 
       {immersive && (
