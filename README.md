@@ -4,6 +4,12 @@
 
 ## 页面预览
 
+> **演示动画** — 如果你想更新此 GIF，请使用 [ScreenToGif](https://github.com/NickvisionApps/ScreenToGif)（Windows）或 QuickTime（macOS）录制 `npm run dev` 后的交互过程，保存为 `public/images/demo.gif`。
+
+| 演示 GIF |
+|:---:|
+| ![Demo](public/images/demo.gif) |
+
 | 首页 | 笔记列表 |
 |:---:|:---:|
 | ![首页](public/screenshots/home-full.png) | ![笔记列表](public/screenshots/notes-list.png) |
