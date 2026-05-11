@@ -3,6 +3,45 @@ import { useLocation } from 'react-router-dom';
 import { getNoteBySlug } from '../utils/noteLoader';
 import { useThemeColors } from '../hooks/useThemeColors';
 
+// HSL color conversion utilities
+function hexToHsl(hex: string): { h: number; s: number; l: number } {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!result) return { h: 0, s: 100, l: 50 };
+
+  let r = parseInt(result[1], 16) / 255;
+  let g = parseInt(result[2], 16) / 255;
+  let b = parseInt(result[3], 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0, s = 0;
+  const l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+      case g: h = ((b - r) / d + 2) / 6; break;
+      case b: h = ((r - g) / d + 4) / 6; break;
+    }
+  }
+
+  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+}
+
+function hslToHex(h: number, s: number, l: number): string {
+  s /= 100;
+  l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = (n: number) => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
 function getScrollContainers(): Array<Window | HTMLElement> {
   return [
     window,
@@ -59,6 +98,13 @@ export function FloatingTools() {
 
   const colors = isLight ? lightColors : darkColors;
   const updateColors = isLight ? updateLightColors : updateDarkColors;
+
+  const updateAccentFromHsl = (hsl: { h: number; s: number; l: number }) => {
+    const accent = hslToHex(hsl.h, hsl.s, hsl.l);
+    // Glow is slightly darker
+    const glow = hslToHex(hsl.h, hsl.s, Math.max(0, hsl.l - 10));
+    updateColors({ accent, glow });
+  };
 
   const currentNote = useMemo(() => {
     const match = pathname.match(/^\/note\/(.+)/);
@@ -476,28 +522,67 @@ export function FloatingTools() {
         {colorOpen && (
           <div className="floating-color-panel" ref={colorRef}>
             <div className="floating-color-header">
-              <span>主题颜色</span>
-              <span className="floating-color-hint">{isLight ? '☀️' : '🌙'}</span>
+              <span>主题色</span>
+              <span className="floating-color-mode">{isLight ? '☀️' : '🌙'}</span>
             </div>
+
+            {/* Color Preview */}
+            <div className="floating-color-preview">
+              <div className="color-preview-swatch" style={{ background: colors.accent }} />
+              <span className="color-preview-hex">{colors.accent}</span>
+            </div>
+
+            {/* Presets */}
             <div className="floating-color-presets">
-              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #d97757, #8f4f32)' }} onClick={() => updateColors({ accent: '#d97757', glow: '#c96442', purple: '#8f4f32', blue: '#6f7669' })} title="默认" />
-              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #f43f5e, #9d174d)' }} onClick={() => updateColors({ accent: '#f43f5e', glow: '#e11d48', purple: '#be185d', blue: '#9d174d' })} title="玫瑰" />
-              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #10b981, #065f46)' }} onClick={() => updateColors({ accent: '#10b981', glow: '#059669', purple: '#047857', blue: '#065f46' })} title="翡翠" />
-              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #0ea5e9, #075985)' }} onClick={() => updateColors({ accent: '#0ea5e9', glow: '#0284c7', purple: '#0369a1', blue: '#075985' })} title="天蓝" />
-              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #8b5cf6, #5b21b6)' }} onClick={() => updateColors({ accent: '#8b5cf6', glow: '#7c3aed', purple: '#6d28d9', blue: '#5b21b6' })} title="紫罗兰" />
-              <button type="button" className="color-preset" style={{ background: 'linear-gradient(135deg, #f59e0b, #92400e)' }} onClick={() => updateColors({ accent: '#f59e0b', glow: '#d97706', purple: '#b45309', blue: '#92400e' })} title="琥珀" />
+              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#d97757' } as React.CSSProperties} onClick={() => updateColors({ accent: '#d97757', glow: '#c96442' })} />
+              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#f43f5e' } as React.CSSProperties} onClick={() => updateColors({ accent: '#f43f5e', glow: '#e11d48' })} />
+              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#10b981' } as React.CSSProperties} onClick={() => updateColors({ accent: '#10b981', glow: '#059669' })} />
+              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#0ea5e9' } as React.CSSProperties} onClick={() => updateColors({ accent: '#0ea5e9', glow: '#0284c7' })} />
+              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#8b5cf6' } as React.CSSProperties} onClick={() => updateColors({ accent: '#8b5cf6', glow: '#7c3aed' })} />
+              <button type="button" className="color-preset-btn" style={{ '--preset-color': '#f59e0b' } as React.CSSProperties} onClick={() => updateColors({ accent: '#f59e0b', glow: '#d97706' })} />
             </div>
-            <div className="floating-color-inputs">
-              <div className="floating-color-row">
-                <span>强调</span>
-                <input type="color" value={colors.accent} onChange={(e) => updateColors({ accent: e.target.value })} />
+
+            {/* HSL Sliders */}
+            <div className="floating-color-sliders">
+              <div className="slider-row">
+                <span className="slider-label">H</span>
+                <input
+                  type="range"
+                  min="0"
+                  max="360"
+                  value={hexToHsl(colors.accent).h}
+                  onChange={(e) => updateAccentFromHsl({ ...hexToHsl(colors.accent), h: parseInt(e.target.value) })}
+                  className="hsl-slider hue-slider"
+                />
+                <span className="slider-value">{hexToHsl(colors.accent).h}°</span>
               </div>
-              <div className="floating-color-row">
-                <span>光晕</span>
-                <input type="color" value={colors.glow} onChange={(e) => updateColors({ glow: e.target.value })} />
+              <div className="slider-row">
+                <span className="slider-label">S</span>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={hexToHsl(colors.accent).s}
+                  onChange={(e) => updateAccentFromHsl({ ...hexToHsl(colors.accent), s: parseInt(e.target.value) })}
+                  className="hsl-slider saturation-slider"
+                  style={{ '--slider-bg': `hsl(${hexToHsl(colors.accent).h}, 100%, 50%)` } as React.CSSProperties}
+                />
+                <span className="slider-value">{hexToHsl(colors.accent).s}%</span>
+              </div>
+              <div className="slider-row">
+                <span className="slider-label">L</span>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={hexToHsl(colors.accent).l}
+                  onChange={(e) => updateAccentFromHsl({ ...hexToHsl(colors.accent), l: parseInt(e.target.value) })}
+                  className="hsl-slider lightness-slider"
+                  style={{ '--slider-bg': `hsl(${hexToHsl(colors.accent).h}, ${hexToHsl(colors.accent).s}%, 50%)` } as React.CSSProperties}
+                />
+                <span className="slider-value">{hexToHsl(colors.accent).l}%</span>
               </div>
             </div>
-            <button type="button" className="floating-color-reset" onClick={resetToDefault}>重置</button>
           </div>
         )}
       </div>

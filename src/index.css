@@ -3185,98 +3185,165 @@ button.nav-link {
   position: absolute;
   bottom: 100%;
   right: 0;
-  margin-bottom: 0.5rem;
-  width: 180px;
+  margin-bottom: 0.75rem;
+  width: 200px;
   background: var(--surface-strong);
   border: 1px solid var(--border-soft);
   border-radius: 0.75rem;
-  padding: 0.75rem;
+  padding: 0.875rem;
   box-shadow: var(--shadow-soft);
+  z-index: 150;
 }
 
 .floating-color-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.floating-color-header span:first-child {
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.floating-color-hint {
+.floating-color-mode {
   font-size: 0.9rem;
+}
+
+.floating-color-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.875rem;
+  padding: 0.5rem;
+  background: var(--surface);
+  border-radius: 0.5rem;
+}
+
+.color-preview-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-soft);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.color-preview-hex {
+  font-size: 0.75rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--text-muted);
+  text-transform: uppercase;
 }
 
 .floating-color-presets {
   display: flex;
-  gap: 0.35rem;
-  margin-bottom: 0.75rem;
-  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-bottom: 0.875rem;
+  justify-content: space-between;
 }
 
-.color-preset {
-  width: 24px;
-  height: 24px;
-  border-radius: 0.375rem;
-  border: 1px solid var(--border-soft);
+.color-preset-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: var(--preset-color);
   cursor: pointer;
-  transition: transform 0.15s;
+  transition: all 0.15s ease;
+  position: relative;
 }
 
-.color-preset:hover {
+.color-preset-btn:hover {
   transform: scale(1.15);
+  border-color: var(--text-muted);
 }
 
-.floating-color-inputs {
+.color-preset-btn:active {
+  transform: scale(0.95);
+}
+
+.floating-color-sliders {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
 }
 
-.floating-color-row {
+.slider-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  gap: 0.5rem;
 }
 
-.floating-color-row input[type="color"] {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--border-soft);
-  border-radius: 0.375rem;
+.slider-label {
+  width: 14px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-subtle);
+  text-align: center;
+}
+
+.slider-value {
+  width: 32px;
+  font-size: 0.65rem;
+  font-family: 'SF Mono', monospace;
+  color: var(--text-subtle);
+  text-align: right;
+}
+
+.hsl-slider {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  appearance: none;
   cursor: pointer;
-  padding: 0;
-  background: none;
+  outline: none;
 }
 
-.floating-color-row input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 2px;
+.hsl-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--nebula-dark);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+  transition: transform 0.1s;
 }
 
-.floating-color-row input[type="color"]::-webkit-color-swatch {
-  border: none;
-  border-radius: 0.25rem;
+.hsl-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.1);
 }
 
-.floating-color-reset {
-  width: 100%;
-  padding: 0.35rem;
-  border: 1px solid var(--border-soft);
-  border-radius: 0.375rem;
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  cursor: pointer;
-  transition: all 0.2s;
+.hue-slider {
+  background: linear-gradient(to right,
+    hsl(0, 100%, 50%),
+    hsl(60, 100%, 50%),
+    hsl(120, 100%, 50%),
+    hsl(180, 100%, 50%),
+    hsl(240, 100%, 50%),
+    hsl(300, 100%, 50%),
+    hsl(360, 100%, 50%)
+  );
 }
 
-.floating-color-reset:hover {
-  border-color: var(--nebula-accent);
-  color: var(--nebula-accent);
+.saturation-slider {
+  background: linear-gradient(to right,
+    hsl(0, 0%, 50%),
+    var(--slider-bg, hsl(0, 100%, 50%))
+  );
+}
+
+.lightness-slider {
+  background: linear-gradient(to right,
+    hsl(0, 0%, 0%),
+    var(--slider-bg, hsl(0, 100%, 50%)),
+    hsl(0, 0%, 100%)
+  );
 }
 
 .immersive-exit-btn {
