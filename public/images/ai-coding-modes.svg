@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="430" viewBox="0 0 1040 430" role="img" aria-labelledby="title desc">
+  <title id="title">Vibe、Plan、Spec 工作模式对比图</title>
+  <desc id="desc">Vibe、Plan、Spec 三种 AI Coding 工作模式的适用场景和风险对比。</desc>
+  <rect width="1040" height="430" rx="32" fill="#1f1e1b"/>
+  <circle cx="110" cy="88" r="120" fill="#d97757" opacity="0.12"/>
+  <circle cx="910" cy="350" r="140" fill="#6f7669" opacity="0.14"/>
+  <text x="52" y="66" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#f4efe7">三种工作模式</text>
+  <text x="52" y="98" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#d8cfc2">同一个工具，在不同模式下风险和收益完全不同。</text>
+  <g font-family="'Microsoft YaHei UI', sans-serif">
+    <g transform="translate(70 144)">
+      <rect width="280" height="210" rx="22" fill="#2a2723" stroke="#5a5047"/>
+      <text x="28" y="48" font-size="28" font-weight="900" fill="#d97757">Vibe</text>
+      <text x="28" y="84" font-size="15" fill="#f4efe7">边聊边做，快速成型</text>
+      <text x="28" y="122" font-size="14" fill="#d8cfc2">适合：原型、小页面、灵感探索</text>
+      <text x="28" y="154" font-size="14" fill="#d8cfc2">风险：方向漂移、难验收</text>
+      <text x="28" y="186" font-size="14" fill="#d8cfc2">关键词：速度</text>
+    </g>
+    <g transform="translate(380 144)">
+      <rect width="280" height="210" rx="22" fill="#2a2723" stroke="#5a5047"/>
+      <text x="28" y="48" font-size="28" font-weight="900" fill="#d97757">Plan</text>
+      <text x="28" y="84" font-size="15" fill="#f4efe7">先拆任务，再逐步执行</text>
+      <text x="28" y="122" font-size="14" fill="#d8cfc2">适合：Bug 修复、中等功能</text>
+      <text x="28" y="154" font-size="14" fill="#d8cfc2">风险：计划粗糙会误导实现</text>
+      <text x="28" y="186" font-size="14" fill="#d8cfc2">关键词：可控</text>
+    </g>
+    <g transform="translate(690 144)">
+      <rect width="280" height="210" rx="22" fill="#2a2723" stroke="#5a5047"/>
+      <text x="28" y="48" font-size="28" font-weight="900" fill="#d97757">Spec</text>
+      <text x="28" y="84" font-size="15" fill="#f4efe7">先写规格，再交付实现</text>
+      <text x="28" y="122" font-size="14" fill="#d8cfc2">适合：复杂系统、多人协作</text>
+      <text x="28" y="154" font-size="14" fill="#d8cfc2">风险：前期成本更高</text>
+      <text x="28" y="186" font-size="14" fill="#d8cfc2">关键词：可靠</text>
+    </g>
+  </g>
+</svg>

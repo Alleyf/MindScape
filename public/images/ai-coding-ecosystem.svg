@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="520" viewBox="0 0 1040 520" role="img" aria-labelledby="title desc">
+  <title id="title">AI Coding 工具生态分层图</title>
+  <desc id="desc">AI Coding 工具生态被分为模型与助手、编码代理、技能市场、规范方法论和验证安全五层。</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffdfa"/>
+      <stop offset="1" stop-color="#f3eadf"/>
+    </linearGradient>
+  </defs>
+  <rect width="1040" height="520" rx="32" fill="#faf9f5"/>
+  <text x="52" y="64" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#141413">工具生态分层</text>
+  <text x="52" y="96" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#6b6258">不要把所有工具混在一起看。先判断它属于哪一层，再决定怎么学。</text>
+  <g font-family="'Microsoft YaHei UI', sans-serif">
+    <g transform="translate(70 136)">
+      <rect width="900" height="58" rx="18" fill="url(#panel)" stroke="#e5d7c8"/>
+      <text x="24" y="37" font-size="18" font-weight="800" fill="#8f4f32">模型与助手</text>
+      <text x="190" y="37" font-size="15" fill="#4f4a43">Claude、GPT、Gemini、推理模型、上下文窗口</text>
+    </g>
+    <g transform="translate(70 212)">
+      <rect width="900" height="58" rx="18" fill="url(#panel)" stroke="#e5d7c8"/>
+      <text x="24" y="37" font-size="18" font-weight="800" fill="#8f4f32">编码代理</text>
+      <text x="190" y="37" font-size="15" fill="#4f4a43">Claude Code、Codex、OpenClaw、Hermes、终端与 IDE 集成</text>
+    </g>
+    <g transform="translate(70 288)">
+      <rect width="900" height="58" rx="18" fill="url(#panel)" stroke="#e5d7c8"/>
+      <text x="24" y="37" font-size="18" font-weight="800" fill="#8f4f32">技能与市场</text>
+      <text x="190" y="37" font-size="15" fill="#4f4a43">SkillHub、SkillsMP、ClawHub、SKILL.md、插件与 MCP</text>
+    </g>
+    <g transform="translate(70 364)">
+      <rect width="900" height="58" rx="18" fill="url(#panel)" stroke="#e5d7c8"/>
+      <text x="24" y="37" font-size="18" font-weight="800" fill="#8f4f32">方法论</text>
+      <text x="190" y="37" font-size="15" fill="#4f4a43">Vibe、Plan、Spec、Superpowers、OpenSpec、Spec Kit、GSD</text>
+    </g>
+    <g transform="translate(70 440)">
+      <rect width="900" height="58" rx="18" fill="url(#panel)" stroke="#e5d7c8"/>
+      <text x="24" y="37" font-size="18" font-weight="800" fill="#8f4f32">验证与安全</text>
+      <text x="190" y="37" font-size="15" fill="#4f4a43">测试、构建、代码审查、权限控制、供应链审查、生产监控</text>
+    </g>
+  </g>
+</svg>

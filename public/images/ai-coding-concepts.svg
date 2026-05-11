@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="420" viewBox="0 0 1040 420" role="img" aria-labelledby="title desc">
+  <title id="title">AI Coding 核心概念关系图</title>
+  <desc id="desc">上下文、工具调用、系统提示、MCP、技能和验证之间的关系。</desc>
+  <rect width="1040" height="420" rx="32" fill="#faf9f5"/>
+  <text x="52" y="66" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#141413">核心概念关系图</text>
+  <text x="52" y="98" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#6b6258">Agent 能做什么，取决于它看见什么、能调用什么、以及你如何验证它。</text>
+  <g font-family="'Microsoft YaHei UI', sans-serif">
+    <circle cx="520" cy="238" r="70" fill="#d97757"/><text x="486" y="232" font-size="20" font-weight="900" fill="#fff">Agent</text><text x="472" y="260" font-size="13" fill="#fff">执行与协作中心</text>
+    <g fill="#fffdfa" stroke="#e5d7c8">
+      <rect x="92" y="160" width="170" height="82" rx="18"/><rect x="306" y="72" width="170" height="82" rx="18"/><rect x="564" y="72" width="170" height="82" rx="18"/><rect x="778" y="160" width="170" height="82" rx="18"/><rect x="306" y="310" width="170" height="82" rx="18"/><rect x="564" y="310" width="170" height="82" rx="18"/>
+    </g>
+    <g fill="#141413" font-size="18" font-weight="800"><text x="126" y="194">上下文窗口</text><text x="348" y="106">系统提示</text><text x="606" y="106">工具调用</text><text x="826" y="194">MCP</text><text x="352" y="344">Skills</text><text x="606" y="344">验证</text></g>
+    <g fill="#7d7468" font-size="13"><text x="122" y="220">决定可见信息</text><text x="342" y="132">规定行为边界</text><text x="600" y="132">读写与执行能力</text><text x="818" y="220">连接外部系统</text><text x="336" y="370">复用工作经验</text><text x="594" y="370">测试 / Review / Eval</text></g>
+    <g stroke="#d97757" stroke-width="3" stroke-dasharray="8 8" fill="none"><path d="M262 202l188 26"/><path d="M450 150l42 36"/><path d="M606 150l-42 36"/><path d="M778 202l-188 26"/><path d="M450 318l42-36"/><path d="M606 318l-42-36"/></g>
+  </g>
+</svg>

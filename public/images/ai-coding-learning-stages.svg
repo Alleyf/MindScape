@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="360" viewBox="0 0 1040 360" role="img" aria-labelledby="title desc">
+  <title id="title">AI Coding 四阶段学习路线</title>
+  <desc id="desc">能用起来、能稳定改仓库、能复用工作流、能做复杂项目四个阶段。</desc>
+  <rect width="1040" height="360" rx="32" fill="#fffaf2"/>
+  <text x="52" y="66" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#141413">四阶段学习节奏</text>
+  <text x="52" y="98" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#6b6258">不要一次全学，把能力拆成四个台阶更稳。</text>
+  <g font-family="'Microsoft YaHei UI', sans-serif">
+    <path d="M88 272h180v-52h180v-52h180v-52h260" fill="none" stroke="#d97757" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <g><circle cx="164" cy="272" r="34" fill="#d97757"/><text x="154" y="281" font-size="24" font-weight="900" fill="#fff">1</text><text x="104" y="326" font-size="17" font-weight="800" fill="#141413">能用起来</text></g>
+    <g><circle cx="372" cy="220" r="34" fill="#d97757"/><text x="362" y="229" font-size="24" font-weight="900" fill="#fff">2</text><text x="300" y="274" font-size="17" font-weight="800" fill="#141413">稳定改仓库</text></g>
+    <g><circle cx="580" cy="168" r="34" fill="#d97757"/><text x="570" y="177" font-size="24" font-weight="900" fill="#fff">3</text><text x="506" y="222" font-size="17" font-weight="800" fill="#141413">复用工作流</text></g>
+    <g><circle cx="788" cy="116" r="34" fill="#d97757"/><text x="778" y="125" font-size="24" font-weight="900" fill="#fff">4</text><text x="718" y="170" font-size="17" font-weight="800" fill="#141413">复杂项目推进</text></g>
+  </g>
+</svg>

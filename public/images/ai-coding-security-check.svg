@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="360" viewBox="0 0 1040 360" role="img" aria-labelledby="title desc">
+  <title id="title">技能安全审查清单图</title>
+  <desc id="desc">安装第三方技能前需要检查说明、脚本、网络、密钥和沙盒。</desc>
+  <rect width="1040" height="360" rx="32" fill="#1f1e1b"/>
+  <text x="52" y="66" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#f4efe7">技能安装前的安全审查</text>
+  <text x="52" y="98" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#d8cfc2">越是方便的技能，越要先确认它会读取什么、执行什么、上传什么。</text>
+  <g font-family="'Microsoft YaHei UI', sans-serif">
+    <g transform="translate(74 146)"><rect width="160" height="118" rx="20" fill="#2a2723" stroke="#5a5047"/><text x="26" y="42" font-size="20" font-weight="900" fill="#d97757">01</text><text x="26" y="76" font-size="17" font-weight="800" fill="#f4efe7">读说明</text><text x="26" y="100" font-size="13" fill="#d8cfc2">触发条件 / 权限边界</text></g>
+    <g transform="translate(258 146)"><rect width="160" height="118" rx="20" fill="#2a2723" stroke="#5a5047"/><text x="26" y="42" font-size="20" font-weight="900" fill="#d97757">02</text><text x="26" y="76" font-size="17" font-weight="800" fill="#f4efe7">看脚本</text><text x="26" y="100" font-size="13" fill="#d8cfc2">文件读写 / 远程代码</text></g>
+    <g transform="translate(442 146)"><rect width="160" height="118" rx="20" fill="#2a2723" stroke="#5a5047"/><text x="26" y="42" font-size="20" font-weight="900" fill="#d97757">03</text><text x="26" y="76" font-size="17" font-weight="800" fill="#f4efe7">查网络</text><text x="26" y="100" font-size="13" fill="#d8cfc2">上传 / API / 外链</text></g>
+    <g transform="translate(626 146)"><rect width="160" height="118" rx="20" fill="#2a2723" stroke="#5a5047"/><text x="26" y="42" font-size="20" font-weight="900" fill="#d97757">04</text><text x="26" y="76" font-size="17" font-weight="800" fill="#f4efe7">护密钥</text><text x="26" y="100" font-size="13" fill="#d8cfc2">Token / Cookie / 云账号</text></g>
+    <g transform="translate(810 146)"><rect width="160" height="118" rx="20" fill="#2a2723" stroke="#5a5047"/><text x="26" y="42" font-size="20" font-weight="900" fill="#d97757">05</text><text x="26" y="76" font-size="17" font-weight="800" fill="#f4efe7">沙盒试用</text><text x="26" y="100" font-size="13" fill="#d8cfc2">先隔离再信任</text></g>
+  </g>
+</svg>

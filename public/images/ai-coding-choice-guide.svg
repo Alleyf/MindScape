@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="420" viewBox="0 0 1040 420" role="img" aria-labelledby="title desc">
+  <title id="title">AI Coding 选型建议图</title>
+  <desc id="desc">根据日常编码、环境管理、技能市场、规范驱动、长任务和自我改进选择工具。</desc>
+  <rect width="1040" height="420" rx="32" fill="#faf9f5"/>
+  <text x="52" y="66" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#141413">从目的反推工具</text>
+  <text x="52" y="98" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#6b6258">不要从工具开始选，从你要完成的任务开始选。</text>
+  <g font-family="'Microsoft YaHei UI', sans-serif">
+    <g transform="translate(70 140)"><rect width="270" height="82" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="24" y="36" font-size="18" font-weight="900" fill="#8f4f32">日常编码</text><text x="24" y="62" font-size="14" fill="#4f4a43">Claude Code / Codex</text></g>
+    <g transform="translate(384 140)"><rect width="270" height="82" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="24" y="36" font-size="18" font-weight="900" fill="#8f4f32">环境管理</text><text x="24" y="62" font-size="14" fill="#4f4a43">CC-Switch</text></g>
+    <g transform="translate(698 140)"><rect width="270" height="82" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="24" y="36" font-size="18" font-weight="900" fill="#8f4f32">技能生态</text><text x="24" y="62" font-size="14" fill="#4f4a43">SkillHub / ClawHub</text></g>
+    <g transform="translate(70 258)"><rect width="270" height="82" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="24" y="36" font-size="18" font-weight="900" fill="#8f4f32">规范驱动</text><text x="24" y="62" font-size="14" fill="#4f4a43">Spec Kit / OpenSpec</text></g>
+    <g transform="translate(384 258)"><rect width="270" height="82" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="24" y="36" font-size="18" font-weight="900" fill="#8f4f32">长任务</text><text x="24" y="62" font-size="14" fill="#4f4a43">GSD</text></g>
+    <g transform="translate(698 258)"><rect width="270" height="82" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="24" y="36" font-size="18" font-weight="900" fill="#8f4f32">自我改进 Agent</text><text x="24" y="62" font-size="14" fill="#4f4a43">Hermes Agent</text></g>
+  </g>
+</svg>

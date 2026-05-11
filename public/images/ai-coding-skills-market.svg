@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="360" viewBox="0 0 1040 360" role="img" aria-labelledby="title desc">
+  <title id="title">Skills 与 Agent 生态市场图</title>
+  <desc id="desc">技能市场、技能说明、脚本和代理之间的流转关系。</desc>
+  <rect width="1040" height="360" rx="32" fill="#fffaf2"/>
+  <text x="52" y="66" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#141413">Skills 生态如何流转</text>
+  <text x="52" y="98" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#6b6258">技能市场不是单纯插件库，它把经验、脚本、权限和触发条件交给 Agent 复用。</text>
+  <g font-family="'Microsoft YaHei UI', sans-serif" font-size="16" font-weight="800">
+    <rect x="72" y="164" width="170" height="92" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="114" y="205" fill="#141413">技能市场</text><text x="100" y="231" font-size="13" font-weight="400" fill="#7d7468">SkillHub / ClawHub</text>
+    <rect x="306" y="164" width="170" height="92" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="350" y="205" fill="#141413">SKILL.md</text><text x="330" y="231" font-size="13" font-weight="400" fill="#7d7468">何时使用 / 如何执行</text>
+    <rect x="540" y="164" width="170" height="92" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="592" y="205" fill="#141413">脚本工具</text><text x="578" y="231" font-size="13" font-weight="400" fill="#7d7468">命令 / MCP / API</text>
+    <rect x="774" y="164" width="170" height="92" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="824" y="205" fill="#141413">Agent</text><text x="808" y="231" font-size="13" font-weight="400" fill="#7d7468">按需调用并验证</text>
+  </g>
+  <g stroke="#d97757" stroke-width="4" fill="none" stroke-linecap="round"><path d="M250 210h48"/><path d="M484 210h48"/><path d="M718 210h48"/></g>
+  <g fill="#d97757"><path d="M298 210l-12-7v14z"/><path d="M532 210l-12-7v14z"/><path d="M766 210l-12-7v14z"/></g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="420" viewBox="0 0 1040 420" role="img" aria-labelledby="title desc">
+  <title id="title">AI Coding 验证闭环图</title>
+  <desc id="desc">需求、上下文、计划、实现、验证和审查组成闭环。</desc>
+  <rect width="1040" height="420" rx="32" fill="#1f1e1b"/>
+  <text x="52" y="66" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#f4efe7">成熟工作流的验证闭环</text>
+  <text x="52" y="98" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#d8cfc2">让 AI 少猜一点，让系统多证明一点。</text>
+  <g transform="translate(520 238)" font-family="'Microsoft YaHei UI', sans-serif">
+    <circle r="122" fill="none" stroke="#d97757" stroke-width="4" stroke-dasharray="12 10"/>
+    <g fill="#2a2723" stroke="#5a5047"><rect x="-72" y="-178" width="144" height="52" rx="16"/><rect x="102" y="-70" width="144" height="52" rx="16"/><rect x="102" y="80" width="144" height="52" rx="16"/><rect x="-72" y="146" width="144" height="52" rx="16"/><rect x="-246" y="80" width="144" height="52" rx="16"/><rect x="-246" y="-70" width="144" height="52" rx="16"/></g>
+    <g fill="#f4efe7" font-size="16" font-weight="900" text-anchor="middle"><text y="-145">需求</text><text x="174" y="-37">上下文</text><text x="174" y="113">计划</text><text y="179">实现</text><text x="-174" y="113">验证</text><text x="-174" y="-37">审查</text></g>
+    <text y="6" text-anchor="middle" font-size="22" font-weight="900" fill="#d97757">AI Coding</text><text y="34" text-anchor="middle" font-size="13" fill="#d8cfc2">不是一次生成，而是一圈闭环</text>
+  </g>
+</svg>

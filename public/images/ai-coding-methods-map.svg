@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="420" viewBox="0 0 1040 420" role="img" aria-labelledby="title desc">
+  <title id="title">AI Coding 方法论地图</title>
+  <desc id="desc">Superpowers、Spec Kit、OpenSpec 和 GSD 关注的不同层面。</desc>
+  <rect width="1040" height="420" rx="32" fill="#faf9f5"/>
+  <text x="52" y="66" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#141413">方法论地图</text>
+  <text x="52" y="98" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#6b6258">这些框架不是互斥选项，它们解决的是不同层面的工程问题。</text>
+  <line x1="120" y1="260" x2="920" y2="260" stroke="#d9c8b7" stroke-width="3"/>
+  <line x1="520" y1="140" x2="520" y2="360" stroke="#d9c8b7" stroke-width="3"/>
+  <text x="132" y="150" font-family="'Microsoft YaHei UI', sans-serif" font-size="14" fill="#7d7468">轻量</text>
+  <text x="856" y="150" font-family="'Microsoft YaHei UI', sans-serif" font-size="14" fill="#7d7468">体系化</text>
+  <text x="536" y="158" font-family="'Microsoft YaHei UI', sans-serif" font-size="14" fill="#7d7468">需求/规格</text>
+  <text x="536" y="354" font-family="'Microsoft YaHei UI', sans-serif" font-size="14" fill="#7d7468">执行/验证</text>
+  <g font-family="'Microsoft YaHei UI', sans-serif" font-size="17" font-weight="900">
+    <rect x="190" y="190" width="180" height="72" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="232" y="234" fill="#8f4f32">OpenSpec</text>
+    <rect x="610" y="182" width="180" height="72" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="666" y="226" fill="#8f4f32">Spec Kit</text>
+    <rect x="220" y="298" width="180" height="72" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="252" y="342" fill="#8f4f32">Superpowers</text>
+    <rect x="650" y="298" width="180" height="72" rx="18" fill="#fffdfa" stroke="#e5d7c8"/><text x="716" y="342" fill="#8f4f32">GSD</text>
+  </g>
+</svg>
