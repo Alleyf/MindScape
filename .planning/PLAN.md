@@ -1,76 +1,72 @@
-# Phase 1 Plan: AI Service Layer Foundation
+# Phase 2 Plan: Smart Note Summarization UI
 
 ## Phase Goal
 
-Create the foundational AI service layer for Claude API integration with caching and error handling.
+Integrate AI summary generation into the note reading experience. Display AI-generated summaries, keywords, and suggested title improvements.
 
 ## Tasks
 
-### Task 1: Project Setup ✓
-- [x] Create `src/services/` directory
-- [x] Create `src/types/ai.ts` for AI types
-- [x] Add `VITE_CLAUDE_API_KEY` to `.env.example`
-- [x] Create `.env` with empty API key placeholder
+### Task 1: Create AISummaryPanel Component
+- [ ] Create `src/components/AISummaryPanel.tsx`
+- [ ] Display AI summary with styled container
+- [ ] Show AI-recommended keywords with highlight
+- [ ] Show improved title suggestion (if available)
+- [ ] Loading skeleton state
+- [ ] Error state with retry button
 
-### Task 2: AI Service Core (`src/services/ai.ts`) ✓
-- [x] Define `AIClient` class
-- [x] Implement `messages` API endpoint call
-- [x] Add streaming support (via queue)
-- [x] Implement request queue (rate limiting)
+### Task 2: Integrate into NotePage
+- [ ] Import and use `useGenerateSummary` hook in NotePage
+- [ ] Add AISummaryPanel below note header
+- [ ] Show loading state while generating
 
-### Task 3: Caching Layer ✓
-- [x] Create content hash utility (`src/utils/hash.ts`)
-- [x] Implement `AICache` class with localStorage
-- [x] Add TTL-based cache invalidation
-- [x] Cache key format: `mindscape-ai:{operation}:{content-hash}`
+### Task 3: Update AIPanel Tabs
+- [ ] Rename existing "隐喻" tab to "摘要"
+- [ ] Integrate AI summary into the tab
+- [ ] Keep fallback static content for unconfigured API
 
-### Task 4: React Hook (`src/hooks/useAI.ts`) ✓
-- [x] `useGenerateSummary(note)` hook
-- [x] `useExtractKeywords(note)` hook
-- [x] `useChat()` hook
-- [x] Loading/error states
-- [x] Auto-cache on success
+### Task 4: Add CSS Styles
+- [ ] Add `.ai-summary-panel` styles
+- [ ] Add `.ai-keyword-tag` highlight styles
+- [ ] Add loading skeleton animation
 
-### Task 5: Error Handling & Fallback ✓
-- [x] API key missing detection
-- [x] Network error with retry logic
-- [x] Rate limit handling
-- [x] Graceful degradation to static content
-
-### Task 6: Integration Points ✓
-- [x] Export AI service from `src/services/index.ts`
-- [ ] Update `src/App.tsx` to pass AI context if needed (optional for now)
+### Task 5: Handle Edge Cases
+- [ ] Long summaries (truncate with "read more")
+- [ ] API not configured message
+- [ ] Network error recovery
 
 ## Files to Create/Modify
 
 | File | Action |
 |------|--------|
-| `src/types/ai.ts` | Create - AI type definitions |
-| `src/services/ai.ts` | Create - Claude API client |
-| `src/services/cache.ts` | Create - Caching utilities |
-| `src/services/index.ts` | Create - Service exports |
-| `src/hooks/useAI.ts` | Create - React hooks |
-| `src/utils/hash.ts` | Create - Hash utility |
-| `.env.example` | Modify - Add API key |
-| `.env` | Create - Local env (gitignored) |
+| `src/components/AISummaryPanel.tsx` | Create - Summary display component |
+| `src/components/AIPanel.tsx` | Modify - Update tabs with AI summary |
+| `src/App.tsx` | Modify - Integrate hook in NotePage |
+| `src/index.css` | Modify - Add AI summary styles |
+
+## UI Design
+
+```
+┌─────────────────────────────────────────────┐
+│ 🤖 AI 摘要                                 │
+├─────────────────────────────────────────────┤
+│ 这篇文章讨论了分布式系统的核心概念，包括...   │
+│                                             │
+│ 关键词: [分布式系统] [一致性] [CAP理论]     │
+│                                             │
+│ 💡 建议标题: 深入理解分布式系统一致性       │
+│                              [刷新 🔄]      │
+└─────────────────────────────────────────────┘
+```
 
 ## Verification
 
 1. **Build**: `npm run build` passes
-2. **Dev**: `npm run dev` starts without errors
-3. **API Test**: With valid key, can call Claude API
-4. **Cache Test**: Same content doesn't trigger duplicate API calls
-5. **Error Test**: Missing key shows setup UI
+2. **UI Test**: Summary appears on note page
+3. **Loading**: Skeleton shows while generating
+4. **Cache**: Same note doesn't regenerate
+5. **Error**: Shows error state if API fails
 
 ## Dependencies
 
-None (pure TypeScript implementation)
-
-## Estimated Effort
-
-- Setup: 10 min
-- Core service: 30 min
-- Caching: 20 min
-- Hooks: 30 min
-- Testing: 20 min
-- **Total**: ~2 hours
+- Phase 1 completed (AI service layer)
+- `useGenerateSummary` hook available
