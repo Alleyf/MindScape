@@ -83,34 +83,52 @@ function buildFlow(route: LearningRoute): { nodes: Node<RoadmapNodeData>[]; edge
         url: '',
       }));
 
-  const nodes = flowItems.map((item, index) => {
-    const rowOffset = index % 2 === 0 ? 0 : 92;
-    const y = index === 0 || index === flowItems.length - 1 ? 120 : rowOffset + 70;
+  const groupedItems = flowItems.reduce<Array<{ type: string; items: typeof flowItems }>>((groups, item) => {
+    const lastGroup = groups[groups.length - 1];
+    if (lastGroup?.type === item.type) {
+      lastGroup.items.push(item);
+    } else {
+      groups.push({ type: item.type || '阶段', items: [item] });
+    }
+    return groups;
+  }, []);
 
-    return {
-      id: `${route.id}-${index}`,
+  const nodes: Node<RoadmapNodeData>[] = groupedItems.flatMap((group, groupIndex) => {
+    const columnHeight = group.items.length * 108;
+    const startY = Math.max(24, 190 - columnHeight / 2);
+
+    return group.items.map((item, itemIndex) => ({
+      id: `${route.id}-${groupIndex}-${itemIndex}`,
       type: 'roadmapCard',
-      position: { x: index * 235, y },
+      position: {
+        x: groupIndex * 285,
+        y: startY + itemIndex * 108,
+      },
       data: {
         label: item.label,
-        subtitle: index === 0 ? '从这里开始' : item.subtitle,
+        subtitle: groupIndex === 0 && itemIndex === 0 ? '从这里开始' : item.subtitle,
         type: item.type,
         url: item.url,
         accent: route.accent,
-        level: index + 1,
+        level: groupIndex + 1,
       },
       draggable: true,
-    };
+    }));
   });
 
-  const edges = flowItems.slice(0, -1).map((_, index) => ({
-    id: `${route.id}-edge-${index}`,
-    source: `${route.id}-${index}`,
-    target: `${route.id}-${index + 1}`,
-    type: 'smoothstep',
-    animated: true,
-    style: { stroke: route.accent, strokeWidth: 2 },
-  }));
+  const edges: Edge[] = groupedItems.slice(0, -1).flatMap((group, groupIndex) => {
+    const nextGroup = groupedItems[groupIndex + 1];
+    return group.items.flatMap((_, sourceIndex) =>
+      nextGroup.items.map((__, targetIndex) => ({
+        id: `${route.id}-edge-${groupIndex}-${sourceIndex}-${targetIndex}`,
+        source: `${route.id}-${groupIndex}-${sourceIndex}`,
+        target: `${route.id}-${groupIndex + 1}-${targetIndex}`,
+        type: 'smoothstep',
+        animated: true,
+        style: { stroke: route.accent, strokeWidth: 1.8 },
+      }))
+    );
+  });
 
   return { nodes, edges };
 }

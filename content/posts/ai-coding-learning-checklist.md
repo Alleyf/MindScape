@@ -14,6 +14,8 @@ Claude Code、Codex、OpenClaw、Hermes、Skills、MCP、Spec、GSD、Superpower
 
 这篇清单的目标很简单：把主流热门的 AI Coding 入口按学习顺序整理出来。先补齐概念，再认识工具，再理解工作模式，最后进入规范驱动、计划驱动和多 Agent 工作流。
 
+![AI Coding 学习路线图](/images/ai-coding-roadmap.svg)
+
 ## 1. 先建立一张心智地图
 
 AI Coding 不是“让 AI 帮我写几行代码”这么窄。更准确地说，它是在把软件开发拆成几类可协作的任务：
@@ -30,6 +32,8 @@ AI Coding 不是“让 AI 帮我写几行代码”这么窄。更准确地说，
 ## 2. AI 编程核心概念扫盲
 
 刚开始不必急着装一堆 CLI。先把“模型、上下文、提示词、工具调用、Agent、RAG、MCP、评估”这些词看懂。否则后面遇到上下文丢失、模型乱改、工具误用、Token 爆炸时，很难判断问题出在哪里。
+
+![AI Coding 核心概念关系图](/images/ai-coding-concepts.svg)
 
 ### 推荐入口
 
@@ -53,6 +57,8 @@ AI Coding 不是“让 AI 帮我写几行代码”这么窄。更准确地说，
 ## 3. 主流 AI Coding 工具入口
 
 工具层可以分成三类：日常编码 Agent、配置管理工具、Agent 生态平台。
+
+![AI Coding 工具生态分层图](/images/ai-coding-ecosystem.svg)
 
 ### Claude Code
 
@@ -110,6 +116,8 @@ Skills 是 AI Coding 里非常关键的一层。它不像传统插件那样只�
 
 这意味着技能市场会越来越像 Agent 时代的 npm、VS Code Marketplace 和工作流模板库的混合体。
 
+![Skills 与 Agent 生态市场图](/images/ai-coding-skills-market.svg)
+
 ### 常用入口
 
 - [SkillHub](https://skillhub.cn/)  
@@ -131,6 +139,8 @@ Skills 是 AI Coding 里非常关键的一层。它不像传统插件那样只�
 
 技能市场很好用，但不要盲装。一个技能可能只是说明文档，也可能带脚本、依赖、网络请求和文件系统操作。
 
+![技能安全审查清单图](/images/ai-coding-security-check.svg)
+
 建议采用这套检查清单：
 
 - 先看 `SKILL.md`：确认触发条件、权限边界和实际操作。
@@ -144,6 +154,8 @@ AI Coding 的技能生态会很强，但供应链安全会成为长期问题。�
 ## 5. 三种常见工作模式：Vibe、Plan、Spec
 
 学习 AI Coding 时，很多争论其实是在混用不同工作模式。
+
+![Vibe、Plan、Spec 工作模式对比图](/images/ai-coding-modes.svg)
 
 ### Vibe Coding
 
@@ -196,6 +208,8 @@ Spec 的价值是减少“看起来写完了，其实方向错了”的风险。
 ## 6. 编程范式、工作流与方法论
 
 当你开始频繁使用 AI Coding，真正决定效率的不是模型，而是工作流。下面这些方法论入口值得系统学习。
+
+![AI Coding 方法论地图](/images/ai-coding-methods-map.svg)
 
 ### Superpowers
 
@@ -262,6 +276,8 @@ GSD 关注的是长任务、上下文工程、阶段推进和自动化执行。�
 
 如果你是初学者，可以按这个顺序走。
 
+![AI Coding 四阶段学习路线](/images/ai-coding-learning-stages.svg)
+
 ### 第一阶段：能用起来
 
 目标是让 AI 帮你完成小任务，而不是搭建宏大系统。
@@ -320,6 +336,8 @@ GSD 关注的是长任务、上下文工程、阶段推进和自动化执行。�
 
 如果只能从少数几个入口开始，我会这样选：
 
+![AI Coding 选型建议图](/images/ai-coding-choice-guide.svg)
+
 - **日常编码**：Claude Code 或 Codex。
 - **多工具环境管理**：CC-Switch。
 - **概念补课**：云途 AGI + JavaGuide。
@@ -335,6 +353,8 @@ GSD 关注的是长任务、上下文工程、阶段推进和自动化执行。�
 
 AI Coding 的核心不是“谁的模型最强”，而是你能不能把意图、上下文、约束和验证交代清楚。
 
+![AI Coding 验证闭环图](/images/ai-coding-verification-loop.svg)
+
 一个成熟的 AI Coding 工作流，通常长这样：
 
 1. 先明确需求和验收标准。
@@ -345,4 +365,3 @@ AI Coding 的核心不是“谁的模型最强”，而是你能不能把意图�
 6. 最后审查 diff 和风险。
 
 工具会继续变化，网站会继续增加，方法论也会继续迭代。但这条主线大概率不会变：让 AI 少猜一点，让系统多验证一点，让人类把判断力放在真正重要的位置。
-
