@@ -47,7 +47,7 @@ description: "| ​​项目​​   | ​​内容​​                       
 
 #### 0.1.3.1 ​**​框架图解谜​**​
 
-![](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/042e47dd633f23a1ba859dab60113621-image.png?q-sign-algorithm=sha1&q-ak=AKID372nLgqocp7HZjfQzNcyGOMTN3Xp6FEA&q-sign-time=1758598209%3B2073958209&q-key-time=1758598209%3B2073958209&q-header-list=host&q-url-param-list=&q-signature=9f2c252467e90fa6a8c5b7e46fdbbaf205a9de18)
+![](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/042e47dd633f23a1ba859dab60113621-image.png)
 
 #### 0.1.3.2 ​**​🔦 第一步：关系描述生成（ERD）​**​
 
@@ -86,7 +86,7 @@ description: "| ​​项目​​   | ​​内容​​                       
     
     ​**​技术实现​**​：用GRU网络构建​**​时间推理链​**​（图3案例）
     
-    ![|750](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/c39ef937594830aa9cb1689a6f852d44-image.png?q-sign-algorithm=sha1&q-ak=AKID372nLgqocp7HZjfQzNcyGOMTN3Xp6FEA&q-sign-time=1758598213%3B2073958213&q-key-time=1758598213%3B2073958213&q-header-list=host&q-url-param-list=&q-signature=a9c7dabdeed1715658abb2613d7fa16e337f9e8c)
+    ![|750](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/c39ef937594830aa9cb1689a6f852d44-image.png)
     
 
 #### 0.1.3.4 ​**​🛡️ 第三步：防作弊机制​**​
@@ -120,7 +120,7 @@ description: "| ​​项目​​   | ​​内容​​                       
     
 2. ​**​资源刺客​**​：单卡A40训练，成本不到PPT模型的1/3（图6）
     
-    ![](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/a48f8ea2b4470cd5586a78d342da520b-image.png?q-sign-algorithm=sha1&q-ak=AKID372nLgqocp7HZjfQzNcyGOMTN3Xp6FEA&q-sign-time=1758598218%3B2073958218&q-key-time=1758598218%3B2073958218&q-header-list=host&q-url-param-list=&q-signature=cc16067df59716f2871cd338c818b720de9127ef)
+    ![](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/a48f8ea2b4470cd5586a78d342da520b-image.png)
     
 3. ​**​领域通吃​**​：一套方法增强7类主流TKG模型（RE-GCN/TiRGN等）
     

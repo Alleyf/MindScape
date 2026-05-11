@@ -31,7 +31,7 @@ description: "| 项目           | 内容                                       
         
     - 图嵌入法（图 1b）把动态图谱当静态处理，导致 LLM 误判（如把"中国援助"答成"美国援助"）
         
-        ![](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/4a3573344e8509d55e9becaa8c29843e-image.png?q-sign-algorithm=sha1&q-ak=AKID372nLgqocp7HZjfQzNcyGOMTN3Xp6FEA&q-sign-time=1759466237%3B2074826237&q-key-time=1759466237%3B2074826237&q-header-list=host&q-url-param-list=&q-signature=a6649c8b4b6c2578fa71449cf9186e2ca1355797)
+        ![](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/4a3573344e8509d55e9becaa8c29843e-image.png)
         
 2. ​**​跨模态对齐翻车​**​
     
@@ -56,7 +56,7 @@ z_r = RA(r)    # 关系适配器：关系向量→LLM语言token
     
 - 候选集：同样结构拼接候选实体 token
     
-![](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/fda842fa8f64c4c78f298fe6f9d691d5-image.png?q-sign-algorithm=sha1&q-ak=AKID372nLgqocp7HZjfQzNcyGOMTN3Xp6FEA&q-sign-time=1759466241%3B2074826241&q-key-time=1759466241%3B2074826241&q-header-list=host&q-url-param-list=&q-signature=411895a7c530cee9bb6e408296b223c74e8c12b8)
+![](https://hunyuan-plugin-private-1258344706.cos.ap-nanjing.myqcloud.com/pdf_youtu/img/fda842fa8f64c4c78f298fe6f9d691d5-image.png)
 
 ---
 #### 0.1.3.2 ​**​创新点 2：两阶段训练玄学​**​
