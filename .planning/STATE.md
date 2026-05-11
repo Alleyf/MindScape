@@ -1,31 +1,34 @@
 # Milestone State
 
-**Current Milestone:** v0.2 — README Demo GIF
+**Current Milestone:** v0.3 — AI 功能接入
 
 ## Task
 
-创建 README 演示 GIF，展示系统各项功能。
+使用 Claude API 完善 AI 功能：
+- 智能笔记摘要
+- 笔记间关联发现
+- AI 写作助手
 
 ## Status
 
-- [x] 分析需求和 GIF 制作方案
-- [x] 更新 README 引用 GIF（public/images/demo.gif）
-- [x] 录制 GIF 并放置到 public/images/demo.gif
-- [ ] 提交 GIF 文件
+- [x] 需求分析完成
+- [ ] 制定详细计划
+- [ ] 实现 AI 服务层
+- [ ] 智能摘要功能
+- [ ] 关联发现功能
+- [ ] AI 写作助手
+- [ ] 测试与部署
+
+## AI Provider
+
+Claude API (Anthropic)
+
+## Tech Requirements
+
+- Claude API 集成
+- 前端缓存（避免重复调用）
+- 错误处理和降级策略
 
 ## Notes
 
-GIF 需展示的核心功能：
-- 首页粒子背景 + 导航
-- 笔记列表时间线视图
-- 博文阅读（TOC 跟随、沉浸模式、导出工具）
-- 知识图谱交互
-- 学习路线流程图
-- 学习路线切换
-- 资源库浏览
-- 主题切换（明/暗）
-
-推荐录制工具：
-- Windows: ScreenToGif (免费, github.com/NickvisionApps/ScreenToGif)
-- macOS: QuickTime → 文件→导出为 GIF
-- 也可使用 licecap (Windows/Mac)
+待定...
