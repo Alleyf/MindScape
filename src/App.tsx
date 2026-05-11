@@ -241,7 +241,7 @@ function extractTableOfContents(content: string): TocItem[] {
       const match = line.match(/^(#{1,3})\s+(.+)$/);
       if (!match) return null;
 
-      const text = match[2].replace(/[#*_`[\]()]/g, '').trim();
+      const text = match[2].trim();
       return {
         id: slugifyHeading(text),
         text,
