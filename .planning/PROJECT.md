@@ -21,7 +21,7 @@ AI-Native 创意知识空间，基于 React + Vite + TypeScript 构建。
 - 沉浸式阅读模式
 - Markdown/PDF 导出
 
-### v0.2 — Demo GIF (current)
+### v0.2 — Demo GIF ✓ (2026-05-12)
 - 为 README 添加演示 GIF，展示系统各项功能
 
 ## Tech Stack
