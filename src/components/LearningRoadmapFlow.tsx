@@ -36,20 +36,36 @@ interface RoadmapNodeData extends Record<string, unknown> {
   url?: string;
 }
 
+function getHostname(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url.replace(/^https?:\/\//, '').split('/')[0];
+  }
+}
+
 interface LearningRoadmapFlowProps {
   route: LearningRoute;
 }
 
 function RoadmapCardNode({ data }: NodeProps<Node<RoadmapNodeData>>) {
+  const hostname = data.url ? getHostname(data.url) : '';
+  const faviconUrl = hostname ? `https://favicon.yandex.net/favicon/${hostname}` : '';
+
   const card = (
     <div className="flow-card" style={{ '--node-accent': data.accent } as React.CSSProperties}>
       <Handle type="target" position={Position.Left} />
-      <div className="flow-card-top">
-        <span>{data.level}</span>
-        <strong>{data.label}</strong>
+      <div className="flow-card-cover">
+        <div className="flow-card-favicon-wrap">
+          <img src={faviconUrl} alt="" className="flow-card-favicon" loading="lazy" />
+        </div>
+        <span className="flow-card-level">{data.level}</span>
       </div>
-      {data.type && <small>{data.type}</small>}
-      <p>{data.subtitle}</p>
+      <div className="flow-card-body">
+        <strong className="flow-card-title">{data.label}</strong>
+        {data.type && <span className="flow-card-type">{data.type}</span>}
+        <p className="flow-card-desc">{hostname || data.subtitle}</p>
+      </div>
       <Handle type="source" position={Position.Right} />
     </div>
   );
