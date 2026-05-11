@@ -12,6 +12,7 @@ import { LearningRoadmapFlow, type LearningRoute } from './components/LearningRo
 import { NoteGraph } from './components/NoteGraph';
 import { NoteGraphSidebar } from './components/NoteGraphSidebar';
 import { FloatingTools } from './components/FloatingTools';
+import { ColorCustomizer } from './components/ColorCustomizer';
 import { getNotes, getNoteBySlug, getRandomNote } from './utils/noteLoader';
 import { Note } from './utils/noteLoader';
 import { RESOURCE_CATEGORIES, LEARNING_ROUTES, MICROLINK_API_URL, FAVICON_YANDEX_URL } from './config/resources';
@@ -1842,6 +1843,7 @@ function App() {
           </div>
         </footer>
         <FloatingTools />
+        <ColorCustomizer />
         <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
       </div>
     </Router>
