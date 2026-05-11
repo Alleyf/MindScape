@@ -49,10 +49,10 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
             <p className="leading-relaxed mb-4" {...props} />
           ),
           ul: ({node, ...props}) => (
-            <ul className="list-disc list-inside space-y-2 my-4" {...props} />
+            <ul className="list-disc list-outside space-y-2 my-4 pl-6" {...props} />
           ),
           ol: ({node, ...props}) => (
-            <ol className="list-decimal list-inside space-y-2 my-4" {...props} />
+            <ol className="list-decimal list-outside space-y-2 my-4 pl-6" {...props} />
           ),
           li: ({node, ...props}) => (
             <li className="pl-2" {...props} />
@@ -60,18 +60,14 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
           blockquote: ({node, ...props}) => (
             <blockquote className="border-l-4 border-pink-500 pl-4 italic my-4 bg-white/5 py-2 pr-4 rounded-r-lg" {...props} />
           ),
-          code: ({node, inline, ...props}: any) => (
-            inline ? (
-              <code className="bg-purple-900/50 px-2 py-1 rounded text-pink-300 text-sm whitespace-nowrap" {...props} />
-            ) : (
-              <code className="block bg-gray-900/80 p-4 rounded-lg overflow-x-auto text-sm text-green-300 font-mono" {...props} />
-            )
+          code: ({node, ...props}) => (
+            <code className="markdown-code" {...props} />
           ),
           pre: ({node, ...props}) => (
             <pre className="my-4" {...props} />
           ),
           a: ({node, ...props}) => (
-            <a className="text-blue-400 hover:text-blue-300 underline decoration-blue-400/50 hover:decoration-blue-300 transition-all" {...props} />
+            <a target="_blank" rel="noreferrer" className="text-blue-400 hover:text-blue-300 underline decoration-blue-400/50 hover:decoration-blue-300 transition-all" {...props} />
           ),
           strong: ({node, ...props}) => (
             <strong className="font-bold" {...props} />

@@ -5,7 +5,6 @@ import { ParticleField } from './components/ParticleField';
 import { MouseGlow } from './components/MouseGlow';
 import { NoteCard } from './components/NoteCard';
 import { AIPanel } from './components/AIPanel';
-import { RandomWalkButton } from './components/RandomWalkButton';
 import { MarkdownContent } from './components/MarkdownContent';
 import { ThemeToggle } from './components/ThemeToggle';
 import { LearningRoadmapFlow, type LearningRoute } from './components/LearningRoadmapFlow';
@@ -17,6 +16,12 @@ interface TocItem {
   id: string;
   text: string;
   level: number;
+}
+
+interface ReferenceLink {
+  title: string;
+  url: string;
+  domain: string;
 }
 
 function slugifyHeading(text: string): string {
@@ -48,16 +53,64 @@ function getAllTags(notes: Note[]): string[] {
   return Array.from(new Set(notes.flatMap((note) => note.tags))).sort((a, b) => a.localeCompare(b, 'zh-CN'));
 }
 
+function getRelatedNotes(currentNote: Note, notes: Note[], limit = 3): Note[] {
+  return notes
+    .filter((note) => note.slug !== currentNote.slug)
+    .map((note) => ({
+      note,
+      score: note.tags.filter((tag) => currentNote.tags.includes(tag)).length,
+    }))
+    .sort((a, b) => b.score - a.score || new Date(b.note.createdAt).getTime() - new Date(a.note.createdAt).getTime())
+    .slice(0, limit)
+    .map((item) => item.note);
+}
+
+function extractReferenceLinks(content: string): ReferenceLink[] {
+  const links = new Map<string, ReferenceLink>();
+  const linkPattern = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
+  let match: RegExpExecArray | null;
+
+  while ((match = linkPattern.exec(content)) !== null) {
+    const [, rawTitle, rawUrl] = match;
+    const url = rawUrl.trim();
+    if (links.has(url)) continue;
+
+    let domain = url;
+    try {
+      domain = new URL(url).hostname.replace(/^www\./, '');
+    } catch {
+      domain = url.replace(/^https?:\/\//, '').split('/')[0];
+    }
+
+    links.set(url, {
+      title: rawTitle.replace(/[`*_]/g, '').trim(),
+      url,
+      domain,
+    });
+  }
+
+  return Array.from(links.values());
+}
+
 const learningRoutes: LearningRoute[] = [
   {
     id: 'ai-coding',
     title: 'AI Coding 入门到实战',
     summary: '从基础扫盲、工具安装到 Spec / GSD 工作流，适合想系统建立 AI 编程习惯的开发者。',
-    accent: '#4f46e5',
+    accent: '#d97757',
     resources: [
-      { type: '网址', title: 'AI 编程核心概念', url: 'https://www.yuntuagi.cn/series/ai-literacy' },
+      { type: '扫盲', title: '云途 AGI', url: 'https://www.yuntuagi.cn/series/ai-literacy' },
+      { type: '扫盲', title: 'JavaGuide AI', url: 'https://javaguide.cn/ai/' },
+      { type: '工具', title: 'Claude Code', url: 'https://code.claude.com/docs/en/overview' },
       { type: '工具', title: 'OpenAI Codex', url: 'https://github.com/openai/codex' },
+      { type: '工具', title: 'CC-Switch', url: 'https://github.com/farion1231/cc-switch' },
+      { type: '生态', title: 'OpenClaw', url: 'https://openclaw.ai/' },
+      { type: '生态', title: 'Hermes Agent', url: 'https://hermesagent.org.cn/' },
+      { type: '技能', title: 'SkillHub', url: 'https://skillhub.cn/' },
       { type: '方法论', title: 'Superpowers', url: 'https://github.com/obra/superpowers' },
+      { type: '方法论', title: 'Spec Kit', url: 'https://github.github.com/spec-kit/' },
+      { type: '方法论', title: 'OpenSpec', url: 'https://openspec.dev/' },
+      { type: '方法论', title: 'GSD 2', url: 'https://github.com/gsd-build/gsd-2' },
     ],
     steps: ['概念扫盲', '安装主力工具', '小任务练习', 'Plan 模式', 'Spec 工作流', '项目验证'],
   },
@@ -65,7 +118,7 @@ const learningRoutes: LearningRoute[] = [
     id: 'frontend',
     title: '前端工程成长路线',
     summary: '围绕 React、工程化、设计系统和 AI 辅助开发，建立可交付的前端能力。',
-    accent: '#0f766e',
+    accent: '#6f7669',
     resources: [
       { type: '博文', title: 'React Hooks 深度探索', url: '/note/react-hooks' },
       { type: '视频', title: '组件设计与状态管理', url: 'https://www.bilibili.com/' },
@@ -77,7 +130,7 @@ const learningRoutes: LearningRoute[] = [
     id: 'knowledge',
     title: '个人知识管理路线',
     summary: '从数字花园、标签组织到长期复盘，让知识在写作和项目中持续生长。',
-    accent: '#c2410c',
+    accent: '#8f4f32',
     resources: [
       { type: '博文', title: '欢迎来到 MindScape', url: '/note/welcome' },
       { type: '博文', title: 'AI Coding 学习清单', url: '/note/ai-coding-learning-checklist' },
@@ -106,6 +159,21 @@ function MindScapeLogo({ compact = false }: { compact?: boolean }) {
       </svg>
       {!compact && <span className="brand-word">MindScape</span>}
     </span>
+  );
+}
+
+function NavIcon({ name }: { name: 'notes' | 'tags' | 'roadmap' | 'about' }) {
+  const paths = {
+    notes: 'M6 4h9a3 3 0 0 1 3 3v13H8a2 2 0 0 1-2-2V4Zm3 4h6M9 12h5',
+    tags: 'M4 7V4h3l10.5 10.5a2.1 2.1 0 0 1 0 3l-2 2a2.1 2.1 0 0 1-3 0L4 11V7Zm3 .5h.01',
+    roadmap: 'M4 17c3-7 6 2 9-5s5-1 7-6M5 17h.01M13 12h.01M20 6h.01',
+    about: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-10v6M12 7h.01',
+  };
+
+  return (
+    <svg className="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d={paths[name]} />
+    </svg>
   );
 }
 
@@ -205,7 +273,7 @@ function HomePage() {
           </div>
           
           <div className="text-center mt-12">
-            <Link 
+            <Link
               to="/notes"
               className="theme-outline-button"
             >
@@ -311,11 +379,59 @@ function NotesPage() {
   );
 }
 
+function TagsPage() {
+  const notes = getNotes();
+  const tags = getAllTags(notes);
+
+  return (
+    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
+      <div className="max-w-6xl mx-auto">
+        <motion.h1
+          className="text-5xl font-bold mb-4 gradient-text"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          标签分类
+        </motion.h1>
+        <p className="theme-muted mb-10 text-lg">
+          按主题浏览 {notes.length} 篇笔记中的 {tags.length} 个标签。
+        </p>
+
+        <div className="tag-category-grid">
+          {tags.map((tag) => {
+            const taggedNotes = notes.filter((note) => note.tags.includes(tag));
+            return (
+              <section key={tag} className="tag-category-card">
+                <div className="tag-category-header">
+                  <h2>#{tag}</h2>
+                  <span>{taggedNotes.length}</span>
+                </div>
+                <div className="space-y-2">
+                  {taggedNotes.map((note) => (
+                    <Link key={note.slug} to={`/note/${note.slug}`} className="tag-category-link">
+                      {note.title}
+                    </Link>
+                  ))}
+                </div>
+                <Link to={`/notes?tag=${encodeURIComponent(tag)}`} className="tag-category-more">
+                  查看全部
+                </Link>
+              </section>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function NotePage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const note = useMemo(() => (slug ? getNoteBySlug(slug) : null), [slug]);
   const toc = useMemo(() => (note ? extractTableOfContents(note.content) : []), [note]);
+  const references = useMemo(() => (note ? extractReferenceLinks(note.content) : []), [note]);
+  const relatedNotes = useMemo(() => (note ? getRelatedNotes(note, getNotes()) : []), [note]);
   const [randomNote, setRandomNote] = useState<Note | null>(null);
   
   useEffect(() => {
@@ -373,7 +489,7 @@ function NotePage() {
           animate={{ opacity: 1, x: 0 }}
           className="mb-8"
         >
-          <Link 
+          <Link
             to="/notes"
             className="inline-flex items-center theme-link transition-colors text-sm"
           >
@@ -449,27 +565,50 @@ function NotePage() {
           </div>
         </motion.article>
         
-        {/* Random walk button */}
-        {randomNote && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="mt-12"
-          >
-            <RandomWalkButton onClick={() => navigate(`/note/${randomNote.slug}`)} />
-          </motion.div>
+        {references.length > 0 && (
+          <section className="reference-section">
+            <div className="reference-section-header">
+              <p>Reference</p>
+              <h2>参考文档</h2>
+            </div>
+            <div className="reference-grid">
+              {references.map((reference) => (
+                <a
+                  key={reference.url}
+                  href={reference.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="reference-card"
+                >
+                  <span>{reference.domain}</span>
+                  <strong>{reference.title}</strong>
+                  <small>{reference.url}</small>
+                </a>
+              ))}
+            </div>
+          </section>
         )}
 
         {/* Mobile AI Panel */}
         <div className="lg:hidden mt-12 mb-8">
-          <AIPanel note={note} isMobile={true} />
+          <AIPanel
+            note={note}
+            isMobile={true}
+            randomNote={randomNote}
+            relatedNotes={relatedNotes}
+            onRandomWalk={() => randomNote && navigate(`/note/${randomNote.slug}`)}
+          />
         </div>
       </main>
       
       {/* Desktop AI Panel */}
       <div className="hidden xl:block">
-        <AIPanel note={note} />
+        <AIPanel
+          note={note}
+          randomNote={randomNote}
+          relatedNotes={relatedNotes}
+          onRandomWalk={() => randomNote && navigate(`/note/${randomNote.slug}`)}
+        />
       </div>
     </div>
   );
@@ -614,14 +753,22 @@ function App() {
             
             <div className="flex items-center gap-4 md:gap-8">
               <Link to="/notes" className="nav-link group">
+                <NavIcon name="notes" />
                 笔记
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
+              <Link to="/tags" className="nav-link group">
+                <NavIcon name="tags" />
+                标签
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
+              </Link>
               <Link to="/roadmap" className="nav-link group">
+                <NavIcon name="roadmap" />
                 学习路线
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
               <Link to="/about" className="nav-link group">
+                <NavIcon name="about" />
                 关于
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
@@ -634,6 +781,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/notes" element={<NotesPage />} />
+          <Route path="/tags" element={<TagsPage />} />
           <Route path="/note/:slug" element={<NotePage />} />
           <Route path="/roadmap" element={<RoadmapPage />} />
           <Route path="/about" element={<AboutPage />} />

@@ -33,6 +33,8 @@ interface RoadmapNodeData extends Record<string, unknown> {
   subtitle: string;
   accent: string;
   level: number;
+  type?: string;
+  url?: string;
 }
 
 interface LearningRoadmapFlowProps {
@@ -40,16 +42,25 @@ interface LearningRoadmapFlowProps {
 }
 
 function RoadmapCardNode({ data }: NodeProps<Node<RoadmapNodeData>>) {
-  return (
+  const card = (
     <div className="flow-card" style={{ '--node-accent': data.accent } as React.CSSProperties}>
       <Handle type="target" position={Position.Left} />
       <div className="flow-card-top">
         <span>{data.level}</span>
         <strong>{data.label}</strong>
       </div>
+      {data.type && <small>{data.type}</small>}
       <p>{data.subtitle}</p>
       <Handle type="source" position={Position.Right} />
     </div>
+  );
+
+  if (!data.url) return card;
+
+  return (
+    <a href={data.url} target={data.url.startsWith('/') ? undefined : '_blank'} rel={data.url.startsWith('/') ? undefined : 'noreferrer'} className="flow-card-link">
+      {card}
+    </a>
   );
 }
 
@@ -58,17 +69,33 @@ const nodeTypes = {
 };
 
 function buildFlow(route: LearningRoute): { nodes: Node<RoadmapNodeData>[]; edges: Edge[] } {
-  const nodes = route.steps.map((step, index) => {
+  const flowItems = route.resources.length > 0
+    ? route.resources.map((resource) => ({
+        label: resource.title,
+        subtitle: resource.url.replace(/^https?:\/\//, ''),
+        type: resource.type,
+        url: resource.url,
+      }))
+    : route.steps.map((step) => ({
+        label: step,
+        subtitle: '完成后进入下一站',
+        type: '阶段',
+        url: '',
+      }));
+
+  const nodes = flowItems.map((item, index) => {
     const rowOffset = index % 2 === 0 ? 0 : 92;
-    const y = index === 0 || index === route.steps.length - 1 ? 120 : rowOffset + 70;
+    const y = index === 0 || index === flowItems.length - 1 ? 120 : rowOffset + 70;
 
     return {
       id: `${route.id}-${index}`,
       type: 'roadmapCard',
-      position: { x: index * 250, y },
+      position: { x: index * 235, y },
       data: {
-        label: step,
-        subtitle: index === 0 ? '从这里开始' : index === route.steps.length - 1 ? '形成稳定能力' : '完成后进入下一站',
+        label: item.label,
+        subtitle: index === 0 ? '从这里开始' : item.subtitle,
+        type: item.type,
+        url: item.url,
         accent: route.accent,
         level: index + 1,
       },
@@ -76,7 +103,7 @@ function buildFlow(route: LearningRoute): { nodes: Node<RoadmapNodeData>[]; edge
     };
   });
 
-  const edges = route.steps.slice(0, -1).map((_, index) => ({
+  const edges = flowItems.slice(0, -1).map((_, index) => ({
     id: `${route.id}-edge-${index}`,
     source: `${route.id}-${index}`,
     target: `${route.id}-${index + 1}`,
@@ -107,13 +134,19 @@ export function LearningRoadmapFlow({ route }: LearningRoadmapFlowProps) {
           elementsSelectable={false}
           panOnScroll
           colorMode="light"
+          proOptions={{ hideAttribution: true }}
         >
           <Background gap={18} size={1} color="var(--flow-dot)" />
           <MiniMap
             pannable
             zoomable
+            position="bottom-right"
             nodeColor={() => route.accent}
-            maskColor="rgba(20, 20, 19, 0.08)"
+            nodeStrokeColor={() => route.accent}
+            nodeBorderRadius={6}
+            maskColor="rgba(250, 249, 245, 0.62)"
+            bgColor="var(--surface-strong)"
+            className="roadmap-minimap"
           />
           <Controls showInteractive={false} />
         </ReactFlow>
@@ -121,4 +154,3 @@ export function LearningRoadmapFlow({ route }: LearningRoadmapFlowProps) {
     </ReactFlowProvider>
   );
 }
-
