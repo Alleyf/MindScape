@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getNoteBySlug } from '../utils/noteLoader';
 
@@ -14,6 +14,8 @@ export function FloatingTools() {
   const [fontSize, setFontSize] = useState<FontSize>('normal');
   const [notice, setNotice] = useState('');
   const [immersive, setImmersive] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
 
   const currentNote = useMemo(() => {
@@ -50,6 +52,17 @@ export function FloatingTools() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [immersive]);
+
+  useEffect(() => {
+    if (!moreOpen) return;
+    const onClick = (e: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setMoreOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onClick);
+    return () => document.removeEventListener('mousedown', onClick);
+  }, [moreOpen]);
 
   const cycleFontSize = () => {
     const next = fontSizes[(fontSizes.indexOf(fontSize) + 1) % fontSizes.length];
@@ -331,30 +344,46 @@ export function FloatingTools() {
         <button type="button" onClick={scrollToBottom} title="回到底部" aria-label="回到底部">
           <svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
         </button>
-        <button type="button" onClick={sharePage} title="分享当前页面" aria-label="分享当前页面">
-          <svg viewBox="0 0 24 24"><path d="M18 8a3 3 0 1 0-2.8-4M6 14a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm12-2a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM8.7 15.4l6.6-3.8M8.7 18.6l6.6 3.8" /></svg>
-        </button>
-        <button type="button" onClick={toggleFullscreen} title="全屏" aria-label="全屏">
-          <svg viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5" /></svg>
-        </button>
         <button type="button" onClick={cycleFontSize} title="切换字体大小" aria-label="切换字体大小">
           <span>{fontSize === 'normal' ? 'A' : fontSize === 'large' ? 'A+' : 'A++'}</span>
         </button>
 
-        {currentNote && (
-          <>
-            <div className="floating-tools-sep" />
-            <button type="button" onClick={downloadMarkdown} title="导出 Markdown" aria-label="导出 Markdown">
-              <svg viewBox="0 0 24 24"><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 10l5 5 5-5M12 15V3" /></svg>
-            </button>
-            <button type="button" onClick={exportPdf} title="导出 PDF" aria-label="导出 PDF">
-              <svg viewBox="0 0 24 24"><path d="M6 9V4h12v5M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v6H6v-6Z" /></svg>
-            </button>
-            <button type="button" onClick={() => setImmersive(v => !v)} title="沉浸模式" aria-label="沉浸模式">
-              <svg viewBox="0 0 24 24"><path d="M21 16v-2a5 5 0 0 0-5-5H8a5 5 0 0 0-5 5v2M3 21h18M12 9V3m-3 3 3-3 3 3"/></svg>
-            </button>
-          </>
-        )}
+        <div className="floating-tools-sep" />
+
+        <div className="floating-more-wrap" ref={moreRef}>
+          <button type="button" onClick={() => setMoreOpen(v => !v)} title="更多工具" aria-label="更多工具" className={moreOpen ? 'active' : ''}>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg>
+          </button>
+
+          {moreOpen && (
+            <div className="floating-popover">
+              <button type="button" onClick={() => { sharePage(); setMoreOpen(false); }} title="分享">
+                <svg viewBox="0 0 24 24"><path d="M18 8a3 3 0 1 0-2.8-4M6 14a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm12-2a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM8.7 15.4l6.6-3.8M8.7 18.6l6.6 3.8" /></svg>
+                <span>分享</span>
+              </button>
+              <button type="button" onClick={() => { toggleFullscreen(); setMoreOpen(false); }} title="全屏">
+                <svg viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5" /></svg>
+                <span>全屏</span>
+              </button>
+              {currentNote && (
+                <>
+                  <button type="button" onClick={() => { downloadMarkdown(); setMoreOpen(false); }} title="导出 Markdown">
+                    <svg viewBox="0 0 24 24"><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 10l5 5 5-5M12 15V3" /></svg>
+                    <span>Markdown</span>
+                  </button>
+                  <button type="button" onClick={() => { exportPdf(); setMoreOpen(false); }} title="导出 PDF">
+                    <svg viewBox="0 0 24 24"><path d="M6 9V4h12v5M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v6H6v-6Z" /></svg>
+                    <span>PDF</span>
+                  </button>
+                  <button type="button" onClick={() => { setImmersive(true); setMoreOpen(false); }} title="沉浸模式">
+                    <svg viewBox="0 0 24 24"><path d="M21 16v-2a5 5 0 0 0-5-5H8a5 5 0 0 0-5 5v2M3 21h18M12 9V3m-3 3 3-3 3 3"/></svg>
+                    <span>沉浸</span>
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {immersive && (

@@ -1373,6 +1373,56 @@ html[data-font-size='xlarge'] .markdown-content li {
   margin: 0.15rem auto;
 }
 
+.floating-more-wrap {
+  position: relative;
+}
+
+.floating-more-wrap button.active {
+  background: rgba(217, 119, 87, 0.14);
+  color: var(--nebula-accent);
+}
+
+.floating-popover {
+  position: absolute;
+  right: calc(100% + 0.6rem);
+  bottom: 0;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 8.5rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 0.4rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.floating-popover button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.floating-popover button:hover {
+  background: rgba(217, 119, 87, 0.12);
+  color: var(--nebula-accent);
+}
+
+.floating-popover button svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
 .immersive-exit-btn {
   position: fixed;
   top: 1rem;
