@@ -100,3 +100,12 @@ export const CLAUDE_API_CONFIG = {
   messagesEndpoint: '/messages',
   apiVersion: '2023-06-01',
 } as const;
+
+// Environment-based configuration
+export function getAIConfig() {
+  return {
+    apiKey: import.meta.env.VITE_CLAUDE_API_KEY || '',
+    baseUrl: import.meta.env.VITE_AI_API_BASE_URL || CLAUDE_API_CONFIG.baseUrl,
+    model: import.meta.env.VITE_AI_MODEL || AI_MODELS.SONNET,
+  };
+}

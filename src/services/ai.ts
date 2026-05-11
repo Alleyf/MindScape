@@ -10,6 +10,7 @@ import {
   AIError,
   AIErrorType,
   SummaryResult,
+  getAIConfig,
 } from '../types/ai';
 import { AICache } from './cache';
 import { createCacheKey } from '../utils/hash';
@@ -94,11 +95,13 @@ class RateLimitQueue {
   }
 
   private async executeRequest(request: ClaudeRequest): Promise<string> {
-    const response = await fetch(CLAUDE_API_CONFIG.baseUrl + CLAUDE_API_CONFIG.messagesEndpoint, {
+    const config = getAIConfig();
+
+    const response = await fetch(`${config.baseUrl}${CLAUDE_API_CONFIG.messagesEndpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': this.getApiKey(),
+        'x-api-key': config.apiKey,
         'anthropic-version': CLAUDE_API_CONFIG.apiVersion,
       },
       body: JSON.stringify(request),
@@ -119,7 +122,7 @@ class RateLimitQueue {
   }
 
   private getApiKey(): string {
-    const key = import.meta.env.VITE_CLAUDE_API_KEY;
+    const key = getAIConfig().apiKey;
     if (!key) {
       throw new AIError(AIErrorType.API_KEY_MISSING, 'Claude API key is not configured. Please set VITE_CLAUDE_API_KEY in your .env file.');
     }
@@ -175,7 +178,14 @@ export class AIClient {
    * Check if API key is configured
    */
   isConfigured(): boolean {
-    return !!import.meta.env.VITE_CLAUDE_API_KEY;
+    return !!getAIConfig().apiKey;
+  }
+
+  /**
+   * Get current AI config
+   */
+  getConfig() {
+    return getAIConfig();
   }
 
   /**
@@ -241,8 +251,9 @@ export class AIClient {
     content: string,
     operation: keyof typeof SYSTEM_PROMPTS
   ): Promise<string> {
+    const config = getAIConfig();
     const request: ClaudeRequest = {
-      model: this.modelConfig.model,
+      model: config.model,
       max_tokens: this.modelConfig.maxTokens,
       messages: [{ role: 'user', content }],
       system: SYSTEM_PROMPTS[operation],
