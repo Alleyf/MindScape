@@ -109,9 +109,9 @@ function buildFlow(route: LearningRoute): { nodes: Node<RoadmapNodeData>[]; edge
     return groups;
   }, []);
 
-  const rowGap = 138;
-  const columnGap = 330;
-  const centerY = 245;
+  const rowGap = 170;
+  const columnGap = 400;
+  const centerY = 290;
   const nodes: Node<RoadmapNodeData>[] = groupedItems.flatMap((group, groupIndex) => {
     const columnHeight = (group.items.length - 1) * rowGap;
     const startY = Math.max(30, centerY - columnHeight / 2);

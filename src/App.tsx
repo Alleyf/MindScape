@@ -269,7 +269,7 @@ function buildTocTree(items: TocItem[]): TocNode[] {
   return tree;
 }
 
-function TocTree({ nodes, depth = 0 }: { nodes: TocNode[]; depth?: number }) {
+function TocTree({ nodes, depth = 0, activeId }: { nodes: TocNode[]; depth?: number; activeId?: string }) {
   if (nodes.length === 0) return null;
   return (
     <ul className={`toc-tree${depth === 0 ? ' space-y-1' : ''}`}>
@@ -277,11 +277,11 @@ function TocTree({ nodes, depth = 0 }: { nodes: TocNode[]; depth?: number }) {
         <li key={node.item.id + node.item.text} className="toc-tree-item">
           <a
             href={`#${node.item.id}`}
-            className={`toc-link${node.item.level === 3 ? ' toc-link-h3' : ''}`}
+            className={`toc-link${node.item.level === 3 ? ' toc-link-h3' : ''}${activeId === node.item.id ? ' toc-link-active' : ''}`}
           >
             {node.item.text}
           </a>
-          {node.children.length > 0 && <TocTree nodes={node.children} depth={depth + 1} />}
+          {node.children.length > 0 && <TocTree nodes={node.children} depth={depth + 1} activeId={activeId} />}
         </li>
       ))}
     </ul>
@@ -1045,6 +1045,37 @@ function NotePage() {
   const toc = useMemo(() => (note ? extractTableOfContents(note.content) : []), [note]);
   const references = useMemo(() => (note ? extractReferenceLinks(note.content) : []), [note]);
   const relatedNotes = useMemo(() => (note ? getRelatedNotes(note, allNotes, 4) : []), [note, allNotes]);
+  const [activeHeadingId, setActiveHeadingId] = useState<string>('');
+
+  // Scroll-spy: track which heading is visible via IntersectionObserver
+  useEffect(() => {
+    if (toc.length === 0) return;
+    const headingIds = toc.map(h => h.id);
+    const observers: IntersectionObserver[] = [];
+
+    const callback: IntersectionObserverCallback = (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          setActiveHeadingId(entry.target.id);
+          break;
+        }
+      }
+    };
+
+    const observer = new IntersectionObserver(callback, {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0,
+    });
+
+    headingIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    observers.push(observer);
+    return () => observers.forEach(o => o.disconnect());
+  }, [toc]);
+
   const adjacentNotes = useMemo(() => {
     if (!note) return { previous: null as Note | null, next: null as Note | null };
     const index = allNotes.findIndex((item) => item.slug === note.slug);
@@ -1094,7 +1125,7 @@ function NotePage() {
           <p className="text-sm font-semibold theme-text mb-4">文章目录</p>
             {toc.length > 0 ? (
               <nav>
-                <TocTree nodes={buildTocTree(toc)} />
+                <TocTree nodes={buildTocTree(toc)} activeId={activeHeadingId} />
               </nav>
             ) : (
               <p className="text-sm theme-subtle">这篇文章暂无小标题。</p>
@@ -1123,7 +1154,7 @@ function NotePage() {
           <details className="mobile-toc">
             <summary>文章目录</summary>
             <nav className="mt-4">
-              <TocTree nodes={buildTocTree(toc)} />
+              <TocTree nodes={buildTocTree(toc)} activeId={activeHeadingId} />
             </nav>
           </details>
         </div>
