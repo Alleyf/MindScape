@@ -39,6 +39,33 @@ interface ReferencePreviewData {
   hostname: string;
 }
 
+function formatDateTime(dateStr: string): string {
+  const d = new Date(dateStr);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mm = String(d.getMinutes()).padStart(2, '0');
+  const ss = String(d.getSeconds()).padStart(2, '0');
+  return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
+}
+
+function relativeTime(dateStr: string): string {
+  const now = Date.now();
+  const past = new Date(dateStr).getTime();
+  const diffMs = now - past;
+  if (diffMs < 0) return '刚刚';
+  const totalMinutes = Math.floor(diffMs / 60000);
+  const days = Math.floor(totalMinutes / 1440);
+  const hours = Math.floor((totalMinutes % 1440) / 60);
+  const minutes = totalMinutes % 60;
+  const parts: string[] = [];
+  if (days > 0) parts.push(`${days} 天`);
+  if (hours > 0) parts.push(`${hours} 小时`);
+  if (minutes > 0 || parts.length === 0) parts.push(`${minutes} 分钟`);
+  return `${parts.join(' ')}前`;
+}
+
 function isImageUrl(url: string): boolean {
   const cleanUrl = url.split('#')[0].split('?')[0].toLowerCase();
   return /\.(avif|gif|jpe?g|png|svg|webp)$/.test(cleanUrl);
@@ -494,7 +521,7 @@ function HomePage() {
             {heroTags.map((tag, index) => (
               <Link
                 key={tag}
-                to={`/notes?tag=${encodeURIComponent(tag)}`}
+                to={`/notes?tags=${encodeURIComponent(tag)}`}
                 className={`home-orbit-node node-${index + 1}`}
               >
                 #{tag}
@@ -542,7 +569,7 @@ function HomePage() {
               >
                 <div className="home-feature-top">
                   <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-                  <span>{featuredNote.createdAt}</span>
+                  <span>{formatDateTime(featuredNote.createdAt)}</span>
                   <span>{featuredNote.personality}</span>
                 </div>
                 <h3>{featuredNote.title}</h3>
@@ -647,24 +674,38 @@ function HomePage() {
 function NotesPage() {
   const notes = getNotes();
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTag = searchParams.get('tag') || 'all';
   const tags = useMemo(() => getAllTags(notes), [notes]);
-  const filteredNotes = activeTag === 'all'
-    ? notes
-    : notes.filter((note) => note.tags.includes(activeTag));
+  const [viewMode, setViewMode] = useState<'grid' | 'timeline'>('grid');
 
-  const selectTag = (tag: string) => {
-    if (tag === 'all') {
+  const selectedTags = useMemo(() => {
+    const raw = searchParams.get('tags');
+    return raw ? raw.split(',').filter(Boolean) : [];
+  }, [searchParams]);
+
+  const hasFilter = selectedTags.length > 0;
+
+  const filteredNotes = useMemo(() => {
+    if (!hasFilter) return notes;
+    return notes.filter((note) => selectedTags.some((t) => note.tags.includes(t)));
+  }, [notes, selectedTags, hasFilter]);
+
+  const toggleTag = (tag: string) => {
+    const current = selectedTags.includes(tag)
+      ? selectedTags.filter((t) => t !== tag)
+      : [...selectedTags, tag];
+    if (current.length === 0) {
       setSearchParams({});
     } else {
-      setSearchParams({ tag });
+      setSearchParams({ tags: current.join(',') });
     }
   };
-  
+
+  const clearFilter = () => setSearchParams({});
+
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
-        <motion.h1 
+        <motion.h1
           className="text-5xl font-bold mb-4 gradient-text"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -672,39 +713,58 @@ function NotesPage() {
           所有笔记
         </motion.h1>
         <p className="theme-muted mb-8 text-lg">
-          {activeTag === 'all' ? `共 ${notes.length} 篇思维记录` : `#${activeTag} 下有 ${filteredNotes.length} 篇记录`}
+          {hasFilter
+            ? `筛选 ${selectedTags.map(t => `#${t}`).join('、')} — 共 ${filteredNotes.length} 篇`
+            : `共 ${notes.length} 篇思维记录`}
         </p>
 
         <div className="mb-10">
           <div className="flex items-center justify-between gap-4 mb-4">
             <h2 className="text-lg font-semibold theme-text">标签导航</h2>
-            {activeTag !== 'all' && (
-              <button
-                type="button"
-                onClick={() => selectTag('all')}
-                className="text-sm theme-link"
-              >
-                清除筛选
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              {hasFilter && (
+                <button
+                  type="button"
+                  onClick={clearFilter}
+                  className="text-sm theme-link"
+                >
+                  清除筛选
+                </button>
+              )}
+              <div className="notes-view-toggle" role="radiogroup" aria-label="显示模式">
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={viewMode === 'grid'}
+                  onClick={() => setViewMode('grid')}
+                  className={viewMode === 'grid' ? 'notes-view-btn notes-view-active' : 'notes-view-btn'}
+                  title="卡片视图"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={viewMode === 'timeline'}
+                  onClick={() => setViewMode('timeline')}
+                  className={viewMode === 'timeline' ? 'notes-view-btn notes-view-active' : 'notes-view-btn'}
+                  title="时间线视图"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/><circle cx="6" cy="12" r="1.5" fill="currentColor"/><circle cx="6" cy="18" r="1.5" fill="currentColor"/></svg>
+                </button>
+              </div>
+            </div>
           </div>
           <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => selectTag('all')}
-              className={activeTag === 'all' ? 'tag-filter-active' : 'tag-filter'}
-            >
-              全部
-              <span>{notes.length}</span>
-            </button>
             {tags.map((tag) => {
               const count = notes.filter((note) => note.tags.includes(tag)).length;
+              const active = selectedTags.includes(tag);
               return (
                 <button
                   key={tag}
                   type="button"
-                  onClick={() => selectTag(tag)}
-                  className={activeTag === tag ? 'tag-filter-active' : 'tag-filter'}
+                  onClick={() => toggleTag(tag)}
+                  className={active ? 'tag-filter-active' : 'tag-filter'}
                 >
                   #{tag}
                   <span>{count}</span>
@@ -713,19 +773,57 @@ function NotesPage() {
             })}
           </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredNotes.map((note, index) => (
-            <motion.div
-              key={note.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <NoteCard note={note} index={index} />
-            </motion.div>
-          ))}
-        </div>
+
+        {viewMode === 'timeline' ? (
+          <div className="notes-timeline">
+            <div className="notes-timeline-line" />
+            {filteredNotes.map((note, index) => (
+              <motion.div
+                key={note.id}
+                className="notes-timeline-item"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.06 }}
+              >
+                <div className="notes-timeline-dot" />
+                <Link to={`/note/${note.slug}`} className="notes-timeline-card">
+                  <div className="notes-timeline-meta">
+                    <svg viewBox="0 0 24 24" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>{formatDateTime(note.createdAt)}</span>
+                    {note.personality && (
+                      <>
+                        <span className="opacity-30 mx-1">·</span>
+                        <span>{note.personality}</span>
+                      </>
+                    )}
+                  </div>
+                  <h3 className="notes-timeline-title">{note.title}</h3>
+                  {note.excerpt && (
+                    <p className="notes-timeline-excerpt">{note.excerpt}</p>
+                  )}
+                  <div className="notes-timeline-tags">
+                    {note.tags.map((tag) => (
+                      <span key={tag}>#{tag}</span>
+                    ))}
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredNotes.map((note, index) => (
+              <motion.div
+                key={note.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <NoteCard note={note} index={index} />
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {filteredNotes.length === 0 && (
           <div className="glass-card p-8 text-center theme-muted">
@@ -739,7 +837,23 @@ function NotesPage() {
 
 function TagsPage() {
   const notes = getNotes();
-  const tags = getAllTags(notes);
+  const tags = useMemo(() => getAllTags(notes), [notes]);
+  const [activeTab, setActiveTab] = useState('all');
+
+  const tagGroups = useMemo(() => [
+    { id: 'all', label: '全部', match: () => true },
+    { id: 'tech', label: '技术', match: (t: string) => ['React', 'CSS', 'JavaScript', 'TypeScript', 'AI', 'AI编程', '工具', 'Vite', '前端', '教程', 'workflow', '后端', 'Node'].includes(t) },
+    { id: 'thinking', label: '思维', match: (t: string) => ['思维模型', '哲学', '创造力', '方法论', '未来'].includes(t) },
+    { id: 'growth', label: '成长', match: (t: string) => ['生产力', '心理学', '自我管理', '个人成长', '知识管理', '阅读'].includes(t) },
+    { id: 'life', label: '生活', match: (t: string) => ['内向者', '自我接纳', '生活方式', '设计'].includes(t) },
+  ], []);
+
+  const filteredTags = useMemo(() => {
+    if (activeTab === 'all') return tags;
+    const group = tagGroups.find(g => g.id === activeTab);
+    if (!group) return [];
+    return tags.filter(group.match);
+  }, [tags, activeTab, tagGroups]);
 
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
@@ -751,33 +865,61 @@ function TagsPage() {
         >
           标签分类
         </motion.h1>
-        <p className="theme-muted mb-10 text-lg">
+        <p className="theme-muted mb-8 text-lg">
           按主题浏览 {notes.length} 篇笔记中的 {tags.length} 个标签。
         </p>
 
-        <div className="tag-category-grid">
-          {tags.map((tag) => {
-            const taggedNotes = notes.filter((note) => note.tags.includes(tag));
-            return (
-              <section key={tag} className="tag-category-card">
-                <div className="tag-category-header">
-                  <h2>#{tag}</h2>
-                  <span>{taggedNotes.length}</span>
-                </div>
-                <div className="space-y-2">
-                  {taggedNotes.map((note) => (
-                    <Link key={note.slug} to={`/note/${note.slug}`} className="tag-category-link">
-                      {note.title}
-                    </Link>
-                  ))}
-                </div>
-                <Link to={`/notes?tag=${encodeURIComponent(tag)}`} className="tag-category-more">
-                  查看全部
-                </Link>
-              </section>
-            );
-          })}
+        {/* Tabs */}
+        <div className="tag-tabs">
+          {tagGroups.map((group) => (
+            <button
+              key={group.id}
+              type="button"
+              onClick={() => setActiveTab(group.id)}
+              className={activeTab === group.id ? 'tag-tab tag-tab-active' : 'tag-tab'}
+            >
+              {group.label}
+            </button>
+          ))}
         </div>
+
+        {/* Tag content */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          className="tag-tab-content"
+        >
+          {filteredTags.length === 0 ? (
+            <p className="theme-muted text-center py-12">暂无此分类的标签</p>
+          ) : (
+            <div className="tag-tab-grid">
+              {filteredTags.map((tag) => {
+                const taggedNotes = notes.filter((note) => note.tags.includes(tag));
+                return (
+                  <section key={tag} className="tag-group-block">
+                    <div className="tag-group-header">
+                      <h2>#{tag}</h2>
+                      <span>{taggedNotes.length}</span>
+                    </div>
+                    <div className="space-y-1">
+                      {taggedNotes.map((note) => (
+                        <Link key={note.slug} to={`/note/${note.slug}`} className="tag-group-link">
+                          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 7h6a4 4 0 0 1 0 8H7m0-8 3-3M7 7l3 3"/></svg>
+                          {note.title}
+                        </Link>
+                      ))}
+                    </div>
+                    <Link to={`/notes?tags=${encodeURIComponent(tag)}`} className="tag-group-more">
+                      查看全部
+                    </Link>
+                  </section>
+                );
+              })}
+            </div>
+          )}
+        </motion.div>
       </div>
     </div>
   );
@@ -871,7 +1013,7 @@ function SearchDialog({ open, onClose }: { open: boolean; onClose: () => void })
               </div>
               <h2>{note.title}</h2>
               <p>{snippet}</p>
-              <small>{note.createdAt} · {note.personality}</small>
+              <small>{formatDateTime(note.createdAt)} · {note.personality}</small>
             </Link>
           ))}
         </div>
@@ -1022,7 +1164,7 @@ function NotePage() {
           
           <div className="flex flex-wrap items-center gap-3 text-xs theme-muted mt-8 pt-5 border-t border-white/10">
             <svg className="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            <span>{note.createdAt}</span>
+            <span>{formatDateTime(note.createdAt)}</span>
 
             <span className="opacity-30">·</span>
 
@@ -1072,7 +1214,7 @@ function NotePage() {
             <div className="note-content-footer">
               <div className="note-content-meta">
                 {note.updatedAt && (
-                  <span>更新于 {note.updatedAt}</span>
+                  <span>更新于 {formatDateTime(note.updatedAt)}（{relativeTime(note.updatedAt)}）</span>
                 )}
                 {noteMeta && (
                   <>
@@ -1479,7 +1621,7 @@ function AboutPage() {
                 return (
                   <Link
                     key={tag}
-                    to={`/notes?tag=${encodeURIComponent(tag)}`}
+                    to={`/notes?tags=${encodeURIComponent(tag)}`}
                     className={`${size} ${weight} px-3 py-1.5 rounded-full border border-white/10 hover:border-nebula-accent hover:text-nebula-accent transition-colors theme-muted`}
                   >
                     #{tag}
@@ -1668,45 +1810,11 @@ function App() {
           </div>
 
           <div className="max-w-5xl mx-auto px-4 pb-10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-              {/* Brand */}
-              <div className="md:col-span-1">
-                <MindScapeLogo />
-                <p className="mt-3 text-sm theme-muted leading-relaxed max-w-xs">
-                  一个 AI-Native 的创意知识空间，思想如星云般绽放，知识如有机生命般生长。
-                </p>
-              </div>
-
-              {/* Quick links */}
-              <div>
-                <h3 className="text-xs font-semibold theme-subtle uppercase tracking-widest mb-4">导航</h3>
-                <div className="flex flex-col gap-2.5">
-                  <Link to="/notes" className="text-sm theme-muted hover:text-nebula-accent transition-colors">所有笔记</Link>
-                  <Link to="/tags" className="text-sm theme-muted hover:text-nebula-accent transition-colors">标签分类</Link>
-                  <Link to="/roadmap" className="text-sm theme-muted hover:text-nebula-accent transition-colors">学习路线</Link>
-                  <Link to="/graph" className="text-sm theme-muted hover:text-nebula-accent transition-colors">笔记图谱</Link>
-                  <Link to="/resources" className="text-sm theme-muted hover:text-nebula-accent transition-colors">资源库</Link>
-                </div>
-              </div>
-
-              {/* Connect */}
-              <div>
-                <h3 className="text-xs font-semibold theme-subtle uppercase tracking-widest mb-4">连接</h3>
-                <div className="flex flex-col gap-2.5">
-                  <a
-                    href="https://github.com/Alleyf/MindScape"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm theme-muted hover:text-nebula-accent transition-colors inline-flex items-center gap-2"
-                  >
-                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
-                      <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.58 9.58 0 0 1 12 6.8c.85.004 1.7.115 2.5.34 1.9-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z" />
-                    </svg>
-                    GitHub 仓库
-                  </a>
-                  <Link to="/about" className="text-sm theme-muted hover:text-nebula-accent transition-colors">关于本站</Link>
-                </div>
-              </div>
+            <div className="flex flex-col items-center text-center mb-8">
+              <MindScapeLogo />
+              <p className="mt-3 text-sm theme-muted leading-relaxed max-w-xs">
+                一个 AI-Native 的创意知识空间，思想如星云般绽放，知识如有机生命般生长。
+              </p>
             </div>
 
             {/* Bottom bar */}
