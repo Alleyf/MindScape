@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { FAVICON_YANDEX_URL } from '../config/resources';
 import {
   Background,
   Controls,
@@ -50,7 +51,7 @@ interface LearningRoadmapFlowProps {
 
 function RoadmapCardNode({ data }: NodeProps<Node<RoadmapNodeData>>) {
   const hostname = data.url ? getHostname(data.url) : '';
-  const faviconUrl = hostname ? `https://favicon.yandex.net/favicon/${hostname}` : '';
+  const faviconUrl = hostname ? `${FAVICON_YANDEX_URL}${hostname}` : '';
 
   const card = (
     <div className="flow-card" style={{ '--node-accent': data.accent } as React.CSSProperties}>

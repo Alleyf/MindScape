@@ -22,9 +22,10 @@ interface NoteGraphSidebarProps {
   currentNote: Note;
   allNotes: Note[];
   relatedNotes?: Note[];
+  className?: string;
 }
 
-export function NoteGraphSidebar({ currentNote, allNotes, relatedNotes = [] }: NoteGraphSidebarProps) {
+export function NoteGraphSidebar({ currentNote, allNotes, relatedNotes = [], className = '' }: NoteGraphSidebarProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const navigate = useNavigate();
 
@@ -164,7 +165,7 @@ export function NoteGraphSidebar({ currentNote, allNotes, relatedNotes = [] }: N
   if (!hasGraph && relatedNotes.length === 0) return null;
 
   return (
-    <div className="note-graph-sidebar">
+    <div className={`note-graph-sidebar ${className}`}>
       <div className="note-graph-sidebar-inner">
         {hasGraph && (
           <>

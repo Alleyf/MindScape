@@ -1,8 +1,9 @@
 import { Note } from '../types';
+export { getRandomNote } from './noteData';
 
 // 使用 Vite 的 import.meta.glob 动态导入 content/posts 下的所有 .md 文件
 // query: '?raw', import: 'default' 表示以原始文本形式加载（替代已弃用的 as: 'raw'）
-const markdownModules = import.meta.glob('../../content/posts/*.md', { eager: true, query: '?raw', import: 'default' });
+const markdownModules = import.meta.glob('../../content/posts/**/*.md', { eager: true, query: '?raw', import: 'default' });
 
 /**
  * 解析 Front Matter 和正文
@@ -57,19 +58,24 @@ export function getNotes(): Note[] {
   const notes: Note[] = [];
 
   Object.entries(markdownModules).forEach(([path, content]) => {
-    const fileName = path.split('/').pop() || '';
-    if (!fileName.endsWith('.md')) return;
+    // path like: ../../content/posts/后端开发/Java常用新特性.md or ../../content/posts/Vue.md
+    // normalize backslashes (Windows) to forward slashes for consistent matching
+    const normalizedPath = path.replace(/\\/g, '/');
+    const match = normalizedPath.match(/content\/posts\/(.+)\.md$/);
+    if (!match) return;
+    const rawSlug = match[1]; // e.g. "后端开发/Java常用新特性" or "Vue"
+
+    // use filename only as slug to keep URLs clean (backward-compatible)
+    const fileName = rawSlug.split('/').pop() || rawSlug;
 
     const { data, content: body } = parseFrontMatter(content as string);
-    const slug = fileName.replace(/\.md$/, '');
-
     const date = data.date || new Date().toISOString().split('T')[0];
     const excerpt = body.trim().slice(0, 150) + (body.length > 150 ? '...' : '');
 
     notes.push({
-      id: slug,
-      slug: slug,
-      title: data.title || slug,
+      id: fileName,
+      slug: fileName,
+      title: data.title || fileName,
       content: body.trim(),
       excerpt: data.description || excerpt,
       tags: Array.isArray(data.tags) ? data.tags : [],
