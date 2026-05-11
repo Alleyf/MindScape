@@ -8,6 +8,8 @@ import { AIPanel } from './components/AIPanel';
 import { RandomWalkButton } from './components/RandomWalkButton';
 import { MarkdownContent } from './components/MarkdownContent';
 import { ThemeToggle } from './components/ThemeToggle';
+import { LearningRoadmapFlow, type LearningRoute } from './components/LearningRoadmapFlow';
+import { FloatingTools } from './components/FloatingTools';
 import { getNotes, getNoteBySlug, getRandomNote } from './utils/noteLoader';
 import { Note } from './utils/noteLoader';
 
@@ -46,6 +48,67 @@ function getAllTags(notes: Note[]): string[] {
   return Array.from(new Set(notes.flatMap((note) => note.tags))).sort((a, b) => a.localeCompare(b, 'zh-CN'));
 }
 
+const learningRoutes: LearningRoute[] = [
+  {
+    id: 'ai-coding',
+    title: 'AI Coding 入门到实战',
+    summary: '从基础扫盲、工具安装到 Spec / GSD 工作流，适合想系统建立 AI 编程习惯的开发者。',
+    accent: '#4f46e5',
+    resources: [
+      { type: '网址', title: 'AI 编程核心概念', url: 'https://www.yuntuagi.cn/series/ai-literacy' },
+      { type: '工具', title: 'OpenAI Codex', url: 'https://github.com/openai/codex' },
+      { type: '方法论', title: 'Superpowers', url: 'https://github.com/obra/superpowers' },
+    ],
+    steps: ['概念扫盲', '安装主力工具', '小任务练习', 'Plan 模式', 'Spec 工作流', '项目验证'],
+  },
+  {
+    id: 'frontend',
+    title: '前端工程成长路线',
+    summary: '围绕 React、工程化、设计系统和 AI 辅助开发，建立可交付的前端能力。',
+    accent: '#0f766e',
+    resources: [
+      { type: '博文', title: 'React Hooks 深度探索', url: '/note/react-hooks' },
+      { type: '视频', title: '组件设计与状态管理', url: 'https://www.bilibili.com/' },
+      { type: '网址', title: 'JavaScript 学习路径', url: 'https://developer.mozilla.org/zh-CN/docs/Web/JavaScript' },
+    ],
+    steps: ['HTML/CSS 基础', 'JavaScript', 'React', '状态管理', '工程化', '设计系统'],
+  },
+  {
+    id: 'knowledge',
+    title: '个人知识管理路线',
+    summary: '从数字花园、标签组织到长期复盘，让知识在写作和项目中持续生长。',
+    accent: '#c2410c',
+    resources: [
+      { type: '博文', title: '欢迎来到 MindScape', url: '/note/welcome' },
+      { type: '博文', title: 'AI Coding 学习清单', url: '/note/ai-coding-learning-checklist' },
+      { type: '网址', title: 'OpenSpec', url: 'https://openspec.dev/' },
+    ],
+    steps: ['捕捉灵感', '标签归档', '主题串联', '定期修剪', '输出文章', '形成系统'],
+  },
+];
+
+function MindScapeLogo({ compact = false }: { compact?: boolean }) {
+  return (
+    <span className="brand-lockup" aria-label="MindScape">
+      <svg className="brand-logo" viewBox="0 0 48 48" role="img" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGradient" x1="8" y1="6" x2="40" y2="42" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#4f46e5" />
+            <stop offset="0.48" stopColor="#06b6d4" />
+            <stop offset="1" stopColor="#f97316" />
+          </linearGradient>
+        </defs>
+        <path d="M24 5c9.9 0 18 8.1 18 18 0 6.5-3.4 12.1-8.6 15.3-2.8 1.7-6 2.7-9.4 2.7S17.4 40 14.6 38.3C9.4 35.1 6 29.5 6 23 6 13.1 14.1 5 24 5Z" fill="url(#logoGradient)" opacity="0.96" />
+        <path d="M15 29.4c3.6-1 5.5-3.7 5.5-8.1 0-2.4 1.6-4.3 3.8-4.3 2.1 0 3.7 1.8 3.7 4.1 0 4.9 2.1 7.6 5.9 8.3" fill="none" stroke="white" strokeWidth="3.1" strokeLinecap="round" />
+        <path d="M15.5 21.5c2.6-6.8 14.9-8.6 19.1-.7" fill="none" stroke="white" strokeOpacity="0.75" strokeWidth="2.2" strokeLinecap="round" />
+        <circle cx="17" cy="30" r="2.4" fill="white" />
+        <circle cx="34" cy="30" r="2.4" fill="white" />
+      </svg>
+      {!compact && <span className="brand-word">MindScape</span>}
+    </span>
+  );
+}
+
 function HomePage() {
   const notes = getNotes();
   
@@ -64,8 +127,16 @@ function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
+          <motion.div
+            className="mb-8 flex justify-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <MindScapeLogo />
+          </motion.div>
           <motion.h1 
-            className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-nebula-purple via-nebula-blue to-nebula-accent bg-clip-text text-transparent"
+            className="text-6xl md:text-8xl font-bold mb-6 gradient-text"
             animate={{ 
               backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
             }}
@@ -84,12 +155,10 @@ function HomePage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.8 }}
           >
-            <Link 
-              to="/notes"
-              className="inline-block px-8 py-4 bg-gradient-to-r from-nebula-purple to-nebula-accent rounded-full text-white font-medium hover:shadow-lg hover:shadow-nebula-accent/30 transition-all duration-300 transform hover:scale-105"
-            >
-              探索思维宇宙 →
-            </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link to="/notes" className="primary-button">探索思维宇宙</Link>
+              <Link to="/roadmap" className="theme-outline-button">查看学习路线</Link>
+            </div>
           </motion.div>
         </motion.div>
         
@@ -274,11 +343,11 @@ function NotePage() {
   }
   
   return (
-    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
-      <div className="max-w-7xl mx-auto xl:grid xl:grid-cols-[220px_minmax(0,56rem)_220px] xl:gap-8">
-        <aside className="hidden xl:block">
-          <div className="toc-panel sticky top-28">
-            <p className="text-sm font-semibold theme-text mb-4">目录</p>
+    <div className="min-h-screen pt-28 pb-20 px-4 relative z-10">
+      <aside className="reading-toc hidden xl:block">
+        <div className="toc-panel">
+          <div className="toc-kicker">On this page</div>
+          <p className="text-sm font-semibold theme-text mb-4">文章目录</p>
             {toc.length > 0 ? (
               <nav className="space-y-2">
                 {toc.map((item) => (
@@ -294,10 +363,10 @@ function NotePage() {
             ) : (
               <p className="text-sm theme-subtle">这篇文章暂无小标题。</p>
             )}
-          </div>
-        </aside>
+        </div>
+      </aside>
 
-        <main className="min-w-0">
+      <main className="reading-main max-w-3xl">
         {/* Back button */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -306,11 +375,28 @@ function NotePage() {
         >
           <Link 
             to="/notes"
-            className="inline-flex items-center theme-link transition-colors"
+            className="inline-flex items-center theme-link transition-colors text-sm"
           >
             ← 返回笔记列表
           </Link>
         </motion.div>
+
+        <div className="xl:hidden mb-8">
+          <details className="mobile-toc">
+            <summary>文章目录</summary>
+            <nav className="mt-4 space-y-2">
+              {toc.map((item) => (
+                <a
+                  key={`${item.id}-${item.text}-mobile`}
+                  href={`#${item.id}`}
+                  className={`toc-link ${item.level === 3 ? 'pl-4' : ''}`}
+                >
+                  {item.text}
+                </a>
+              ))}
+            </nav>
+          </details>
+        </div>
         
         {/* Note header */}
         <motion.header
@@ -379,14 +465,82 @@ function NotePage() {
         <div className="lg:hidden mt-12 mb-8">
           <AIPanel note={note} isMobile={true} />
         </div>
-        </main>
-
-        <div className="hidden xl:block" aria-hidden="true" />
-      </div>
+      </main>
       
       {/* Desktop AI Panel */}
-      <div className="hidden lg:block">
+      <div className="hidden xl:block">
         <AIPanel note={note} />
+      </div>
+    </div>
+  );
+}
+
+function RoadmapPage() {
+  const [activeRoute, setActiveRoute] = useState(learningRoutes[0].id);
+  const currentRoute = learningRoutes.find((route) => route.id === activeRoute) || learningRoutes[0];
+
+  return (
+    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-10"
+        >
+          <h1 className="text-5xl font-bold mb-5 gradient-text">学习路线一览</h1>
+          <p className="theme-muted max-w-3xl mx-auto leading-relaxed">
+            把视频、网址和博文组织成可切换的路线图。路线数据集中配置，后续只要改数组就能扩展新的学习路径。
+          </p>
+        </motion.div>
+
+        <div className="roadmap-tabs">
+          {learningRoutes.map((route) => (
+            <button
+              key={route.id}
+              type="button"
+              onClick={() => setActiveRoute(route.id)}
+              className={route.id === activeRoute ? 'roadmap-tab-active' : 'roadmap-tab'}
+            >
+              {route.title}
+            </button>
+          ))}
+        </div>
+
+        <section className="roadmap-board">
+          <div className="roadmap-header">
+            <div>
+              <p className="roadmap-label">Learning Roadmap</p>
+              <h2>{currentRoute.title}</h2>
+              <p>{currentRoute.summary}</p>
+            </div>
+            <Link to="/notes" className="theme-outline-button">浏览相关笔记</Link>
+          </div>
+
+          <LearningRoadmapFlow route={currentRoute} />
+
+          <div className="roadmap-resources">
+            {currentRoute.resources.map((resource) => {
+              const isInternal = resource.url.startsWith('/');
+              const content = (
+                <>
+                  <span>{resource.type}</span>
+                  <h3>{resource.title}</h3>
+                  <p>{resource.url}</p>
+                </>
+              );
+
+              return isInternal ? (
+                <Link key={resource.title} to={resource.url} className="resource-card">
+                  {content}
+                </Link>
+              ) : (
+                <a key={resource.title} href={resource.url} target="_blank" rel="noreferrer" className="resource-card">
+                  {content}
+                </a>
+              );
+            })}
+          </div>
+        </section>
       </div>
     </div>
   );
@@ -454,13 +608,17 @@ function App() {
         {/* Navigation */}
         <nav className="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-            <Link to="/" className="text-2xl font-bold gradient-text hover:scale-105 transition-transform">
-              MindScape
+            <Link to="/" className="hover:scale-105 transition-transform">
+              <MindScapeLogo />
             </Link>
             
-            <div className="flex items-center gap-6 md:gap-10">
+            <div className="flex items-center gap-4 md:gap-8">
               <Link to="/notes" className="nav-link group">
                 笔记
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
+              </Link>
+              <Link to="/roadmap" className="nav-link group">
+                学习路线
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
               <Link to="/about" className="nav-link group">
@@ -477,6 +635,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/note/:slug" element={<NotePage />} />
+          <Route path="/roadmap" element={<RoadmapPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
         
@@ -484,6 +643,7 @@ function App() {
         <footer className="py-8 text-center theme-subtle text-sm relative z-10">
           <p>MindScape © 2026 — 用 AI 增强人类创造力</p>
         </footer>
+        <FloatingTools />
       </div>
     </Router>
   );

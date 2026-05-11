@@ -25,10 +25,11 @@ const aiConnections = [
 
 export function AIPanel({ note, isMobile = false }: AIPanelProps) {
   const [activeTab, setActiveTab] = useState<'metaphor' | 'connections' | 'personality'>('metaphor');
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const containerClasses = isMobile 
-    ? "w-full glass-card p-6" 
-    : "fixed right-0 top-1/4 w-80 glass-card p-6";
+  const containerClasses = isMobile
+    ? "w-full ai-panel p-5"
+    : `fixed right-7 top-28 z-40 ai-panel transition-all duration-300 ${isCollapsed ? 'ai-panel-collapsed w-16 p-2' : 'w-72 p-5'}`;
 
   return (
     <motion.div
@@ -37,34 +38,54 @@ export function AIPanel({ note, isMobile = false }: AIPanelProps) {
       transition={{ delay: 0.5, duration: 0.6 }}
       className={containerClasses}
     >
+      {!isMobile && (
+        <button
+          type="button"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="ai-panel-toggle"
+          aria-label={isCollapsed ? '展开 AI 侧栏' : '折叠 AI 侧栏'}
+          title={isCollapsed ? '展开 AI 侧栏' : '折叠 AI 侧栏'}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d={isCollapsed ? 'M9 6l6 6-6 6' : 'M15 6l-6 6 6 6'} />
+          </svg>
+        </button>
+      )}
+
+      {isCollapsed && !isMobile ? (
+        <div className="ai-panel-rail">
+          <span>AI</span>
+        </div>
+      ) : (
+      <>
       {/* Tab headers */}
       <div className="flex gap-2 mb-6 border-b border-white/10 pb-4">
         <button
           onClick={() => setActiveTab('metaphor')}
-          className={`flex-1 text-sm py-2 rounded-lg transition-colors ${
+          className={`ai-tab ${
             activeTab === 'metaphor' 
-              ? 'bg-nebula-accent/20 text-nebula-accent' 
-              : 'text-gray-400 hover:text-white'
+              ? 'ai-tab-active' 
+              : ''
           }`}
         >
           🎭 隐喻
         </button>
         <button
           onClick={() => setActiveTab('connections')}
-          className={`flex-1 text-sm py-2 rounded-lg transition-colors ${
+          className={`ai-tab ${
             activeTab === 'connections' 
-              ? 'bg-nebula-accent/20 text-nebula-accent' 
-              : 'text-gray-400 hover:text-white'
+              ? 'ai-tab-active' 
+              : ''
           }`}
         >
           🔗 联想
         </button>
         <button
           onClick={() => setActiveTab('personality')}
-          className={`flex-1 text-sm py-2 rounded-lg transition-colors ${
+          className={`ai-tab ${
             activeTab === 'personality' 
-              ? 'bg-nebula-accent/20 text-nebula-accent' 
-              : 'text-gray-400 hover:text-white'
+              ? 'ai-tab-active' 
+              : ''
           }`}
         >
           🎪 人格
@@ -82,16 +103,16 @@ export function AIPanel({ note, isMobile = false }: AIPanelProps) {
             className="space-y-4"
           >
             <h4 className="text-nebula-accent font-medium mb-3">AI 共振</h4>
-            <p className="text-gray-300 text-sm leading-relaxed italic">
+            <p className="theme-muted text-sm leading-relaxed italic">
               {aiMetaphors[Math.floor(Math.random() * aiMetaphors.length)]}
             </p>
             <div className="pt-4 border-t border-white/10">
-              <p className="text-xs text-gray-500 mb-2">情绪能量</p>
+              <p className="text-xs theme-subtle mb-2">情绪能量</p>
               <div className="flex gap-2">
-                <span className="px-3 py-1 bg-gradient-to-r from-nebula-purple to-nebula-blue rounded-full text-xs">
+                <span className="ai-chip">
                   {note.mood || '🌟'} 沉思
                 </span>
-                <span className="px-3 py-1 bg-gradient-to-r from-nebula-blue to-nebula-accent rounded-full text-xs">
+                <span className="ai-chip">
                   ⚡ 高能量
                 </span>
               </div>
@@ -108,21 +129,21 @@ export function AIPanel({ note, isMobile = false }: AIPanelProps) {
             className="space-y-4"
           >
             <h4 className="text-nebula-accent font-medium mb-3">思维连接</h4>
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="theme-muted text-sm leading-relaxed">
               {aiConnections[Math.floor(Math.random() * aiConnections.length)]}
             </p>
             <div className="pt-4 border-t border-white/10">
-              <p className="text-xs text-gray-500 mb-3">可能相关的笔记</p>
+              <p className="text-xs theme-subtle mb-3">可能相关的笔记</p>
               <div className="space-y-2">
                 <Link 
                   to="/note/quantum-thinking"
-                  className="block p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-xs text-gray-300"
+                  className="ai-link-card"
                 >
                   → 量子思维：超越二元对立
                 </Link>
                 <Link 
                   to="/note/creative-flow"
-                  className="block p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-xs text-gray-300"
+                  className="ai-link-card"
                 >
                   → 心流状态的触发密码
                 </Link>
@@ -153,16 +174,16 @@ export function AIPanel({ note, isMobile = false }: AIPanelProps) {
                 {note.personality === '陪伴者' && '🌙'}
               </motion.div>
               <p className="text-lg font-bold gradient-text">{note.personality}</p>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs theme-subtle mt-2">
                 这篇笔记有自己的性格和气质
               </p>
             </div>
             <div className="pt-4 border-t border-white/10">
-              <p className="text-xs text-gray-500 mb-2">人格特质</p>
+              <p className="text-xs theme-subtle mb-2">人格特质</p>
               <div className="flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">深度</span>
-                <span className="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">内省</span>
-                <span className="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">启发</span>
+                <span className="ai-chip">深度</span>
+                <span className="ai-chip">内省</span>
+                <span className="ai-chip">启发</span>
               </div>
             </div>
           </motion.div>
@@ -171,6 +192,8 @@ export function AIPanel({ note, isMobile = false }: AIPanelProps) {
 
       {/* Decorative element */}
       <div className="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-br from-nebula-accent/20 to-transparent rounded-full blur-xl" />
+      </>
+      )}
     </motion.div>
   );
 }
