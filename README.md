@@ -1,172 +1,113 @@
-# 🚀 MindScape - AI-Native 创意 WikiBlog
+# MindScape — AI-Native Knowledge Studio
 
-一个令人惊艳的 AI-Native 个人知识库系统，将 Markdown 笔记转化为充满创意和美学体验的思维宇宙。
+将 Markdown 笔记转化为可探索的思维星图。AI 隐喻、标签图谱、学习路线、参考文档预览——不是归档文章，而是在每次阅读时重新生成线索。
 
-## ✨ 核心特性
+## 页面预览
 
-### 🎨 视觉奇观
-- **粒子场背景**：动态星云粒子效果，营造沉浸式思维空间
-- **鼠标光晕追踪**：跟随鼠标移动的柔和光晕，增强交互感
-- **玻璃拟态设计**：半透明磨砂玻璃效果，现代感十足
-- **渐变色彩系统**：紫色→蓝色→青色的梦幻渐变
+| 首页 | 笔记列表 |
+|:---:|:---:|
+| ![首页](public/screenshots/home-full.png) | ![笔记列表](public/screenshots/notes-list.png) |
 
-### 🤖 AI 增强功能
-- **AI 隐喻面板**：为每篇笔记生成诗意的隐喻描述
-- **智能联想**：自动发现笔记间的隐藏连接
-- **笔记人格化**：赋予每篇笔记独特的性格标签（沉思者🦉、引路人🧭、园丁🌱等）
-- **情绪能量分析**：可视化展示笔记的情感基调
+| 笔记阅读 | 参考文档 |
+|:---:|:---:|
+| ![笔记阅读](public/screenshots/note-reading.png) | ![参考文档](public/screenshots/note-references.png) |
 
-### 🎪 创意交互
-- **随机漫步按钮**：像探索宇宙一样随机跳转到另一篇笔记
-- **动态动画**：使用 Framer Motion 实现流畅的页面过渡
-- **响应式布局**：完美适配桌面和移动设备
+| 知识图谱 | 学习路线 | 资源库 |
+|:---:|:---:|:---:|
+| ![图谱](public/screenshots/graph.png) | ![路线](public/screenshots/roadmap.png) | ![资源](public/screenshots/resources.png) |
 
-## 📦 快速启动
+| 关于 |
+|:---:|
+| ![关于](public/screenshots/about.png) |
 
-### 方式一：直接启动（推荐）
+## 核心特性
+
+### 知识图谱
+- **双向链接图谱** — 基于共享标签自动构建笔记间的关联网络，支持缩放、拖拽和节点点击导航
+- **笔记侧栏图谱** — 阅读笔记时在右侧展示当前笔记的关联子图
+- **推荐阅读** — 基于标签匹配自动推荐相关笔记
+
+### 学习路线
+- **交互式流程图** — 使用 React Flow 构建的可拖拽路线图，支持滚动缩放
+- **多路线切换** — 预设 AI Coding、前端工程、知识管理等多条学习路径
+- **资源卡片** — 每张卡片展示层级、Favicon 封面、名称、分类标签和域名描述，支持点击跳转
+
+### 资源库
+- **分类整理** — AI 编程、前端开发、开发工具、知识管理、学习资源、部署运维六大分类
+- **Favicon 集成** — 自动从 Yandex Favicon 服务获取网站图标
+- **外部链接预览** — 点击直接跳转至目标资源
+
+### 阅读体验
+- **参考文档卡片** — 博文底部展示外部参考链接的自动预览（标题、描述、封面、站点名称）
+- **滚动进度环** — 右下角工具栏显示阅读进度百分比
+- **沉浸模式** — 隐藏所有 UI 元素，专注阅读
+- **目录导航** — 支持 h1~h3 标题的自动目录生成
+- **Markdown / PDF 导出** — 一键下载 Markdown 源文件或通过打印生成 PDF
+- **全屏阅读** — 支持浏览器全屏模式
+
+### AI 增强
+- **AI 隐喻面板** — 为每篇笔记生成诗意的隐喻描述
+- **智能联想** — 自动发现笔记间的隐藏连接
+- **笔记人格化** — 赋予每篇笔记独特的性格标签（沉思者、引路人、园丁等）
+- **情绪能量分析** — 可视化展示笔记的情感基调
+
+### 视觉设计
+- **粒子场背景** — 动态星云粒子效果
+- **鼠标光晕追踪** — 跟随鼠标移动的柔和光晕
+- **玻璃拟态设计** — 半透明磨砂玻璃效果
+- **明暗主题切换** — 支持明亮/暗黑模式
+
+## 快速启动
 
 ```bash
-cd /workspace/mindscape
+cd mindscape
+npm install
 npm run dev
 ```
 
-服务器将在 http://localhost:3000 启动
+服务器默认在 `http://localhost:5173` 启动。
 
-### 方式二：指定端口
+## 技术栈
 
-```bash
-cd /workspace/mindscape
-npm run dev -- --port 5173
-```
+| 类别 | 技术 |
+|------|------|
+| 框架 | React 19 + TypeScript |
+| 构建 | Vite 8 (Rolldown) |
+| 路由 | react-router-dom v7 |
+| 动画 | Framer Motion |
+| 图谱 | d3-force + d3-selection |
+| 流程图 | @xyflow/react (React Flow) |
+| 样式 | CSS Custom Properties + 响应式布局 |
 
-## 🎯 使用演示
-
-### 1. 首页浏览
-- 访问 http://localhost:3000
-- 欣赏动态粒子背景和渐变标题动画
-- 点击"探索思维宇宙"进入笔记列表
-
-### 2. 阅读笔记
-- 在笔记列表页浏览所有文章卡片
-- 点击任意卡片进入详情
-- 观察右侧的 **AI 面板**（仅桌面端显示）：
-  - 🎭 **隐喻**：查看 AI 生成的诗意描述
-  - 🔗 **联想**：发现与其他笔记的连接
-  - 🎪 **人格**：了解这篇笔记的性格特质
-
-### 3. 创意导航
-- 在笔记底部点击 **"随机漫步"** 按钮
-- 体验像宇宙漫游一样的知识探索
-- 每次点击都会跳转到一篇随机笔记
-
-### 4. 添加新笔记
-
-编辑 `src/utils/noteData.ts`，添加新的 Note 对象：
-
-```typescript
-{
-  id: '6',
-  slug: 'your-note-slug',
-  title: '你的笔记标题',
-  content: `# 你的内容\n\n正文...`,
-  excerpt: '简短摘要...',
-  tags: ['标签 1', '标签 2'],
-  createdAt: '2026-01-01',
-  updatedAt: '2026-01-01',
-  mood: '🌟',
-  personality: '沉思者', // 可选：沉思者/引路人/园丁/未来主义者/陪伴者
-  aiSubtitle: 'AI 生成的副标题'
-}
-```
-
-## 🛠️ 技术栈
-
-- **React 19** - 最新 React 版本
-- **Vite 8** - 极速开发构建工具
-- **Framer Motion** - 流畅的动画库
-- **React Router** - 页面路由
-- **Tailwind CSS** - 原子化 CSS 框架
-- **TypeScript** - 类型安全
-
-## 📁 项目结构
+## 项目结构
 
 ```
 mindscape/
 ├── src/
 │   ├── components/
-│   │   ├── AIPanel.tsx       # AI 增强面板（核心创意组件）
-│   │   ├── MouseGlow.tsx     # 鼠标光晕效果
-│   │   ├── NoteCard.tsx      # 笔记卡片组件
-│   │   ├── ParticleField.tsx # 粒子场背景
-│   │   └── RandomWalkButton.tsx # 随机漫步按钮
-│   ├── hooks/
-│   │   └── useEffects.ts     # 自定义 Hooks
-│   ├── types/
-│   │   └── index.ts          # TypeScript 类型定义
+│   │   ├── AIPanel.tsx              # AI 增强面板
+│   │   ├── FloatingTools.tsx        # 浮动工具栏（滚动进度、导出等）
+│   │   ├── LearningRoadmapFlow.tsx  # 学习路线流程图
+│   │   ├── MarkdownContent.tsx      # Markdown 渲染组件
+│   │   ├── MouseGlow.tsx            # 鼠标光晕效果
+│   │   ├── NoteCard.tsx             # 笔记卡片
+│   │   ├── NoteGraph.tsx            # 全屏知识图谱
+│   │   ├── NoteGraphSidebar.tsx     # 笔记侧栏关联图谱
+│   │   ├── ParticleField.tsx        # 粒子场背景
+│   │   ├── RandomWalkButton.tsx     # 随机漫步按钮
+│   │   └── ThemeToggle.tsx          # 主题切换
 │   ├── utils/
-│   │   └── noteData.ts       # 笔记数据（在此添加新笔记）
-│   ├── App.tsx               # 主应用组件
-│   ├── main.tsx              # 入口文件
-│   └── index.css             # 全局样式
+│   │   ├── noteData.ts              # 笔记数据
+│   │   └── noteLoader.ts            # 笔记加载器
+│   ├── App.tsx                      # 主应用组件（含所有页面）
+│   ├── main.tsx                     # 入口文件
+│   └── index.css                    # 全局样式
+├── screenshots/                     # 页面截图
 ├── index.html
 ├── package.json
-├── tailwind.config.js        # Tailwind 配置
-└── vite.config.ts            # Vite 配置
+└── vite.config.ts
 ```
 
-## 🎨 自定义主题
-
-编辑 `tailwind.config.js` 修改颜色主题：
-
-```javascript
-theme: {
-  extend: {
-    colors: {
-      nebula: {
-        dark: '#0a0a0f',
-        purple: '#7c3aed',
-        blue: '#3b82f6',
-        accent: '#06b6d4'
-      }
-    }
-  }
-}
-```
-## 🌟 下一步计划
-
-### 已完成 ✅
-- [x] 集成真实 Markdown 解析（当前为模拟数据）
-- [x] 移动端优化
-- [x] 全文搜索功能
-- [x] 暗黑/明亮模式切换
-- [x] 支持用户自定义主题（预设主题模板）
-
-### 进行中 🚧
-- [ ] **双向链接图谱可视化**
-  - 使用 D3.js 或 Force Graph
-  - 展示笔记间的关联网络
-  - 支持节点点击导航
-
-### 待实现 🚧
-- [ ] **接入 AI API 实时生成内容分析**
-  - 集成 OpenAI/Claude API
-  - 自动生成笔记隐喻、联想和人格标签
-  - 支持自定义 AI 提示词
-
-- [ ] **笔记版本历史**
-  - 记录编辑历史
-  - 支持版本对比
-  - 一键回滚到旧版本
-
-- [ ] **导出功能**
-  - 导出为 PDF/Markdown
-  - 批量导出整个知识库
-  - 支持自定义导出模板
-
-## 📄 License
+## License
 
 MIT © 2026 MindScape
-
----
-
-**让知识如有机生命般生长，让思想如星云般绽放** 🌌
