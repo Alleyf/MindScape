@@ -794,6 +794,7 @@ function TagsPage() {
   const notes = getNotes();
   const tags = useMemo(() => getAllTags(notes), [notes]);
   const [activeTab, setActiveTab] = useState('all');
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const tagGroups = useMemo(() => [
     { id: 'all', label: '全部', match: () => true },
@@ -810,9 +811,26 @@ function TagsPage() {
     return tags.filter(group.match);
   }, [tags, activeTab, tagGroups]);
 
+  const tagCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    tags.forEach(t => { counts[t] = notes.filter(n => n.tags.includes(t)).length; });
+    return counts;
+  }, [tags, notes]);
+
+  const maxCount = useMemo(() => Math.max(...Object.values(tagCounts), 1), [tagCounts]);
+
+  const selectedTagNotes = useMemo(() => {
+    if (!selectedTag) return [];
+    return notes.filter(n => n.tags.includes(selectedTag));
+  }, [selectedTag, notes]);
+
+  const handleTagClick = (tag: string) => {
+    setSelectedTag(prev => prev === tag ? null : tag);
+  };
+
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <motion.h1
           className="text-5xl font-bold mb-4 gradient-text"
           initial={{ opacity: 0, y: 20 }}
@@ -824,13 +842,13 @@ function TagsPage() {
           按主题浏览 {notes.length} 篇笔记中的 {tags.length} 个标签。
         </p>
 
-        {/* Tabs */}
+        {/* Category tabs */}
         <div className="tag-tabs">
           {tagGroups.map((group) => (
             <button
               key={group.id}
               type="button"
-              onClick={() => setActiveTab(group.id)}
+              onClick={() => { setActiveTab(group.id); setSelectedTag(null); }}
               className={activeTab === group.id ? 'tag-tab tag-tab-active' : 'tag-tab'}
             >
               {group.label}
@@ -838,43 +856,66 @@ function TagsPage() {
           ))}
         </div>
 
-        {/* Tag content */}
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-          className="tag-tab-content"
-        >
-          {filteredTags.length === 0 ? (
-            <p className="theme-muted text-center py-12">暂无此分类的标签</p>
-          ) : (
-            <div className="tag-tab-grid">
-              {filteredTags.map((tag) => {
-                const taggedNotes = notes.filter((note) => note.tags.includes(tag));
-                return (
-                  <section key={tag} className="tag-group-block">
-                    <div className="tag-group-header">
-                      <h2>#{tag}</h2>
-                      <span>{taggedNotes.length}</span>
-                    </div>
-                    <div className="space-y-1">
-                      {taggedNotes.map((note) => (
-                        <Link key={note.slug} to={`/note/${note.slug}`} className="tag-group-link">
-                          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 7h6a4 4 0 0 1 0 8H7m0-8 3-3M7 7l3 3"/></svg>
-                          {note.title}
-                        </Link>
-                      ))}
-                    </div>
-                    <Link to={`/notes?tags=${encodeURIComponent(tag)}`} className="tag-group-more">
-                      查看全部
-                    </Link>
-                  </section>
-                );
-              })}
+        {/* Selected tag result */}
+        {selectedTag ? (
+          <motion.div
+            key={selectedTag}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="tag-result-panel"
+          >
+            <div className="tag-result-header">
+              <button type="button" onClick={() => setSelectedTag(null)} className="tag-result-back">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M19 12H5m7-7-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
+                返回标签
+              </button>
+              <span className="tag-result-label">
+                <span className="tag-chip-active">#{selectedTag}</span>
+                <span className="tag-result-count">{selectedTagNotes.length} 篇</span>
+              </span>
             </div>
-          )}
-        </motion.div>
+            <div className="tag-result-list">
+              {selectedTagNotes.map((note) => (
+                <Link key={note.slug} to={`/note/${note.slug}`} className="tag-result-item">
+                  <svg viewBox="0 0 24 24" width="15" height="15" className="tag-result-arrow"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
+                  <span className="tag-result-title">{note.title}</span>
+                  <span className="tag-result-excerpt">{note.excerpt}</span>
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        ) : (
+          /* Tag cloud */
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="tag-cloud"
+          >
+            {filteredTags.length === 0 ? (
+              <p className="theme-muted text-center py-16">暂无此分类的标签</p>
+            ) : (
+              filteredTags.map((tag) => {
+                const freq = tagCounts[tag] / maxCount;
+                const size = 0.8 + freq * 0.5; // 0.8rem to 1.3rem
+                return (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => handleTagClick(tag)}
+                    className="tag-cloud-chip"
+                    style={{ fontSize: `${size}rem` }}
+                  >
+                    #{tag}
+                    <span className="tag-cloud-count">{tagCounts[tag]}</span>
+                  </button>
+                );
+              })
+            )}
+          </motion.div>
+        )}
       </div>
     </div>
   );
