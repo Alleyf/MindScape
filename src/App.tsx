@@ -5,6 +5,7 @@ import { ParticleField } from './components/ParticleField';
 import { MouseGlow } from './components/MouseGlow';
 import { NoteCard } from './components/NoteCard';
 import { AIPanel } from './components/AIPanel';
+import { AISummaryPanel } from './components/AISummaryPanel';
 import { MarkdownContent } from './components/MarkdownContent';
 import { ThemeToggle } from './components/ThemeToggle';
 import { LearningRoadmapFlow, type LearningRoute } from './components/LearningRoadmapFlow';
@@ -1225,6 +1226,9 @@ function NotePage() {
             )}
           </div>
         </motion.header>
+
+        {/* AI Summary Panel */}
+        <AISummaryPanel note={note} />
 
         <div className="mb-6">
           <AIPanel

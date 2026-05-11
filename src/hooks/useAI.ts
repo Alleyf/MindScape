@@ -2,6 +2,8 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { aiClient, AIError, AIErrorType, SummaryResult } from '../services';
+import { AICache } from '../services/cache';
+import { createCacheKey } from '../utils/hash';
 import { Note } from '../types';
 
 // Hook state types
@@ -51,7 +53,7 @@ export function useGenerateSummary(note: Note | null) {
       })
       .catch(err => {
         const message = err instanceof AIError
-          ? this.getErrorMessage(err.type)
+          ? getErrorMessage(err.type)
           : '生成摘要失败';
         setState(prev => ({ ...prev, loading: false, error: message, isConfigured: true }));
       });
@@ -60,15 +62,13 @@ export function useGenerateSummary(note: Note | null) {
   const refresh = useCallback(() => {
     if (note) {
       // Force refresh by clearing cache and re-fetching
-      const { AICache } = require('../services/cache');
-      const { createCacheKey } = require('../utils/hash');
       AICache.remove(createCacheKey('summary', note.slug + note.content));
       setState(prev => ({ ...prev, loading: true, error: null }));
       aiClient.generateSummary(note)
         .then(summary => {
           setState({ summary, loading: false, error: null, isConfigured: true });
         })
-        .catch(err => {
+        .catch(() => {
           setState(prev => ({ ...prev, loading: false, error: '刷新失败', isConfigured: true }));
         });
     }
