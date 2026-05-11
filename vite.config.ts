@@ -15,4 +15,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api/ai': {
+        target: () => {
+          const customUrl = process.env.VITE_AI_API_BASE_URL;
+          return customUrl || 'https://api.anthropic.com/v1';
+        },
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/ai/, ''),
+      },
+    },
+  },
 })

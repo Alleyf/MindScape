@@ -103,9 +103,13 @@ export const CLAUDE_API_CONFIG = {
 
 // Environment-based configuration
 export function getAIConfig() {
+  const baseUrl = import.meta.env.VITE_AI_API_BASE_URL;
   return {
     apiKey: import.meta.env.VITE_CLAUDE_API_KEY || '',
-    baseUrl: import.meta.env.VITE_AI_API_BASE_URL || CLAUDE_API_CONFIG.baseUrl,
+    // Use proxy path in dev, direct URL in production
+    baseUrl: baseUrl && import.meta.env.DEV
+      ? '/api/ai'
+      : (baseUrl || CLAUDE_API_CONFIG.baseUrl),
     model: import.meta.env.VITE_AI_MODEL || AI_MODELS.SONNET,
   };
 }
