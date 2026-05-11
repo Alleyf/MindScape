@@ -1050,30 +1050,33 @@ function NotePage() {
   // Scroll-spy: track which heading is visible via IntersectionObserver
   useEffect(() => {
     if (toc.length === 0) return;
-    const headingIds = toc.map(h => h.id);
-    const observers: IntersectionObserver[] = [];
 
     const callback: IntersectionObserverCallback = (entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          setActiveHeadingId(entry.target.id);
-          break;
-        }
+      const intersecting = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (intersecting.length > 0) {
+        setActiveHeadingId(intersecting[0].target.id);
       }
     };
 
     const observer = new IntersectionObserver(callback, {
-      rootMargin: '-80px 0px -60% 0px',
-      threshold: 0,
+      rootMargin: '-80px 0px -70% 0px',
+      threshold: [0, 0.25, 0.5, 1],
     });
 
-    headingIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+    // Small delay to ensure headings are in DOM after render
+    const timer = setTimeout(() => {
+      toc.forEach(({ id }) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    }, 0);
 
-    observers.push(observer);
-    return () => observers.forEach(o => o.disconnect());
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
   }, [toc]);
 
   const adjacentNotes = useMemo(() => {
