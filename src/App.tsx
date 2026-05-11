@@ -1227,8 +1227,8 @@ function NotePage() {
           </div>
         </motion.header>
 
-        {/* AI Summary Panel */}
-        <AISummaryPanel note={note} />
+        {/* AI Summary Panel - TODO: re-enable when AI API is working */}
+        {/* <AISummaryPanel note={note} /> */}
 
         <div className="mb-6">
           <AIPanel
