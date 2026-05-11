@@ -1,11 +1,8 @@
-// Claude API AI Service
+// AI Service - Supports OpenAI compatible APIs
 
 import {
-  ClaudeRequest,
-  ClaudeResponse,
   AIModelConfig,
   DEFAULT_MODEL_CONFIG,
-  CLAUDE_API_CONFIG,
   AI_MODELS,
   AIError,
   AIErrorType,
@@ -45,11 +42,20 @@ const SYSTEM_PROMPTS = {
 请用友好、简洁的方式回答用户的问题。如果问题与当前笔记相关，请结合笔记内容回答。`,
 };
 
+// Detect API provider from base URL
+function detectProvider(baseUrl: string): 'openai' | 'anthropic' {
+  if (baseUrl.includes('openai') || baseUrl.includes('azure') || baseUrl.includes('groq')) {
+    return 'openai';
+  }
+  // Default to OpenAI compatible for other URLs
+  return 'openai';
+}
+
 // Rate limiting queue
 interface QueuedRequest {
   resolve: (value: string) => void;
   reject: (error: Error) => void;
-  request: ClaudeRequest;
+  body: object;
 }
 
 class RateLimitQueue {
@@ -58,9 +64,9 @@ class RateLimitQueue {
   private lastRequestTime = 0;
   private minInterval = 1000; // 1 second between requests
 
-  async add<T>(request: ClaudeRequest): Promise<string> {
+  async add(body: object): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.queue.push({ resolve, reject, request });
+      this.queue.push({ resolve, reject, body });
       this.process();
     });
   }
@@ -81,7 +87,7 @@ class RateLimitQueue {
       }
 
       try {
-        const result = await this.executeRequest(item.request);
+        const result = await this.executeRequest(item.body);
         this.queue.shift();
         item.resolve(result);
         this.lastRequestTime = Date.now();
@@ -94,39 +100,69 @@ class RateLimitQueue {
     this.processing = false;
   }
 
-  private async executeRequest(request: ClaudeRequest): Promise<string> {
+  private async executeRequest(body: object): Promise<string> {
     const config = getAIConfig();
+    const provider = detectProvider(config.baseUrl);
 
-    const response = await fetch(`${config.baseUrl}${CLAUDE_API_CONFIG.messagesEndpoint}`, {
-      method: 'POST',
-      headers: {
+    let url: string;
+    let headers: Record<string, string>;
+    let requestBody: string;
+
+    if (provider === 'openai') {
+      // OpenAI / OpenAI-compatible format
+      url = `${config.baseUrl}/v1/chat/completions`;
+      headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.apiKey}`,
+      };
+      requestBody = JSON.stringify(body);
+    } else {
+      // Anthropic format
+      url = `${config.baseUrl}/v1/messages`;
+      headers = {
         'Content-Type': 'application/json',
         'x-api-key': config.apiKey,
-        'anthropic-version': CLAUDE_API_CONFIG.apiVersion,
-      },
-      body: JSON.stringify(request),
+        'anthropic-version': '2023-06-01',
+      };
+      requestBody = JSON.stringify(body);
+    }
+
+    if (!config.apiKey) {
+      throw new AIError(
+        AIErrorType.API_KEY_MISSING,
+        'API key is not configured. Please set VITE_CLAUDE_API_KEY in your .env file.'
+      );
+    }
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: requestBody,
     });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
+      const errorMessage = errorData.error?.message || errorData.error?.type || `API Error: ${response.status}`;
+
       throw new AIError(
         response.status === 401 ? AIErrorType.API_KEY_MISSING :
         response.status === 429 ? AIErrorType.RATE_LIMIT :
+        response.status === 403 ? AIErrorType.API_KEY_MISSING : // 403 often means invalid key
         AIErrorType.NETWORK_ERROR,
-        errorData.error?.message || `API Error: ${response.status}`,
+        errorMessage,
       );
     }
 
-    const data: ClaudeResponse = await response.json();
-    return data.content[0]?.text || '';
-  }
+    const data = await response.json();
 
-  private getApiKey(): string {
-    const key = getAIConfig().apiKey;
-    if (!key) {
-      throw new AIError(AIErrorType.API_KEY_MISSING, 'Claude API key is not configured. Please set VITE_CLAUDE_API_KEY in your .env file.');
+    // Parse response based on provider
+    if (provider === 'openai') {
+      // OpenAI format: { choices: [{ message: { content } }] }
+      return data.choices?.[0]?.message?.content || '';
+    } else {
+      // Anthropic format: { content: [{ type: "text", text }] }
+      return data.content?.[0]?.text || '';
     }
-    return key;
   }
 }
 
@@ -202,10 +238,7 @@ export class AIClient {
 
     const content = `标题：${note.title}\n\n内容：\n${note.content.slice(0, 8000)}`;
 
-    const text = await this.callClaude(
-      content,
-      'summary'
-    );
+    const text = await this.callAI(content, 'summary');
 
     // Parse response
     const result = this.parseSummaryResponse(text);
@@ -227,7 +260,7 @@ export class AIClient {
 
     const content = `标题：${note.title}\n\n内容：\n${note.content.slice(0, 8000)}`;
 
-    const text = await this.callClaude(content, 'keywords');
+    const text = await this.callAI(content, 'keywords');
 
     const keywords = text.split(/[,，、]/).map(k => k.trim()).filter(Boolean);
     AICache.set(cacheKey, keywords);
@@ -241,25 +274,43 @@ export class AIClient {
   async chat(message: string, note: Note): Promise<string> {
     const context = `当前笔记标题：${note.title}\n\n笔记内容摘要：\n${note.content.slice(0, 4000)}`;
 
-    return this.callClaude(`${context}\n\n用户问题：${message}`, 'chat');
+    return this.callAI(`${context}\n\n用户问题：${message}`, 'chat');
   }
 
   /**
-   * Core method to call Claude API
+   * Core method to call AI API (OpenAI compatible)
    */
-  private async callClaude(
+  private async callAI(
     content: string,
     operation: keyof typeof SYSTEM_PROMPTS
   ): Promise<string> {
     const config = getAIConfig();
-    const request: ClaudeRequest = {
-      model: config.model,
-      max_tokens: this.modelConfig.maxTokens,
-      messages: [{ role: 'user', content }],
-      system: SYSTEM_PROMPTS[operation],
-    };
+    const provider = detectProvider(config.baseUrl);
 
-    return withRetry(() => rateLimitQueue.add(request));
+    let body: object;
+
+    if (provider === 'openai') {
+      // OpenAI format with system message
+      body = {
+        model: config.model,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPTS[operation] },
+          { role: 'user', content },
+        ],
+        temperature: this.modelConfig.temperature,
+        max_tokens: this.modelConfig.maxTokens,
+      };
+    } else {
+      // Anthropic format
+      body = {
+        model: config.model,
+        max_tokens: this.modelConfig.maxTokens,
+        messages: [{ role: 'user', content }],
+        system: SYSTEM_PROMPTS[operation],
+      };
+    }
+
+    return withRetry(() => rateLimitQueue.add(body));
   }
 
   /**
