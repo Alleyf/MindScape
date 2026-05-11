@@ -33,6 +33,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH }}
           VITE_RESOURCE_CATEGORIES: ${{ vars.VITE_RESOURCE_CATEGORIES }}
           VITE_LEARNING_ROUTES: ${{ vars.VITE_LEARNING_ROUTES }}
           VITE_MICROLINK_API_URL: ${{ vars.VITE_MICROLINK_API_URL }}
