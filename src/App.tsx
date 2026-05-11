@@ -410,13 +410,14 @@ function MindScapeLogo({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function NavIcon({ name }: { name: 'notes' | 'tags' | 'search' | 'roadmap' | 'graph' | 'about' }) {
+function NavIcon({ name }: { name: 'notes' | 'tags' | 'search' | 'roadmap' | 'graph' | 'resources' | 'about' }) {
   const paths = {
     notes: 'M6 4h9a3 3 0 0 1 3 3v13H8a2 2 0 0 1-2-2V4Zm3 4h6M9 12h5',
     tags: 'M4 7V4h3l10.5 10.5a2.1 2.1 0 0 1 0 3l-2 2a2.1 2.1 0 0 1-3 0L4 11V7Zm3 .5h.01',
     search: 'm21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z',
     roadmap: 'M4 17c3-7 6 2 9-5s5-1 7-6M5 17h.01M13 12h.01M20 6h.01',
     graph: 'M12 3c-1.5 2-5 4-8 4 0 5 2 11 8 14 6-3 8-9 8-14-3 0-6.5-2-8-4ZM8 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm8 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z',
+    resources: 'M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5A2.5 2.5 0 0 1 4 19.5ZM14 7l-2 3 2 3M10 7l2 3-2 3',
     about: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-10v6M12 7h.01',
   };
 
@@ -501,11 +502,13 @@ function HomePage() {
             ))}
 
             <div className="home-floating-card card-a">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
               <span>Search</span>
               <strong>全文搜索</strong>
               <small>标题、正文、摘要、标签</small>
             </div>
             <div className="home-floating-card card-b">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 17c3-7 6 2 9-5s5-1 7-6"/><circle cx="5" cy="17" r="1"/><circle cx="13" cy="12" r="1"/><circle cx="20" cy="6" r="1"/></svg>
               <span>Roadmap</span>
               <strong>学习路线</strong>
               <small>卡片式流程导航</small>
@@ -538,6 +541,7 @@ function HomePage() {
                 viewport={{ once: true }}
               >
                 <div className="home-feature-top">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
                   <span>{featuredNote.createdAt}</span>
                   <span>{featuredNote.personality}</span>
                 </div>
@@ -562,7 +566,7 @@ function HomePage() {
                   transition={{ delay: index * 0.08 }}
                 >
                   <Link to={`/note/${note.slug}`} className="home-stack-item">
-                    <span>{String(index + 2).padStart(2, '0')}</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="home-stack-icon"><path d="M9 5l7 7-7 7"/></svg>
                     <div>
                       <strong>{note.title}</strong>
                       <small>{note.tags.slice(0, 3).map((tag) => `#${tag}`).join('  ')}</small>
@@ -584,13 +588,15 @@ function HomePage() {
 
           <div className="home-capability-grid">
             {[
-              { title: '沉浸式长文阅读', text: '固定目录、阅读进度、字体控制、PDF 打印版和代码高亮复制。', to: '/notes' },
-              { title: '标签与全文搜索', text: '顶部搜索弹窗即时检索标题、摘要、标签和正文，标签页支持主题分组。', to: '/tags' },
-              { title: '学习路线流图', text: '用 React Flow 把网址、视频和博文组织成并行阶段路线图。', to: '/roadmap' },
-              { title: '知识图谱探索', text: '基于标签生成笔记网络，发现不同主题之间的隐藏连接。', to: '/graph' },
-            ].map((item, index) => (
+              { title: '沉浸式长文阅读', text: '固定目录、阅读进度、字体控制、PDF 打印版和代码高亮复制。', to: '/notes', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' },
+              { title: '标签与全文搜索', text: '顶部搜索弹窗即时检索标题、摘要、标签和正文，标签页支持主题分组。', to: '/tags', icon: 'm21 21-4.35-4.35M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z' },
+              { title: '学习路线流图', text: '用 React Flow 把网址、视频和博文组织成并行阶段路线图。', to: '/roadmap', icon: 'M4 17c3-7 6 2 9-5s5-1 7-6M5 17h.01M13 12h.01M20 6h.01' },
+              { title: '知识图谱探索', text: '基于标签生成笔记网络，发现不同主题之间的隐藏连接。', to: '/graph', icon: 'M12 3c-1.5 2-5 4-8 4 0 5 2 11 8 14 6-3 8-9 8-14-3 0-6.5-2-8-4ZM8 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm8 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z' },
+            ].map((item) => (
               <Link key={item.title} to={item.to} className="home-capability-card">
-                <span>{String(index + 1).padStart(2, '0')}</span>
+                <div className="home-capability-icon">
+                  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d={item.icon} /></svg>
+                </div>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </Link>
@@ -1226,6 +1232,146 @@ function GraphPage() {
   );
 }
 
+function ResourcesPage() {
+  const categories = [
+    {
+      title: 'AI 编程',
+      icon: 'M12 3c-1.5 2-5 4-8 4 0 5 2 11 8 14 6-3 8-9 8-14-3 0-6.5-2-8-4Z',
+      items: [
+        { name: 'Claude Code', desc: 'Anthropic 官方 CLI 编程助手，支持 Plan/Act 模式', url: 'https://code.claude.com/docs/en/overview' },
+        { name: 'Cursor', desc: 'AI-First 代码编辑器，深度集成多模型对话', url: 'https://cursor.sh/' },
+        { name: 'GitHub Copilot', desc: 'GitHub 推出的 AI 编程助手，支持多种 IDE', url: 'https://github.com/features/copilot' },
+        { name: 'OpenAI Codex', desc: 'OpenAI 代码生成模型，ChatGPT 插件生态', url: 'https://github.com/openai/codex' },
+        { name: 'CC-Switch', desc: 'Claude Code 多模型切换工具', url: 'https://github.com/farion1231/cc-switch' },
+        { name: 'OpenClaw', desc: 'AI 编程生态聚合平台', url: 'https://openclaw.ai/' },
+      ],
+    },
+    {
+      title: '前端开发',
+      icon: 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z',
+      items: [
+        { name: 'React', desc: '用于构建用户界面的 JavaScript 库', url: 'https://react.dev/' },
+        { name: 'Vite', desc: '下一代前端构建工具，极速 HMR', url: 'https://vitejs.dev/' },
+        { name: 'Tailwind CSS', desc: 'Utility-First CSS 框架', url: 'https://tailwindcss.com/' },
+        { name: 'TypeScript', desc: '带有类型系统的 JavaScript 超集', url: 'https://www.typescriptlang.org/' },
+        { name: 'Next.js', desc: 'React 全栈框架，支持 SSR/SSG', url: 'https://nextjs.org/' },
+        { name: 'Framer Motion', desc: 'React 动画库，声明式交互动画', url: 'https://www.framer.com/motion/' },
+      ],
+    },
+    {
+      title: '开发工具',
+      icon: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+      items: [
+        { name: 'VS Code', desc: '轻量级代码编辑器，海量扩展生态', url: 'https://code.visualstudio.com/' },
+        { name: 'WebStorm', desc: 'JetBrains 前端 IDE，智能代码分析', url: 'https://www.jetbrains.com/webstorm/' },
+        { name: 'Arc Browser', desc: '现代化浏览器，垂直标签和空间管理', url: 'https://arc.net/' },
+        { name: 'iTerm2', desc: 'macOS 终端替代品，分屏和配置丰富', url: 'https://iterm2.com/' },
+        { name: 'Warp', desc: 'Rust 编写的现代化终端，AI 辅助', url: 'https://www.warp.dev/' },
+        { name: 'Raycast', desc: 'macOS 效率启动器，开发者友好', url: 'https://www.raycast.com/' },
+      ],
+    },
+    {
+      title: '知识管理',
+      icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+      items: [
+        { name: 'Obsidian', desc: '本地优先的知识库，双向链接和图谱', url: 'https://obsidian.md/' },
+        { name: 'Notion', desc: 'All-in-One 工作空间，文档和数据库', url: 'https://www.notion.so/' },
+        { name: 'Logseq', desc: '开源知识管理，大纲和双向链接', url: 'https://logseq.com/' },
+        { name: 'Heptabase', desc: '可视化白板笔记，思维导图式管理', url: 'https://heptabase.com/' },
+        { name: 'Readwise', desc: '阅读高亮和笔记聚合工具', url: 'https://readwise.io/' },
+        { name: 'Memos', desc: '开源轻量笔记，类 Twitter 风格', url: 'https://usememos.com/' },
+      ],
+    },
+    {
+      title: '学习资源',
+      icon: 'M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 0 1 .665 6.479A11.952 11.952 0 0 0 12 20.055a11.952 11.952 0 0 0-6.824-2.998 12.078 12.078 0 0 1 .665-6.479L12 14zm0 0l-6.16-3.422a12.083 12.083 0 0 0-.665 6.479A11.952 11.952 0 0 0 12 20.055',
+      items: [
+        { name: 'MDN Web Docs', desc: 'Web 标准权威文档，HTML/CSS/JS 参考', url: 'https://developer.mozilla.org/zh-CN/' },
+        { name: 'Roadmap.sh', desc: '开发者学习路线图，覆盖全技术栈', url: 'https://roadmap.sh/' },
+        { name: 'Learn Git Branching', desc: '交互式 Git 学习，可视化分支练习', url: 'https://learngitbranching.js.org/' },
+        { name: 'JavaScript.info', desc: '现代 JavaScript 教程，从入门到深入', url: 'https://javascript.info/' },
+        { name: 'Patterns.dev', desc: '现代 Web 应用设计模式与最佳实践', url: 'https://www.patterns.dev/' },
+        { name: 'Developer Roadmaps', desc: 'JavaGuide 编程学习路线', url: 'https://javaguide.cn/' },
+      ],
+    },
+    {
+      title: '部署与运维',
+      icon: 'M5 12h14M12 5l7 7-7 7',
+      items: [
+        { name: 'Vercel', desc: '前端部署平台，原生支持 React/Next.js', url: 'https://vercel.com/' },
+        { name: 'Netlify', desc: '静态网站托管，支持 Serverless 函数', url: 'https://www.netlify.com/' },
+        { name: 'Cloudflare Pages', desc: '边缘计算部署，全球 CDN 加速', url: 'https://pages.cloudflare.com/' },
+        { name: 'Railway', desc: '全栈部署平台，数据库和容器托管', url: 'https://railway.app/' },
+        { name: 'Docker', desc: '应用容器化，环境一致性和快速部署', url: 'https://www.docker.com/' },
+        { name: 'Supabase', desc: '开源 Firebase 替代，BaaS 后端服务', url: 'https://supabase.com/' },
+      ],
+    },
+  ];
+
+  const totalResources = categories.reduce((sum, c) => sum + c.items.length, 0);
+
+  return (
+    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12 text-center"
+        >
+          <h1 className="text-5xl font-bold mb-4 gradient-text">资源库</h1>
+          <p className="text-lg theme-muted max-w-2xl mx-auto">
+            精选 {totalResources} 个开发工具和学习资源，分类整理方便快速定位。
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {categories.map((cat, ci) => (
+            <motion.div
+              key={cat.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 * ci }}
+              className="glass-card p-5"
+            >
+              <div className="flex items-center gap-3 mb-4 pb-3 border-b border-white/10">
+                <div className="w-8 h-8 rounded-lg bg-nebula-accent/10 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 text-nebula-accent" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d={cat.icon} />
+                  </svg>
+                </div>
+                <h2 className="text-base font-bold theme-text">{cat.title}</h2>
+              </div>
+              <ul className="space-y-0.5">
+                {cat.items.map((item) => (
+                  <li key={item.name}>
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="resource-item-link"
+                    >
+                      <img
+                        className="resource-item-icon"
+                        src={`https://favicon.yandex.net/favicon/${getHostname(item.url)}`}
+                        alt=""
+                        width="16"
+                        height="16"
+                        loading="lazy"
+                      />
+                      <span className="resource-item-name">{item.name}</span>
+                      <span className="resource-item-desc">{item.desc}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AboutPage() {
   const notes = getNotes();
   const tags = getAllTags(notes);
@@ -1472,11 +1618,29 @@ function App() {
                 图谱
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
+              <Link to="/resources" className="nav-link group">
+                <NavIcon name="resources" />
+                资源库
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
+              </Link>
               <Link to="/about" className="nav-link group">
                 <NavIcon name="about" />
                 关于
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
+              <a
+                href="https://github.com/Alleyf/MindScape"
+                target="_blank"
+                rel="noreferrer"
+                className="nav-link group"
+                title="GitHub 源码"
+              >
+                <svg viewBox="0 0 24 24" className="nav-icon" aria-hidden="true">
+                  <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.58 9.58 0 0 1 12 6.8c.85.004 1.7.115 2.5.34 1.9-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z" />
+                </svg>
+                <span className="hidden md:inline">GitHub</span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
+              </a>
               <ThemeToggle />
             </div>
           </div>
@@ -1491,12 +1655,71 @@ function App() {
           <Route path="/note/:slug" element={<NotePage />} />
           <Route path="/roadmap" element={<RoadmapPage />} />
           <Route path="/graph" element={<GraphPage />} />
+          <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
         
         {/* Footer */}
-        <footer className="py-8 text-center theme-subtle text-sm relative z-10">
-          <p>MindScape © 2026 — 用 AI 增强人类创造力</p>
+        <footer className="relative z-10 mt-20">
+          {/* Decorative top border */}
+          <div className="relative h-px mb-12 mx-auto max-w-5xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-nebula-accent/30 to-transparent" />
+            <div className="absolute left-1/2 -translate-x-1/2 -top-[3px] w-2 h-2 rotate-45 border border-nebula-accent/40" />
+          </div>
+
+          <div className="max-w-5xl mx-auto px-4 pb-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+              {/* Brand */}
+              <div className="md:col-span-1">
+                <MindScapeLogo />
+                <p className="mt-3 text-sm theme-muted leading-relaxed max-w-xs">
+                  一个 AI-Native 的创意知识空间，思想如星云般绽放，知识如有机生命般生长。
+                </p>
+              </div>
+
+              {/* Quick links */}
+              <div>
+                <h3 className="text-xs font-semibold theme-subtle uppercase tracking-widest mb-4">导航</h3>
+                <div className="flex flex-col gap-2.5">
+                  <Link to="/notes" className="text-sm theme-muted hover:text-nebula-accent transition-colors">所有笔记</Link>
+                  <Link to="/tags" className="text-sm theme-muted hover:text-nebula-accent transition-colors">标签分类</Link>
+                  <Link to="/roadmap" className="text-sm theme-muted hover:text-nebula-accent transition-colors">学习路线</Link>
+                  <Link to="/graph" className="text-sm theme-muted hover:text-nebula-accent transition-colors">笔记图谱</Link>
+                  <Link to="/resources" className="text-sm theme-muted hover:text-nebula-accent transition-colors">资源库</Link>
+                </div>
+              </div>
+
+              {/* Connect */}
+              <div>
+                <h3 className="text-xs font-semibold theme-subtle uppercase tracking-widest mb-4">连接</h3>
+                <div className="flex flex-col gap-2.5">
+                  <a
+                    href="https://github.com/Alleyf/MindScape"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm theme-muted hover:text-nebula-accent transition-colors inline-flex items-center gap-2"
+                  >
+                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.58 9.58 0 0 1 12 6.8c.85.004 1.7.115 2.5.34 1.9-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z" />
+                    </svg>
+                    GitHub 仓库
+                  </a>
+                  <Link to="/about" className="text-sm theme-muted hover:text-nebula-accent transition-colors">关于本站</Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom bar */}
+            <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs theme-subtle">
+              <p>MindScape © 2026</p>
+              <p className="flex items-center gap-2">
+                <span>用</span>
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-nebula-accent" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+                <span>与 AI 增强人类创造力</span>
+              </p>
+              <p>由 墨·夕 构建</p>
+            </div>
+          </div>
         </footer>
         <FloatingTools />
         <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />

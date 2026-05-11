@@ -587,9 +587,21 @@ body {
   border: 1px solid var(--border-soft);
   border-radius: 26px;
   background: var(--surface);
-  padding: 1.2rem;
+  padding: 1.5rem;
   color: var(--text-primary);
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.home-capability-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--nebula-accent) 12%, transparent);
+  color: var(--nebula-accent);
+  margin-bottom: 1.5rem;
 }
 
 .home-capability-card h3 {
@@ -1334,8 +1346,8 @@ button.nav-link {
 
 .reference-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
 }
 
 .reference-grid > * {
@@ -1367,7 +1379,7 @@ button.nav-link {
 .reference-preview-cover {
   position: relative;
   display: block;
-  height: 9.5rem;
+  height: 6.5rem;
   overflow: hidden;
   border-bottom: 1px solid var(--border-soft);
   background-color: color-mix(in srgb, var(--nebula-accent) 8%, var(--surface-strong));
@@ -1878,6 +1890,52 @@ button.nav-link {
 }
 
 .sidebar-related-link:hover {
+  color: var(--nebula-accent);
+}
+
+/* ──资源库条目── */
+.resource-item-link {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  gap: 0.45rem 0.5rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.18s ease;
+  align-items: center;
+}
+
+.resource-item-link:hover {
+  background: var(--surface-hover);
+}
+
+.resource-item-icon {
+  grid-row: span 2;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 4px;
+  align-self: center;
+}
+
+.resource-item-name {
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 550;
+  line-height: 1.4;
+  min-width: 0;
+}
+
+.resource-item-desc {
+  color: var(--text-subtle);
+  font-size: 0.74rem;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.resource-item-link:hover .resource-item-name {
   color: var(--nebula-accent);
 }
 
