@@ -1,11 +1,52 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MindScape - AI-Native Creative WikiBlog</title>
-    <meta name="description" content="A breathing, imagining, connecting personal thought universe" />
+    <meta name="theme-color" content="#D97757" />
+    <meta name="color-scheme" content="light dark" />
+
+    <title>MindScape - AI-Native 创意知识空间</title>
+    <meta name="description" content="MindScape 是一个 AI-Native 创意知识空间，记录 AI Coding、前端工程、知识管理、学习路线与个人工作流实践。" />
+    <meta name="keywords" content="MindScape, AI Coding, Claude Code, Codex, React, 前端工程, 知识管理, 数字花园, 学习路线, 工作流" />
+    <meta name="author" content="MindScape" />
+    <meta name="robots" content="index,follow" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MindScape" />
+    <meta property="og:title" content="MindScape - AI-Native 创意知识空间" />
+    <meta property="og:description" content="记录 AI Coding、前端工程、知识管理、学习路线与个人工作流实践。" />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:url" content="/" />
+    <meta property="og:locale" content="zh_CN" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MindScape - AI-Native 创意知识空间" />
+    <meta name="twitter:description" content="记录 AI Coding、前端工程、知识管理、学习路线与个人工作流实践。" />
+    <meta name="twitter:image" content="/og-image.svg" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "MindScape",
+        "description": "AI-Native 创意知识空间，记录 AI Coding、前端工程、知识管理与个人工作流实践。",
+        "inLanguage": "zh-CN",
+        "url": "/",
+        "image": "/og-image.svg",
+        "keywords": ["AI Coding", "前端工程", "知识管理", "数字花园", "学习路线"]
+      }
+    </script>
+    <script>
+      const canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      canonical.href = window.location.origin + window.location.pathname;
+      document.head.appendChild(canonical);
+    </script>
   </head>
   <body>
     <div id="root"></div>

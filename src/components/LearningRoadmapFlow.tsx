@@ -3,7 +3,6 @@ import {
   Background,
   Controls,
   Handle,
-  MiniMap,
   Position,
   ReactFlow,
   ReactFlowProvider,
@@ -93,16 +92,19 @@ function buildFlow(route: LearningRoute): { nodes: Node<RoadmapNodeData>[]; edge
     return groups;
   }, []);
 
+  const rowGap = 138;
+  const columnGap = 330;
+  const centerY = 245;
   const nodes: Node<RoadmapNodeData>[] = groupedItems.flatMap((group, groupIndex) => {
-    const columnHeight = group.items.length * 108;
-    const startY = Math.max(24, 190 - columnHeight / 2);
+    const columnHeight = (group.items.length - 1) * rowGap;
+    const startY = Math.max(30, centerY - columnHeight / 2);
 
     return group.items.map((item, itemIndex) => ({
       id: `${route.id}-${groupIndex}-${itemIndex}`,
       type: 'roadmapCard',
       position: {
-        x: groupIndex * 285,
-        y: startY + itemIndex * 108,
+        x: groupIndex * columnGap,
+        y: startY + itemIndex * rowGap,
       },
       data: {
         label: item.label,
@@ -155,17 +157,6 @@ export function LearningRoadmapFlow({ route }: LearningRoadmapFlowProps) {
           proOptions={{ hideAttribution: true }}
         >
           <Background gap={18} size={1} color="var(--flow-dot)" />
-          <MiniMap
-            pannable
-            zoomable
-            position="bottom-right"
-            nodeColor={() => route.accent}
-            nodeStrokeColor={() => route.accent}
-            nodeBorderRadius={6}
-            maskColor="rgba(250, 249, 245, 0.62)"
-            bgColor="var(--surface-strong)"
-            className="roadmap-minimap"
-          />
           <Controls showInteractive={false} />
         </ReactFlow>
       </div>

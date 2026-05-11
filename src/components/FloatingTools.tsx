@@ -10,11 +10,48 @@ function applyFontSize(size: FontSize) {
   localStorage.setItem('mindscape-font-size', size);
 }
 
+function getScrollContainers(): Array<Window | HTMLElement> {
+  return [
+    window,
+    document.documentElement,
+    document.body,
+    document.getElementById('root'),
+    ...Array.from(document.querySelectorAll<HTMLElement>('[data-scroll-container], .app-shell')),
+  ].filter(Boolean) as Array<Window | HTMLElement>;
+}
+
+function getScrollMetrics() {
+  const candidates = getScrollContainers().map((target) => {
+    if (target === window) {
+      const scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      const clientHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+      return {
+        target,
+        scrollTop: window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0,
+        maxScroll: Math.max(0, scrollHeight - clientHeight),
+      };
+    }
+
+    const element = target as HTMLElement;
+    return {
+      target,
+      scrollTop: element.scrollTop,
+      maxScroll: Math.max(0, element.scrollHeight - element.clientHeight),
+    };
+  });
+
+  return candidates.sort((a, b) => {
+    const activeDelta = Number(b.scrollTop > 0) - Number(a.scrollTop > 0);
+    return activeDelta || b.maxScroll - a.maxScroll;
+  })[0] || { target: window, scrollTop: 0, maxScroll: 0 };
+}
+
 export function FloatingTools() {
   const [fontSize, setFontSize] = useState<FontSize>('normal');
   const [notice, setNotice] = useState('');
   const [immersive, setImmersive] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const moreRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
 
@@ -36,6 +73,31 @@ export function FloatingTools() {
     const timer = window.setTimeout(() => setNotice(''), 1800);
     return () => window.clearTimeout(timer);
   }, [notice]);
+
+  useEffect(() => {
+    let frame = 0;
+    const updateProgress = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const { scrollTop, maxScroll } = getScrollMetrics();
+        setScrollProgress(maxScroll <= 0 ? 0 : Math.min(100, Math.max(0, (scrollTop / maxScroll) * 100)));
+      });
+    };
+
+    const containers = getScrollContainers();
+    updateProgress();
+    containers.forEach((container) => container.addEventListener('scroll', updateProgress, { passive: true }));
+    document.addEventListener('scroll', updateProgress, { passive: true, capture: true });
+    window.addEventListener('resize', updateProgress);
+    const interval = window.setInterval(updateProgress, 400);
+    return () => {
+      cancelAnimationFrame(frame);
+      containers.forEach((container) => container.removeEventListener('scroll', updateProgress));
+      document.removeEventListener('scroll', updateProgress, { capture: true });
+      window.removeEventListener('resize', updateProgress);
+      window.clearInterval(interval);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (immersive) {
@@ -334,12 +396,28 @@ export function FloatingTools() {
     setNotice('请在打印窗口选择保存为 PDF');
   };
 
+  const progressCircumference = 2 * Math.PI * 18;
+  const progressOffset = progressCircumference * (1 - scrollProgress / 100);
+
   return (
     <>
       <div className="floating-tools" aria-label="阅读工具">
         {notice && <div className="floating-tools-notice">{notice}</div>}
-        <button type="button" onClick={backToTop} title="回到顶部" aria-label="回到顶部">
-          <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
+        <button type="button" onClick={backToTop} title="回到顶部" aria-label={`回到顶部，已阅读 ${Math.round(scrollProgress)}%`} className="scroll-progress-button">
+          <svg className="scroll-progress-ring" viewBox="0 0 44 44" aria-hidden="true">
+            <circle className="scroll-progress-track" cx="22" cy="22" r="18" />
+            <circle
+              className="scroll-progress-value"
+              cx="22"
+              cy="22"
+              r="18"
+              style={{
+                strokeDasharray: progressCircumference,
+                strokeDashoffset: progressOffset,
+              }}
+            />
+          </svg>
+          <svg className="scroll-progress-icon" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
         </button>
         <button type="button" onClick={scrollToBottom} title="回到底部" aria-label="回到底部">
           <svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" /></svg>

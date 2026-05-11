@@ -8,6 +8,8 @@ import { AIPanel } from './components/AIPanel';
 import { MarkdownContent } from './components/MarkdownContent';
 import { ThemeToggle } from './components/ThemeToggle';
 import { LearningRoadmapFlow, type LearningRoute } from './components/LearningRoadmapFlow';
+import { NoteGraph } from './components/NoteGraph';
+import { NoteGraphSidebar } from './components/NoteGraphSidebar';
 import { FloatingTools } from './components/FloatingTools';
 import { getNotes, getNoteBySlug, getRandomNote } from './utils/noteLoader';
 import { Note } from './utils/noteLoader';
@@ -29,6 +31,173 @@ interface ReferenceLink {
   domain: string;
 }
 
+interface ReferencePreviewData {
+  title: string;
+  description: string;
+  image: string;
+  siteName: string;
+  hostname: string;
+}
+
+function isImageUrl(url: string): boolean {
+  const cleanUrl = url.split('#')[0].split('?')[0].toLowerCase();
+  return /\.(avif|gif|jpe?g|png|svg|webp)$/.test(cleanUrl);
+}
+
+function getHostname(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url.replace(/^https?:\/\//, '').split('/')[0];
+  }
+}
+
+function createReferenceCover(domain: string): string {
+  const safeDomain = domain.slice(0, 38).replace(/[<>&"]/g, '');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#241f1a"/>
+        <stop offset="0.52" stop-color="#4f3528"/>
+        <stop offset="1" stop-color="#d97757"/>
+      </linearGradient>
+      <radialGradient id="glow" cx="24%" cy="18%" r="70%">
+        <stop offset="0" stop-color="#fffaf2" stop-opacity="0.35"/>
+        <stop offset="1" stop-color="#fffaf2" stop-opacity="0"/>
+      </radialGradient>
+      <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+        <circle cx="3" cy="3" r="2" fill="#fffaf2" opacity="0.14"/>
+      </pattern>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#141413" flood-opacity="0.28"/>
+      </filter>
+      <clipPath id="card">
+        <rect x="72" y="118" width="520" height="252" rx="34"/>
+      </clipPath>
+      <linearGradient id="cardGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fffaf2"/>
+        <stop offset="1" stop-color="#e7d6c4"/>
+      </radialGradient>
+    </defs>
+    <rect width="960" height="540" rx="42" fill="url(#bg)"/>
+    <rect width="960" height="540" fill="url(#dots)"/>
+    <circle cx="210" cy="95" r="260" fill="url(#glow)"/>
+    <path d="M650 90 C820 116 902 242 860 390 C742 340 646 436 540 356 C646 278 568 172 650 90Z" fill="#fffaf2" opacity="0.18"/>
+    <g filter="url(#shadow)">
+      <rect x="72" y="118" width="520" height="252" rx="34" fill="#fffaf2" opacity="0.96"/>
+      <g clip-path="url(#card)">
+        <path d="M78 326 C168 196 310 374 418 238 S548 204 596 156" fill="none" stroke="#d97757" stroke-width="22" stroke-linecap="round" opacity="0.62"/>
+        <circle cx="504" cy="156" r="76" fill="#d97757" opacity="0.16"/>
+      </g>
+    </g>
+    <text x="112" y="178" font-family="Arial, sans-serif" font-size="26" font-weight="800" fill="#d97757" letter-spacing="5">REFERENCE</text>
+    <text x="112" y="254" font-family="Georgia, serif" font-size="52" font-weight="800" fill="#241f1a">Link Preview</text>
+    <text x="112" y="318" font-family="Arial, sans-serif" font-size="34" font-weight="800" fill="#8f4f32">${safeDomain}</text>
+    <text x="72" y="458" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#fffaf2" opacity="0.88">MindScape curated reference</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+async function fetchLinkPreviewMetadata(url: string): Promise<ReferencePreviewData> {
+  const hostname = getHostname(url);
+  const fallback = {
+    title: hostname,
+    description: '点击打开外部参考文档。',
+    image: createReferenceCover(hostname),
+    siteName: hostname,
+    hostname,
+  };
+
+  try {
+    const response = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+    if (!response.ok) return fallback;
+
+    const payload = await response.json();
+    const data = payload?.data || {};
+    const title = data.title || data.publisher || hostname;
+    const description = data.description || data.lang || fallback.description;
+    const rawImage = data.image?.url || data.logo?.url || '';
+    const image = rawImage && !rawImage.startsWith('/') ? rawImage : fallback.image;
+
+    return {
+      title,
+      description,
+      image,
+      siteName: data.publisher || data.author || hostname,
+      hostname,
+    };
+  } catch {
+    return fallback;
+  }
+}
+
+function ReferencePreviewCard({ reference }: { reference: ReferenceLink }) {
+  const fallback = useMemo(() => ({
+    title: reference.title || reference.domain,
+    description: '点击打开外部参考文档。',
+    image: createReferenceCover(reference.domain),
+    siteName: reference.domain,
+    hostname: reference.domain,
+  }), [reference.domain, reference.title]);
+  const [preview, setPreview] = useState<ReferencePreviewData>(fallback);
+  const [loading, setLoading] = useState(true);
+  const [imageSrc, setImageSrc] = useState(fallback.image);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setPreview(fallback);
+    setImageSrc(fallback.image);
+
+    fetchLinkPreviewMetadata(reference.url)
+      .then((metadata) => {
+        if (cancelled) return;
+        const next = {
+          ...metadata,
+          title: metadata.title || fallback.title,
+          description: metadata.description || fallback.description,
+          image: metadata.image || fallback.image,
+          siteName: metadata.siteName || fallback.siteName,
+          hostname: metadata.hostname || fallback.hostname,
+        };
+        setPreview(next);
+        setImageSrc(next.image);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setPreview(fallback);
+        setImageSrc(fallback.image);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [reference.url, fallback]);
+
+  return (
+    <a href={reference.url} target="_blank" rel="noreferrer" className="reference-preview-card" aria-busy={loading}>
+      <span className="reference-preview-cover">
+        <img
+          src={imageSrc}
+          alt=""
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          onError={() => setImageSrc(fallback.image)}
+        />
+        {loading && <span className="reference-preview-shimmer" />}
+      </span>
+      <span className="reference-preview-body">
+        <strong>{preview.title}</strong>
+        <span className="reference-preview-desc">{preview.description}</span>
+        <span className="reference-preview-site">{preview.siteName} · {preview.hostname}</span>
+      </span>
+    </a>
+  );
+}
+
 function slugifyHeading(text: string): string {
   return text
     .trim()
@@ -41,7 +210,7 @@ function extractTableOfContents(content: string): TocItem[] {
   return content
     .split(/\r?\n/)
     .map((line) => {
-      const match = line.match(/^(#{2,3})\s+(.+)$/);
+      const match = line.match(/^(#{1,3})\s+(.+)$/);
       if (!match) return null;
 
       const text = match[2].replace(/[#*_`[\]()]/g, '').trim();
@@ -59,7 +228,7 @@ function buildTocTree(items: TocItem[]): TocNode[] {
   let currentParent: TocNode | null = null;
 
   for (const item of items) {
-    if (item.level === 2) {
+    if (item.level <= 2) {
       currentParent = { item, children: [] };
       tree.push(currentParent);
     } else if (item.level >= 3 && currentParent) {
@@ -151,7 +320,8 @@ function extractReferenceLinks(content: string): ReferenceLink[] {
   while ((match = linkPattern.exec(content)) !== null) {
     const [, rawTitle, rawUrl] = match;
     const url = rawUrl.trim();
-    if (links.has(url)) continue;
+    const previousChar = content[match.index - 1];
+    if (previousChar === '!' || isImageUrl(url) || links.has(url)) continue;
 
     let domain = url;
     try {
@@ -240,11 +410,13 @@ function MindScapeLogo({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function NavIcon({ name }: { name: 'notes' | 'tags' | 'roadmap' | 'about' }) {
+function NavIcon({ name }: { name: 'notes' | 'tags' | 'search' | 'roadmap' | 'graph' | 'about' }) {
   const paths = {
     notes: 'M6 4h9a3 3 0 0 1 3 3v13H8a2 2 0 0 1-2-2V4Zm3 4h6M9 12h5',
     tags: 'M4 7V4h3l10.5 10.5a2.1 2.1 0 0 1 0 3l-2 2a2.1 2.1 0 0 1-3 0L4 11V7Zm3 .5h.01',
+    search: 'm21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z',
     roadmap: 'M4 17c3-7 6 2 9-5s5-1 7-6M5 17h.01M13 12h.01M20 6h.01',
+    graph: 'M12 3c-1.5 2-5 4-8 4 0 5 2 11 8 14 6-3 8-9 8-14-3 0-6.5-2-8-4ZM8 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm8 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z',
     about: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-10v6M12 7h.01',
   };
 
@@ -503,10 +675,9 @@ function TagsPage() {
   );
 }
 
-function SearchPage() {
+function SearchDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const notes = getNotes();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('q') || '';
+  const [query, setQuery] = useState('');
   const normalizedQuery = normalizeSearchText(query);
   const results = useMemo(() => {
     if (!normalizedQuery) return [];
@@ -521,40 +692,58 @@ function SearchPage() {
       .sort((a, b) => b.score - a.score || new Date(b.note.createdAt).getTime() - new Date(a.note.createdAt).getTime());
   }, [notes, normalizedQuery]);
 
-  const updateQuery = (value: string) => {
-    if (value.trim()) {
-      setSearchParams({ q: value });
-    } else {
-      setSearchParams({});
-    }
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  const closeAndReset = () => {
+    onClose();
+    setQuery('');
   };
 
   return (
-    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
-      <div className="max-w-5xl mx-auto">
-        <motion.h1
-          className="text-5xl font-bold mb-4 gradient-text"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          全文搜索
-        </motion.h1>
-        <p className="theme-muted mb-8 text-lg">
-          搜索标题、正文、摘要和标签，快速定位知识片段。
-        </p>
+    <div className="search-modal-layer" role="dialog" aria-modal="true" aria-label="全文搜索">
+      <button type="button" className="search-modal-backdrop" aria-label="关闭搜索" onClick={onClose} />
+      <motion.div
+        className="search-modal"
+        initial={{ opacity: 0, y: 18, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 18, scale: 0.98 }}
+        transition={{ duration: 0.18 }}
+      >
+        <div className="search-modal-header">
+          <div>
+            <p>Search</p>
+            <h2>全文搜索</h2>
+          </div>
+          <button type="button" className="search-close-btn" onClick={onClose} aria-label="关闭搜索">
+            <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
 
-        <div className="search-box">
+        <div className="search-box search-box-modal">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" />
           </svg>
           <input
             value={query}
-            onChange={(event) => updateQuery(event.target.value)}
+            onChange={(event) => setQuery(event.target.value)}
             placeholder="搜索 AI Coding、React、workflow..."
             autoFocus
           />
           {query && (
-            <button type="button" onClick={() => updateQuery('')}>
+            <button type="button" onClick={() => setQuery('')}>
               清除
             </button>
           )}
@@ -564,9 +753,9 @@ function SearchPage() {
           {query ? `找到 ${results.length} 条结果` : `当前可搜索 ${notes.length} 篇笔记`}
         </div>
 
-        <div className="search-results">
+        <div className="search-results search-results-modal">
           {results.map(({ note, snippet }) => (
-            <Link key={note.slug} to={`/note/${note.slug}`} className="search-result-card">
+            <Link key={note.slug} to={`/note/${note.slug}`} className="search-result-card" onClick={closeAndReset}>
               <div className="flex flex-wrap gap-2 mb-3">
                 {note.tags.slice(0, 4).map((tag) => (
                   <span key={tag} className="tag-pill">#{tag}</span>
@@ -584,18 +773,37 @@ function SearchPage() {
             没找到匹配内容。换个关键词试试。
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
+}
+
+function SearchPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/', { replace: true });
+  }, [navigate]);
+
+  return null;
 }
 
 function NotePage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const note = useMemo(() => (slug ? getNoteBySlug(slug) : null), [slug]);
+  const allNotes = useMemo(() => getNotes(), []);
   const toc = useMemo(() => (note ? extractTableOfContents(note.content) : []), [note]);
   const references = useMemo(() => (note ? extractReferenceLinks(note.content) : []), [note]);
-  const relatedNotes = useMemo(() => (note ? getRelatedNotes(note, getNotes()) : []), [note]);
+  const relatedNotes = useMemo(() => (note ? getRelatedNotes(note, allNotes, 4) : []), [note, allNotes]);
+  const adjacentNotes = useMemo(() => {
+    if (!note) return { previous: null as Note | null, next: null as Note | null };
+    const index = allNotes.findIndex((item) => item.slug === note.slug);
+    return {
+      previous: index >= 0 ? allNotes[index + 1] ?? null : null,
+      next: index > 0 ? allNotes[index - 1] ?? null : null,
+    };
+  }, [note, allNotes]);
   const [randomNote, setRandomNote] = useState<Note | null>(null);
   const noteMeta = useMemo(() => {
     if (!note) return null;
@@ -644,6 +852,8 @@ function NotePage() {
             )}
         </div>
       </aside>
+
+      <NoteGraphSidebar currentNote={note} allNotes={allNotes} relatedNotes={relatedNotes} />
 
       <main className="reading-main max-w-3xl">
         {/* Back button */}
@@ -732,7 +942,16 @@ function NotePage() {
             )}
           </div>
         </motion.header>
-        
+
+        <div className="mb-6">
+          <AIPanel
+            note={note}
+            randomNote={randomNote}
+            relatedNotes={relatedNotes}
+            onRandomWalk={() => randomNote && navigate(`/note/${randomNote.slug}`)}
+          />
+        </div>
+
         {/* Note content with Markdown renderer */}
         <motion.article
           initial={{ opacity: 0, y: 20 }}
@@ -742,19 +961,21 @@ function NotePage() {
         >
           <div className="glass-card p-6 md:p-8 rounded-2xl">
             <MarkdownContent content={note.content} />
-            <div className="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm theme-muted">
-              {note.updatedAt && (
-                <span>更新于 {note.updatedAt}</span>
-              )}
-              {noteMeta && (
-                <>
-                  <span>约 {noteMeta.wordCount} 字</span>
-                  <span>预计阅读 {noteMeta.readingTime} 分钟</span>
-                </>
-              )}
-              <div className="flex flex-wrap gap-2 ml-auto">
+            <div className="note-content-footer">
+              <div className="note-content-meta">
+                {note.updatedAt && (
+                  <span>更新于 {note.updatedAt}</span>
+                )}
+                {noteMeta && (
+                  <>
+                    <span>约 {noteMeta.wordCount} 字</span>
+                    <span>预计阅读 {noteMeta.readingTime} 分钟</span>
+                  </>
+                )}
+              </div>
+              <div className="note-content-tags">
                 {note.tags.map(tag => (
-                  <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-white/5 theme-subtle">#{tag}</span>
+                  <span key={tag}>#{tag}</span>
                 ))}
               </div>
             </div>
@@ -769,43 +990,40 @@ function NotePage() {
             </div>
             <div className="reference-grid">
               {references.map((reference) => (
-                <a
-                  key={reference.url}
-                  href={reference.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="reference-card"
-                >
-                  <span>{reference.domain}</span>
-                  <strong>{reference.title}</strong>
-                  <small>{reference.url}</small>
-                </a>
+                <ReferencePreviewCard key={reference.url} reference={reference} />
               ))}
             </div>
           </section>
         )}
 
-        {/* Mobile AI Panel */}
-        <div className="lg:hidden mt-12 mb-8">
-          <AIPanel
-            note={note}
-            isMobile={true}
-            randomNote={randomNote}
-            relatedNotes={relatedNotes}
-            onRandomWalk={() => randomNote && navigate(`/note/${randomNote.slug}`)}
-          />
-        </div>
+        <section className="note-navigation-section">
+          <div className="note-adjacent-row">
+            {adjacentNotes.previous ? (
+              <Link to={`/note/${adjacentNotes.previous.slug}`} className="note-adjacent-link note-adjacent-prev">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+                <span>{adjacentNotes.previous.title}</span>
+              </Link>
+            ) : (
+              <span className="note-adjacent-link note-adjacent-disabled">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+                <span>已经是第一篇</span>
+              </span>
+            )}
+
+            {adjacentNotes.next ? (
+              <Link to={`/note/${adjacentNotes.next.slug}`} className="note-adjacent-link note-adjacent-next">
+                <span>{adjacentNotes.next.title}</span>
+                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              </Link>
+            ) : (
+              <span className="note-adjacent-link note-adjacent-disabled">
+                <span>已经是最后一篇</span>
+                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              </span>
+            )}
+          </div>
+        </section>
       </main>
-      
-      {/* Desktop AI Panel */}
-      <div className="hidden xl:block">
-        <AIPanel
-          note={note}
-          randomNote={randomNote}
-          relatedNotes={relatedNotes}
-          onRandomWalk={() => randomNote && navigate(`/note/${randomNote.slug}`)}
-        />
-      </div>
     </div>
   );
 }
@@ -881,6 +1099,31 @@ function RoadmapPage() {
   );
 }
 
+function GraphPage() {
+  const notes = getNotes();
+
+  return (
+    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-10"
+        >
+          <h1 className="text-5xl font-bold mb-4 gradient-text">笔记图谱</h1>
+          <p className="theme-muted text-lg">
+            基于标签关联的 {notes.length} 篇笔记知识网络，节点代表笔记，连线代表共享标签。
+          </p>
+        </motion.div>
+
+        <div className="glass-card p-4 rounded-2xl">
+          <NoteGraph notes={notes} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AboutPage() {
   const notes = getNotes();
   const tags = getAllTags(notes);
@@ -937,6 +1180,8 @@ function AboutPage() {
 }
 
 function App() {
+  const [searchOpen, setSearchOpen] = useState(false);
+
   return (
     <Router>
       <div className="app-shell min-h-screen overflow-x-hidden">
@@ -958,9 +1203,19 @@ function App() {
                 标签
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
+              <button type="button" onClick={() => setSearchOpen(true)} className="nav-link group">
+                <NavIcon name="search" />
+                搜索
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
+              </button>
               <Link to="/roadmap" className="nav-link group">
                 <NavIcon name="roadmap" />
                 学习路线
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
+              </Link>
+              <Link to="/graph" className="nav-link group">
+                <NavIcon name="graph" />
+                图谱
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
               <Link to="/about" className="nav-link group">
@@ -978,8 +1233,10 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/tags" element={<TagsPage />} />
+          <Route path="/search" element={<SearchPage />} />
           <Route path="/note/:slug" element={<NotePage />} />
           <Route path="/roadmap" element={<RoadmapPage />} />
+          <Route path="/graph" element={<GraphPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
         
@@ -988,6 +1245,7 @@ function App() {
           <p>MindScape © 2026 — 用 AI 增强人类创造力</p>
         </footer>
         <FloatingTools />
+        <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
       </div>
     </Router>
   );

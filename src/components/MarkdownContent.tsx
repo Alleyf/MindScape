@@ -114,6 +114,46 @@ function CodeBlock({ children }: { children: React.ReactNode }) {
   );
 }
 
+function normalizeImageSrc(src?: string): string {
+  if (!src) return '';
+  const trimmed = src.trim();
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed.split('#')[0];
+  }
+  return trimmed;
+}
+
+function MarkdownImage({ src, alt }: { src?: string; alt?: string }) {
+  const [failed, setFailed] = useState(false);
+  const normalizedSrc = normalizeImageSrc(src);
+
+  if (!normalizedSrc || failed) {
+    return (
+      <span className="markdown-image-fallback">
+        <span>{alt || '图片暂时无法加载'}</span>
+        {normalizedSrc && (
+          <a href={normalizedSrc} target="_blank" rel="noreferrer">
+            打开原图
+          </a>
+        )}
+      </span>
+    );
+  }
+
+  return (
+    <span className="markdown-image-frame">
+      <img
+        src={normalizedSrc}
+        alt={alt || ''}
+        loading="lazy"
+        referrerPolicy="no-referrer"
+        onError={() => setFailed(true)}
+      />
+      {alt && <span className="markdown-image-caption">{alt}</span>}
+    </span>
+  );
+}
+
 export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => {
   return (
     <div className="markdown-content max-w-none">
@@ -152,6 +192,9 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
           ),
           a: ({node, ...props}) => (
             <a target="_blank" rel="noreferrer" className="text-blue-400 hover:text-blue-300 underline decoration-blue-400/50 hover:decoration-blue-300 transition-all" {...props} />
+          ),
+          img: ({node, src, alt}) => (
+            <MarkdownImage src={src} alt={alt} />
           ),
           strong: ({node, ...props}) => (
             <strong className="font-bold" {...props} />
