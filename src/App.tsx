@@ -429,74 +429,176 @@ function NavIcon({ name }: { name: 'notes' | 'tags' | 'search' | 'roadmap' | 'gr
 
 function HomePage() {
   const notes = getNotes();
+  const featuredNote = notes[0];
+  const secondaryNotes = notes.slice(1, 4);
+  const tags = useMemo(() => getAllTags(notes), [notes]);
+  const totalWords = useMemo(
+    () => notes.reduce((sum, note) => sum + note.content.replace(/[#>*_`\[\]()\-]/g, '').replace(/\s+/g, '').length, 0),
+    [notes],
+  );
+  const heroTags = tags.slice(0, 8);
   
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen home-lab">
+      <section className="home-hero">
         <div className="absolute inset-0 z-0">
           <ParticleField />
         </div>
         <MouseGlow />
         
-        <motion.div 
-          className="relative z-10 text-center px-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
+        <div className="home-hero-grid">
           <motion.div
-            className="mb-8 flex justify-center"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
+            className="home-hero-copy"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
           >
-            <MindScapeLogo />
-          </motion.div>
-          <motion.h1 
-            className="text-6xl md:text-8xl font-bold mb-6 gradient-text"
-            animate={{ 
-              backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-            }}
-            transition={{ duration: 5, repeat: Infinity }}
-            style={{ backgroundSize: '200% 200%' }}
-          >
-            MindScape
-          </motion.h1>
-          <p className="text-xl md:text-2xl theme-muted mb-8 max-w-2xl mx-auto leading-relaxed">
-            一个 AI-Native 的创意知识空间<br/>
-            <span className="text-sm theme-subtle">在这里，思想如星云般绽放，知识如有机生命般生长</span>
-          </p>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
-          >
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/notes" className="primary-button">探索思维宇宙</Link>
-              <Link to="/roadmap" className="theme-outline-button">查看学习路线</Link>
+            <div className="home-kicker">
+              <MindScapeLogo compact />
+              <span>AI-Native Knowledge Studio</span>
+            </div>
+            <h1>
+              让笔记像一座会发光的<span>思维星图</span>
+            </h1>
+            <p>
+              MindScape 把 Markdown、AI 联想、标签图谱、学习路线和参考文档预览组织成一个可探索的知识界面。
+              不是归档文章，而是在每次阅读时重新生成线索。
+            </p>
+
+            <div className="home-actions">
+              <Link to="/notes" className="primary-button">进入笔记宇宙</Link>
+              <Link to="/graph" className="theme-outline-button">查看知识图谱</Link>
+            </div>
+
+            <div className="home-stats-strip" aria-label="站点统计">
+              <span><strong>{notes.length}</strong> 篇笔记</span>
+              <span><strong>{tags.length}</strong> 个标签</span>
+              <span><strong>{totalWords}</strong> 字沉淀</span>
             </div>
           </motion.div>
-        </motion.div>
-        
-        {/* Scroll indicator */}
-        <motion.div 
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+
+          <motion.div
+            className="home-orbit"
+            initial={{ opacity: 0, scale: 0.94, rotate: -2 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            <div className="home-orbit-rings" />
+            <div className="home-orbit-core">
+              <span>MindScape</span>
+              <strong>{featuredNote?.title || 'Creative Notes'}</strong>
+              {featuredNote && <Link to={`/note/${featuredNote.slug}`}>阅读最新笔记</Link>}
+            </div>
+
+            {heroTags.map((tag, index) => (
+              <Link
+                key={tag}
+                to={`/notes?tag=${encodeURIComponent(tag)}`}
+                className={`home-orbit-node node-${index + 1}`}
+              >
+                #{tag}
+              </Link>
+            ))}
+
+            <div className="home-floating-card card-a">
+              <span>Search</span>
+              <strong>全文搜索</strong>
+              <small>标题、正文、摘要、标签</small>
+            </div>
+            <div className="home-floating-card card-b">
+              <span>Roadmap</span>
+              <strong>学习路线</strong>
+              <small>卡片式流程导航</small>
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="home-scroll-hint"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <motion.div 
-              className="w-1 h-3 bg-white/50 rounded-full mt-2"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-          </div>
+          <span />
         </motion.div>
       </section>
 
-      {/* Featured Notes Preview */}
+      <section className="home-section px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="home-section-heading">
+            <p>Latest Dispatch</p>
+            <h2>最新入口不是列表，是一张可继续走下去的地图</h2>
+          </div>
+
+          <div className="home-feature-grid">
+            {featuredNote && (
+              <motion.article
+                className="home-feature-note"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <div className="home-feature-top">
+                  <span>{featuredNote.createdAt}</span>
+                  <span>{featuredNote.personality}</span>
+                </div>
+                <h3>{featuredNote.title}</h3>
+                <p>{featuredNote.excerpt}</p>
+                <div className="home-feature-tags">
+                  {featuredNote.tags.slice(0, 6).map((tag) => (
+                    <span key={tag}>#{tag}</span>
+                  ))}
+                </div>
+                <Link to={`/note/${featuredNote.slug}`} className="home-feature-link">打开这篇笔记</Link>
+              </motion.article>
+            )}
+
+            <div className="home-note-stack">
+              {secondaryNotes.map((note, index) => (
+                <motion.div
+                  key={note.slug}
+                  initial={{ opacity: 0, x: 24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08 }}
+                >
+                  <Link to={`/note/${note.slug}`} className="home-stack-item">
+                    <span>{String(index + 2).padStart(2, '0')}</span>
+                    <div>
+                      <strong>{note.title}</strong>
+                      <small>{note.tags.slice(0, 3).map((tag) => `#${tag}`).join('  ')}</small>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-section home-capabilities px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="home-section-heading">
+            <p>Navigation Systems</p>
+            <h2>为长文、路线、图谱和参考资料设计的阅读仪表盘</h2>
+          </div>
+
+          <div className="home-capability-grid">
+            {[
+              { title: '沉浸式长文阅读', text: '固定目录、阅读进度、字体控制、PDF 打印版和代码高亮复制。', to: '/notes' },
+              { title: '标签与全文搜索', text: '顶部搜索弹窗即时检索标题、摘要、标签和正文，标签页支持主题分组。', to: '/tags' },
+              { title: '学习路线流图', text: '用 React Flow 把网址、视频和博文组织成并行阶段路线图。', to: '/roadmap' },
+              { title: '知识图谱探索', text: '基于标签生成笔记网络，发现不同主题之间的隐藏连接。', to: '/graph' },
+            ].map((item, index) => (
+              <Link key={item.title} to={item.to} className="home-capability-card">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <motion.h2 

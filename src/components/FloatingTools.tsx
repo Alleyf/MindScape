@@ -2,14 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getNoteBySlug } from '../utils/noteLoader';
 
-const fontSizes = ['normal', 'large', 'xlarge'] as const;
-type FontSize = (typeof fontSizes)[number];
-
-function applyFontSize(size: FontSize) {
-  document.documentElement.dataset.fontSize = size;
-  localStorage.setItem('mindscape-font-size', size);
-}
-
 function getScrollContainers(): Array<Window | HTMLElement> {
   return [
     window,
@@ -47,7 +39,6 @@ function getScrollMetrics() {
 }
 
 export function FloatingTools() {
-  const [fontSize, setFontSize] = useState<FontSize>('normal');
   const [notice, setNotice] = useState('');
   const [immersive, setImmersive] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -60,13 +51,6 @@ export function FloatingTools() {
     const slug = match?.[1] ?? null;
     return slug ? getNoteBySlug(slug) : null;
   }, [pathname]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem('mindscape-font-size') as FontSize | null;
-    const next = saved && fontSizes.includes(saved) ? saved : 'normal';
-    setFontSize(next);
-    applyFontSize(next);
-  }, []);
 
   useEffect(() => {
     if (!notice) return;
@@ -125,13 +109,6 @@ export function FloatingTools() {
     document.addEventListener('mousedown', onClick);
     return () => document.removeEventListener('mousedown', onClick);
   }, [moreOpen]);
-
-  const cycleFontSize = () => {
-    const next = fontSizes[(fontSizes.indexOf(fontSize) + 1) % fontSizes.length];
-    setFontSize(next);
-    applyFontSize(next);
-    setNotice(next === 'normal' ? '标准字号' : next === 'large' ? '大字号' : '超大字号');
-  };
 
   const backToTop = () => {
     const scrollTargets = [
@@ -421,9 +398,6 @@ export function FloatingTools() {
         </button>
         <button type="button" onClick={scrollToBottom} title="回到底部" aria-label="回到底部">
           <svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
-        </button>
-        <button type="button" onClick={cycleFontSize} title="切换字体大小" aria-label="切换字体大小">
-          <span>{fontSize === 'normal' ? 'A' : fontSize === 'large' ? 'A+' : 'A++'}</span>
         </button>
 
         <div className="floating-tools-sep" />
