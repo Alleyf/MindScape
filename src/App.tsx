@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useState, useEffect, useMemo } from 'react';
 import { ParticleField } from './components/ParticleField';
@@ -10,6 +10,41 @@ import { MarkdownContent } from './components/MarkdownContent';
 import { ThemeToggle } from './components/ThemeToggle';
 import { getNotes, getNoteBySlug, getRandomNote } from './utils/noteLoader';
 import { Note } from './utils/noteLoader';
+
+interface TocItem {
+  id: string;
+  text: string;
+  level: number;
+}
+
+function slugifyHeading(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s-]/gu, '')
+    .replace(/\s+/g, '-');
+}
+
+function extractTableOfContents(content: string): TocItem[] {
+  return content
+    .split(/\r?\n/)
+    .map((line) => {
+      const match = line.match(/^(#{2,3})\s+(.+)$/);
+      if (!match) return null;
+
+      const text = match[2].replace(/[#*_`[\]()]/g, '').trim();
+      return {
+        id: slugifyHeading(text),
+        text,
+        level: match[1].length,
+      };
+    })
+    .filter((item): item is TocItem => Boolean(item));
+}
+
+function getAllTags(notes: Note[]): string[] {
+  return Array.from(new Set(notes.flatMap((note) => note.tags))).sort((a, b) => a.localeCompare(b, 'zh-CN'));
+}
 
 function HomePage() {
   const notes = getNotes();
@@ -39,9 +74,9 @@ function HomePage() {
           >
             MindScape
           </motion.h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl theme-muted mb-8 max-w-2xl mx-auto leading-relaxed">
             一个 AI-Native 的创意知识空间<br/>
-            <span className="text-sm text-gray-400">在这里，思想如星云般绽放，知识如有机生命般生长</span>
+            <span className="text-sm theme-subtle">在这里，思想如星云般绽放，知识如有机生命般生长</span>
           </p>
           
           <motion.div
@@ -103,7 +138,7 @@ function HomePage() {
           <div className="text-center mt-12">
             <Link 
               to="/notes"
-              className="inline-block px-6 py-3 border border-white/20 rounded-full text-white hover:bg-white/10 transition-colors"
+              className="theme-outline-button"
             >
               查看全部笔记 →
             </Link>
@@ -116,6 +151,20 @@ function HomePage() {
 
 function NotesPage() {
   const notes = getNotes();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTag = searchParams.get('tag') || 'all';
+  const tags = useMemo(() => getAllTags(notes), [notes]);
+  const filteredNotes = activeTag === 'all'
+    ? notes
+    : notes.filter((note) => note.tags.includes(activeTag));
+
+  const selectTag = (tag: string) => {
+    if (tag === 'all') {
+      setSearchParams({});
+    } else {
+      setSearchParams({ tag });
+    }
+  };
   
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
@@ -127,12 +176,51 @@ function NotesPage() {
         >
           所有笔记
         </motion.h1>
-        <p className="text-gray-400 mb-12 text-lg">
-          共 {notes.length} 篇思维记录
+        <p className="theme-muted mb-8 text-lg">
+          {activeTag === 'all' ? `共 ${notes.length} 篇思维记录` : `#${activeTag} 下有 ${filteredNotes.length} 篇记录`}
         </p>
+
+        <div className="mb-10">
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <h2 className="text-lg font-semibold theme-text">标签导航</h2>
+            {activeTag !== 'all' && (
+              <button
+                type="button"
+                onClick={() => selectTag('all')}
+                className="text-sm theme-link"
+              >
+                清除筛选
+              </button>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => selectTag('all')}
+              className={activeTag === 'all' ? 'tag-filter-active' : 'tag-filter'}
+            >
+              全部
+              <span>{notes.length}</span>
+            </button>
+            {tags.map((tag) => {
+              const count = notes.filter((note) => note.tags.includes(tag)).length;
+              return (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => selectTag(tag)}
+                  className={activeTag === tag ? 'tag-filter-active' : 'tag-filter'}
+                >
+                  #{tag}
+                  <span>{count}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {notes.map((note, index) => (
+          {filteredNotes.map((note, index) => (
             <motion.div
               key={note.id}
               initial={{ opacity: 0, y: 30 }}
@@ -143,6 +231,12 @@ function NotesPage() {
             </motion.div>
           ))}
         </div>
+
+        {filteredNotes.length === 0 && (
+          <div className="glass-card p-8 text-center theme-muted">
+            这个标签下暂时没有笔记。
+          </div>
+        )}
       </div>
     </div>
   );
@@ -152,6 +246,7 @@ function NotePage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const note = useMemo(() => (slug ? getNoteBySlug(slug) : null), [slug]);
+  const toc = useMemo(() => (note ? extractTableOfContents(note.content) : []), [note]);
   const [randomNote, setRandomNote] = useState<Note | null>(null);
   
   useEffect(() => {
@@ -180,7 +275,29 @@ function NotePage() {
   
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto xl:grid xl:grid-cols-[220px_minmax(0,56rem)_220px] xl:gap-8">
+        <aside className="hidden xl:block">
+          <div className="toc-panel sticky top-28">
+            <p className="text-sm font-semibold theme-text mb-4">目录</p>
+            {toc.length > 0 ? (
+              <nav className="space-y-2">
+                {toc.map((item) => (
+                  <a
+                    key={`${item.id}-${item.text}`}
+                    href={`#${item.id}`}
+                    className={`toc-link ${item.level === 3 ? 'pl-4' : ''}`}
+                  >
+                    {item.text}
+                  </a>
+                ))}
+              </nav>
+            ) : (
+              <p className="text-sm theme-subtle">这篇文章暂无小标题。</p>
+            )}
+          </div>
+        </aside>
+
+        <main className="min-w-0">
         {/* Back button */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -189,7 +306,7 @@ function NotePage() {
         >
           <Link 
             to="/notes"
-            className="inline-flex items-center text-gray-400 hover:text-white transition-colors"
+            className="inline-flex items-center theme-link transition-colors"
           >
             ← 返回笔记列表
           </Link>
@@ -206,7 +323,7 @@ function NotePage() {
             {note.tags.map(tag => (
               <span 
                 key={tag}
-                className="px-4 py-2 bg-white/5 rounded-full text-sm text-gray-300 border border-white/10"
+                className="tag-pill"
               >
                 #{tag}
               </span>
@@ -228,7 +345,7 @@ function NotePage() {
             </motion.p>
           )}
           
-          <div className="flex items-center gap-6 text-sm text-gray-400">
+          <div className="flex items-center gap-6 text-sm theme-muted">
             <span>📅 {note.createdAt}</span>
             <span className="capitalize">{note.personality}</span>
           </div>
@@ -239,9 +356,9 @@ function NotePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="prose prose-invert prose-lg max-w-none"
+          className="max-w-none"
         >
-          <div className="glass-card p-8 rounded-2xl">
+          <div className="glass-card p-6 md:p-8 rounded-2xl">
             <MarkdownContent content={note.content} />
           </div>
         </motion.article>
@@ -262,6 +379,9 @@ function NotePage() {
         <div className="lg:hidden mt-12 mb-8">
           <AIPanel note={note} isMobile={true} />
         </div>
+        </main>
+
+        <div className="hidden xl:block" aria-hidden="true" />
       </div>
       
       {/* Desktop AI Panel */}
@@ -272,10 +392,65 @@ function NotePage() {
   );
 }
 
+function AboutPage() {
+  const notes = getNotes();
+  const tags = getAllTags(notes);
+
+  return (
+    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
+      <div className="max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12"
+        >
+          <h1 className="text-5xl font-bold mb-6 gradient-text">关于 MindScape</h1>
+          <p className="text-xl theme-muted leading-relaxed max-w-3xl">
+            MindScape 是一个 AI-Native 的创意知识空间，用来收纳技术学习、思维模型、工作流实践和长期生长的个人笔记。
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="glass-card p-6">
+            <p className="text-3xl font-bold text-nebula-accent mb-2">{notes.length}</p>
+            <p className="theme-muted">篇公开笔记</p>
+          </div>
+          <div className="glass-card p-6">
+            <p className="text-3xl font-bold text-nebula-accent mb-2">{tags.length}</p>
+            <p className="theme-muted">个知识标签</p>
+          </div>
+          <div className="glass-card p-6">
+            <p className="text-3xl font-bold text-nebula-accent mb-2">AI</p>
+            <p className="theme-muted">辅助整理与联想</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <section className="glass-card p-8">
+            <h2 className="text-2xl font-semibold theme-text mb-4">这里记录什么</h2>
+            <div className="space-y-4 theme-muted leading-relaxed">
+              <p>这里更像一座数字花园，而不是一次性写完的文章仓库。笔记会随着学习、实践和复盘持续更新。</p>
+              <p>内容会覆盖 AI 编程、前端工程、知识管理、生产力方法、个人成长，以及一些正在形成中的想法。</p>
+            </div>
+          </section>
+
+          <section className="glass-card p-8">
+            <h2 className="text-2xl font-semibold theme-text mb-4">如何浏览</h2>
+            <div className="space-y-4 theme-muted leading-relaxed">
+              <p>你可以从最新笔记开始，也可以进入笔记页通过标签筛选主题。长文页面左侧会显示目录，方便快速跳转。</p>
+              <p>每篇笔记保留标签、日期和人格化气质，让知识不只是被存放，也能被重新发现。</p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <div className="bg-nebula-dark min-h-screen text-white overflow-x-hidden">
+      <div className="app-shell min-h-screen overflow-x-hidden">
         {/* Navigation */}
         <nav className="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -284,14 +459,14 @@ function App() {
             </Link>
             
             <div className="flex items-center gap-6 md:gap-10">
-              <Link to="/notes" className="text-gray-300 hover:text-white transition-colors relative group">
+              <Link to="/notes" className="nav-link group">
                 笔记
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors relative group">
+              <Link to="/about" className="nav-link group">
                 关于
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
-              </a>
+              </Link>
               <ThemeToggle />
             </div>
           </div>
@@ -302,10 +477,11 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/note/:slug" element={<NotePage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
         
         {/* Footer */}
-        <footer className="py-8 text-center text-gray-500 text-sm relative z-10">
+        <footer className="py-8 text-center theme-subtle text-sm relative z-10">
           <p>MindScape © 2026 — 用 AI 增强人类创造力</p>
         </footer>
       </div>

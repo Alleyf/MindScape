@@ -58,16 +58,16 @@ export function NoteCard({ note, index }: NoteCardProps) {
         </h3>
         
         {/* Excerpt */}
-        <p className="text-gray-400 text-sm mb-4 line-clamp-3 leading-relaxed">
-          {note.excerpt}
-        </p>
+          <p className="theme-muted text-sm mb-4 line-clamp-3 leading-relaxed">
+            {note.excerpt}
+          </p>
         
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
           {note.tags.slice(0, 3).map((tag, i) => (
             <span
               key={i}
-              className="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 text-gray-300 hover:border-nebula-accent/50 transition-colors"
+              className="tag-pill"
             >
               #{tag}
             </span>
@@ -75,7 +75,7 @@ export function NoteCard({ note, index }: NoteCardProps) {
         </div>
         
         {/* Personality & Date */}
-        <div className="flex items-center justify-between text-xs text-gray-500">
+        <div className="flex items-center justify-between text-xs theme-subtle">
           {note.personality && (
             <span className="flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-nebula-accent" />

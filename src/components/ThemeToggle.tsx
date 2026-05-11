@@ -58,7 +58,7 @@ export function ThemeToggle({ className = '' }: ThemeToggleProps) {
         className={`absolute top-1 w-5 h-5 rounded-full shadow-md ${
           isDark 
             ? 'bg-gradient-to-br from-indigo-400 to-purple-500 left-1' 
-            : 'bg-yellow-600 left-8'
+            : 'bg-yellow-600 left-1'
         }`}
         initial={false}
         animate={{
