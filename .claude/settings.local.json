@@ -18,7 +18,15 @@
       "mcp__chrome-devtools__list_console_messages",
       "Bash(git pull *)",
       "Bash(git stash *)",
-      "Skill(gsd-new-milestone)"
+      "Skill(gsd-new-milestone)",
+      "Bash(npx skills *)",
+      "WebSearch",
+      "Bash(npm search *)",
+      "Bash(npm view *)",
+      "WebFetch(domain:skills.sh)",
+      "Bash(claude *)",
+      "Bash(npm run *)",
+      "Bash(npx zcf *)"
     ]
   }
 }

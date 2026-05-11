@@ -18,10 +18,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/ai': {
-        target: () => {
-          const customUrl = process.env.VITE_AI_API_BASE_URL;
-          return customUrl || 'https://api.anthropic.com/v1';
-        },
+        target: process.env.VITE_AI_API_BASE_URL || 'https://api.anthropic.com/v1',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/ai/, ''),
       },

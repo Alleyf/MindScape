@@ -1,0 +1,24 @@
+---
+title: Paper_Reading_Tables
+date: 2026-03-08 23:09:10
+tags:
+  - NLP
+sticky: 80
+excerpt: some overview about NLP papers。
+author: fcs
+index_img: https://picsum.photos/800/300.webp?random=202603082309
+lang: zh-CN
+number headings: auto, first-level 1, max 5, start-at 1, 1.1
+personality: "沉思者"
+description: "| 序号  | 作者               | 来源                |                                                          标题..."
+---
+
+| 序号  | 作者               | 来源                |                                                          标题                                                           | 关键词                           | 研究对象      | 主要实验方法        | 结论                             | 阅读日期                |
+| :-: | ---------------- | ----------------- | :-------------------------------------------------------------------------------------------------------------------: | ----------------------------- | --------- | ------------- | ------------------------------ | ------------------- |
+|  1  | Kaiming He       | 2015-CVPR         |                                   [[Deep residual learning for image recognition]]                                    | 深度神经网络，残差，短接                  | 网络深度      | 提出层之间跳跃短接的残差块 | 解决深层网络退化问题，并提升了网络效果，是后续深层网络的基石 | 2023-08-10 16:06:07 |
+|  2  | Ashish Vaswani   | 2017-NIPS         |                                            [[Attention is All you Need  ]]                                            | Transformer，注意力机制，编码器，解码器     | 网络架构，特称提取 |               |                                |                     |
+|  3  | Haiyan Zhao .etc | 2023-11-28-arxive | [Explainability for large language models A survey](Explainability%20for%20large%20language%20models%20A%20survey.md) | LLM,<br>CoT,<br>Explainablity |           |               |                                |                     |
+|  4  |                  |                   |                                                                                                                       |                               |           |               |                                |                     |
+|  5  |                  |                   |                                                                                                                       |                               |           |               |                                |                     |
+|  6  |                  |                   |                                                                                                                       |                               |           |               |                                |                     |
+|  7  |                  |                   |                                                                                                                       |                               |           |               |                                |                     |
