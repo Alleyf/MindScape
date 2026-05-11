@@ -674,14 +674,33 @@ function NotesPage() {
         </p>
 
         <div className="mb-10">
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <h2 className="text-lg font-semibold theme-text">标签导航</h2>
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between gap-4 mb-5">
+            <div className="flex items-center gap-3 flex-wrap">
+              <h2 className="text-base font-semibold theme-text whitespace-nowrap">标签筛选</h2>
+              <div className="notes-filter-tags">
+                {tags.map((tag) => {
+                  const count = notes.filter((note) => note.tags.includes(tag)).length;
+                  const active = selectedTags.includes(tag);
+                  return (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() => toggleTag(tag)}
+                      className={active ? 'notes-filter-tag notes-filter-tag-active' : 'notes-filter-tag'}
+                    >
+                      #{tag}
+                      <span>{count}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
               {hasFilter && (
                 <button
                   type="button"
                   onClick={clearFilter}
-                  className="text-sm theme-link"
+                  className="text-sm theme-link whitespace-nowrap"
                 >
                   清除筛选
                 </button>
@@ -709,23 +728,6 @@ function NotesPage() {
                 </button>
               </div>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            {tags.map((tag) => {
-              const count = notes.filter((note) => note.tags.includes(tag)).length;
-              const active = selectedTags.includes(tag);
-              return (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => toggleTag(tag)}
-                  className={active ? 'tag-filter-active' : 'tag-filter'}
-                >
-                  #{tag}
-                  <span>{count}</span>
-                </button>
-              );
-            })}
           </div>
         </div>
 

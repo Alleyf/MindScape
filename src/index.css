@@ -1681,6 +1681,57 @@ button.nav-link {
   background: color-mix(in srgb, var(--nebula-accent) 10%, transparent);
 }
 
+/* ── Notes page compact tag filter ─────────── */
+.notes-filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.notes-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.notes-filter-tag:hover {
+  border-color: var(--nebula-accent);
+  color: var(--nebula-accent);
+}
+
+.notes-filter-tag span {
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0.5;
+  line-height: 1;
+}
+
+.notes-filter-tag-active {
+  background: color-mix(in srgb, var(--nebula-accent) 10%, transparent);
+  border-color: var(--nebula-accent);
+  color: var(--nebula-accent);
+}
+
+.notes-filter-tag-active span {
+  opacity: 0.7;
+}
+
+.notes-filter-tag-active:hover {
+  background: color-mix(in srgb, var(--nebula-accent) 16%, transparent);
+}
+
 /* ── Tag cloud ─────────────────────────────── */
 .tag-cloud {
   display: flex;
