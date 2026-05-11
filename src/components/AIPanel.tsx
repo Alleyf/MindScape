@@ -6,6 +6,9 @@ import { Note } from '../types';
 interface AIPanelProps {
   note: Note;
   isMobile?: boolean;
+  randomNote?: Note | null;
+  relatedNotes?: Note[];
+  onRandomWalk?: () => void;
 }
 
 const aiMetaphors = [
@@ -16,55 +19,80 @@ const aiMetaphors = [
   "这是一次思维的潜水，潜入意识深处打捞被遗忘的珍珠。",
 ];
 
-const aiConnections = [
-  "读到此处，让我想起另一篇关于「心流」的笔记，两者都在探讨专注的力量。",
-  "这个观点与「量子思维」中的叠加态概念有奇妙的呼应。",
-  "如果结合「数字花园」的理念，这个想法可以如何生长？",
-  "此处的情绪基调，与「独处的力量」中描述的宁静感不谋而合。",
-];
-
-export function AIPanel({ note, isMobile = false }: AIPanelProps) {
+export function AIPanel({ note, isMobile = false, randomNote, relatedNotes = [], onRandomWalk }: AIPanelProps) {
   const [activeTab, setActiveTab] = useState<'metaphor' | 'connections' | 'personality'>('metaphor');
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const containerClasses = isMobile 
-    ? "w-full glass-card p-6" 
-    : "fixed right-0 top-1/4 w-80 glass-card p-6";
+  const containerClasses = isMobile
+    ? "w-full ai-panel p-5"
+    : `fixed right-7 top-28 z-40 ai-panel transition-all duration-300 ${isCollapsed ? 'ai-panel-collapsed w-16 p-2' : 'w-72 p-5'}`;
 
   return (
+    <>
+    {isCollapsed && !isMobile ? (
+      <motion.button
+        type="button"
+        onClick={() => setIsCollapsed(false)}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="ai-orb"
+        aria-label="展开 AI 助手"
+        title="展开 AI 助手"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3l1.8 5.6L20 10l-5 3.6L16 20l-4-3.2L8 20l1-6.4L4 10l6.2-1.4L12 3Z" />
+        </svg>
+      </motion.button>
+    ) : (
     <motion.div
       initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0, y: 0 }}
       transition={{ delay: 0.5, duration: 0.6 }}
       className={containerClasses}
     >
+      {!isMobile && (
+        <button
+          type="button"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="ai-panel-toggle"
+          aria-label={isCollapsed ? '展开 AI 侧栏' : '折叠 AI 侧栏'}
+          title={isCollapsed ? '展开 AI 侧栏' : '折叠 AI 侧栏'}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d={isCollapsed ? 'M9 6l6 6-6 6' : 'M15 6l-6 6 6 6'} />
+          </svg>
+        </button>
+      )}
+
+      <>
       {/* Tab headers */}
       <div className="flex gap-2 mb-6 border-b border-white/10 pb-4">
         <button
           onClick={() => setActiveTab('metaphor')}
-          className={`flex-1 text-sm py-2 rounded-lg transition-colors ${
+          className={`ai-tab ${
             activeTab === 'metaphor' 
-              ? 'bg-nebula-accent/20 text-nebula-accent' 
-              : 'text-gray-400 hover:text-white'
+              ? 'ai-tab-active' 
+              : ''
           }`}
         >
           🎭 隐喻
         </button>
         <button
           onClick={() => setActiveTab('connections')}
-          className={`flex-1 text-sm py-2 rounded-lg transition-colors ${
+          className={`ai-tab ${
             activeTab === 'connections' 
-              ? 'bg-nebula-accent/20 text-nebula-accent' 
-              : 'text-gray-400 hover:text-white'
+              ? 'ai-tab-active' 
+              : ''
           }`}
         >
           🔗 联想
         </button>
         <button
           onClick={() => setActiveTab('personality')}
-          className={`flex-1 text-sm py-2 rounded-lg transition-colors ${
+          className={`ai-tab ${
             activeTab === 'personality' 
-              ? 'bg-nebula-accent/20 text-nebula-accent' 
-              : 'text-gray-400 hover:text-white'
+              ? 'ai-tab-active' 
+              : ''
           }`}
         >
           🎪 人格
@@ -82,16 +110,16 @@ export function AIPanel({ note, isMobile = false }: AIPanelProps) {
             className="space-y-4"
           >
             <h4 className="text-nebula-accent font-medium mb-3">AI 共振</h4>
-            <p className="text-gray-300 text-sm leading-relaxed italic">
+            <p className="theme-muted text-sm leading-relaxed italic">
               {aiMetaphors[Math.floor(Math.random() * aiMetaphors.length)]}
             </p>
             <div className="pt-4 border-t border-white/10">
-              <p className="text-xs text-gray-500 mb-2">情绪能量</p>
+              <p className="text-xs theme-subtle mb-2">情绪能量</p>
               <div className="flex gap-2">
-                <span className="px-3 py-1 bg-gradient-to-r from-nebula-purple to-nebula-blue rounded-full text-xs">
+                <span className="ai-chip">
                   {note.mood || '🌟'} 沉思
                 </span>
-                <span className="px-3 py-1 bg-gradient-to-r from-nebula-blue to-nebula-accent rounded-full text-xs">
+                <span className="ai-chip">
                   ⚡ 高能量
                 </span>
               </div>
@@ -108,24 +136,25 @@ export function AIPanel({ note, isMobile = false }: AIPanelProps) {
             className="space-y-4"
           >
             <h4 className="text-nebula-accent font-medium mb-3">思维连接</h4>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              {aiConnections[Math.floor(Math.random() * aiConnections.length)]}
+            <p className="theme-muted text-sm leading-relaxed">
+              {relatedNotes.length > 0
+                ? `这篇笔记和 ${relatedNotes[0].title} 共享了相近的标签或主题，可以顺着这条线继续阅读。`
+                : '暂时没有找到强相关笔记，可以使用随机漫步探索下一篇。'}
             </p>
             <div className="pt-4 border-t border-white/10">
-              <p className="text-xs text-gray-500 mb-3">可能相关的笔记</p>
+              <p className="text-xs theme-subtle mb-3">可能相关的笔记</p>
               <div className="space-y-2">
-                <Link 
-                  to="/note/quantum-thinking"
-                  className="block p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-xs text-gray-300"
-                >
-                  → 量子思维：超越二元对立
-                </Link>
-                <Link 
-                  to="/note/creative-flow"
-                  className="block p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-xs text-gray-300"
-                >
-                  → 心流状态的触发密码
-                </Link>
+                {relatedNotes.length > 0 ? relatedNotes.map((relatedNote) => (
+                  <Link
+                    key={relatedNote.slug}
+                    to={`/note/${relatedNote.slug}`}
+                    className="ai-link-card"
+                  >
+                    → {relatedNote.title}
+                  </Link>
+                )) : (
+                  <span className="ai-link-card">暂无相关笔记</span>
+                )}
               </div>
             </div>
           </motion.div>
@@ -153,24 +182,41 @@ export function AIPanel({ note, isMobile = false }: AIPanelProps) {
                 {note.personality === '陪伴者' && '🌙'}
               </motion.div>
               <p className="text-lg font-bold gradient-text">{note.personality}</p>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs theme-subtle mt-2">
                 这篇笔记有自己的性格和气质
               </p>
             </div>
             <div className="pt-4 border-t border-white/10">
-              <p className="text-xs text-gray-500 mb-2">人格特质</p>
+              <p className="text-xs theme-subtle mb-2">人格特质</p>
               <div className="flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">深度</span>
-                <span className="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">内省</span>
-                <span className="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">启发</span>
+                <span className="ai-chip">深度</span>
+                <span className="ai-chip">内省</span>
+                <span className="ai-chip">启发</span>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
+      <div className="ai-actions">
+        <button
+          type="button"
+          onClick={onRandomWalk}
+          disabled={!randomNote || !onRandomWalk}
+          className="ai-random-button"
+        >
+          <span>随机漫步</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 7h6a4 4 0 0 1 0 8H6m0 0 3-3m-3 3 3 3M17 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2Z" />
+          </svg>
+        </button>
+      </div>
+
       {/* Decorative element */}
       <div className="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-br from-nebula-accent/20 to-transparent rounded-full blur-xl" />
+      </>
     </motion.div>
+    )}
+    </>
   );
 }

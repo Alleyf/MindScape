@@ -1,11 +1,9 @@
-import { motion } from 'framer-motion';
-
 interface MouseGlowProps {
-  position: { x: number; y: number };
-  isVisible: boolean;
+  position?: { x: number; y: number };
+  isVisible?: boolean;
 }
 
-export function MouseGlow({ position, isVisible }: MouseGlowProps) {
+export function MouseGlow({ position = { x: 0, y: 0 }, isVisible = false }: MouseGlowProps) {
   if (!isVisible) return null;
 
   return (
