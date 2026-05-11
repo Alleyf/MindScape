@@ -1447,14 +1447,29 @@ function AboutPage() {
     notes.forEach(n => n.tags.forEach(t => counts.set(t, (counts.get(t) ?? 0) + 1)));
     return Array.from(counts.entries()).sort((a, b) => b[1] - a[1]);
   }, [notes]);
-  const months = useMemo(() => {
-    const m = new Set<string>();
+  const monthlyCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
     notes.forEach(n => {
       const d = n.createdAt?.match(/(\d{4})[年-](\d{1,2})/);
-      if (d) m.add(`${d[1]}.${d[2].padStart(2, '0')}`);
+      if (d) {
+        const key = `${d[1]}.${d[2].padStart(2, '0')}`;
+        counts[key] = (counts[key] ?? 0) + 1;
+      }
     });
-    return Array.from(m).sort();
+    return counts;
   }, [notes]);
+
+  const timelineYears = useMemo(() => {
+    const years: Record<string, { month: string; count: number }[]> = {};
+    Object.entries(monthlyCounts)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .forEach(([key, count]) => {
+        const [year, month] = key.split('.');
+        if (!years[year]) years[year] = [];
+        years[year].push({ month, count });
+      });
+    return years;
+  }, [monthlyCounts]);
 
   const features = [
     { icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5', title: '数字花园', desc: '笔记像植物一样生长，随学习持续修订，不追求一次性完成。' },
@@ -1494,7 +1509,7 @@ function AboutPage() {
             <p className="text-sm theme-subtle">个标签</p>
           </div>
           <div className="glass-card p-5 text-center">
-            <p className="text-3xl font-bold text-nebula-accent mb-1">{months.length}</p>
+            <p className="text-3xl font-bold text-nebula-accent mb-1">{Object.keys(monthlyCounts).length}</p>
             <p className="text-sm theme-subtle">覆盖月份</p>
           </div>
           <div className="glass-card p-5 text-center">
@@ -1620,7 +1635,7 @@ function AboutPage() {
         </motion.div>
 
         {/* Timeline */}
-        {months.length > 0 && (
+        {Object.keys(timelineYears).length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1629,14 +1644,47 @@ function AboutPage() {
           >
             <h2 className="text-3xl font-bold mb-6 gradient-text">写作时间线</h2>
             <div className="glass-card p-6">
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                {months.map((m, i) => (
-                  <span key={m} className="flex items-center gap-1.5">
-                    <span className={`w-2 h-2 rounded-full ${i === months.length - 1 ? 'bg-nebula-accent' : 'bg-nebula-accent/40'}`} />
-                    <span className="text-sm theme-muted">{m}</span>
-                    {i < months.length - 1 && <span className="w-4 h-px bg-border-soft" />}
-                  </span>
-                ))}
+              <div className="relative">
+                {/* Vertical timeline line */}
+                <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-nebula-accent/60 via-nebula-accent/20 to-transparent" />
+                {Object.entries(timelineYears)
+                  .sort(([a], [b]) => b.localeCompare(a))
+                  .map(([year, yearData]) => {
+                    const yearTotal = yearData.reduce((s, m) => s + m.count, 0);
+                    return (
+                      <div key={year} className="relative pl-12 mb-8 last:mb-0">
+                        {/* Year marker */}
+                        <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-nebula-accent/15 border border-nebula-accent/30 flex items-center justify-center">
+                          <span className="text-xs font-black text-nebula-accent">{year.slice(2)}</span>
+                        </div>
+                        <div className="flex items-baseline gap-3 mb-3">
+                          <span className="text-xl font-black theme-text">{year}</span>
+                          <span className="text-xs theme-subtle font-semibold tracking-widest uppercase">Year</span>
+                          <span className="ml-auto text-xs font-bold text-nebula-accent">{yearTotal} 篇</span>
+                        </div>
+                        {/* Month bars */}
+                        <div className="flex flex-wrap gap-2">
+                          {yearData.map(({ month, count }) => {
+                            const barWidth = Math.round(36 + (count / Math.max(...Object.values(monthlyCounts)) * 80));
+                            return (
+                              <div key={month} className="flex items-center gap-2 group cursor-default">
+                                <div className="relative h-5 rounded-sm overflow-hidden bg-white/5 border border-white/8">
+                                  <div
+                                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-nebula-accent/70 to-nebula-accent/40 rounded-sm transition-all duration-500"
+                                    style={{ width: `${barWidth}%` }}
+                                  />
+                                  <span className="absolute inset-0 flex items-center px-2 text-xs font-mono font-bold theme-subtle group-hover:text-white transition-colors">
+                                    {count}
+                                  </span>
+                                </div>
+                                <span className="text-xs theme-subtle timeline-bar-label w-10">{month}月</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </motion.div>

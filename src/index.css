@@ -1730,6 +1730,13 @@ button.nav-link {
   background: color-mix(in srgb, var(--nebula-accent) 16%, transparent);
 }
 
+/* ── Timeline (About page) ───────────────── */
+.timeline-bar-label {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+}
+
 /* ── Tag cloud ─────────────────────────────── */
 .tag-cloud {
   display: flex;
