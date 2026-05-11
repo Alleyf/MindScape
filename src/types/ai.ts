@@ -104,12 +104,19 @@ export const CLAUDE_API_CONFIG = {
 // Environment-based configuration
 export function getAIConfig() {
   const baseUrl = import.meta.env.VITE_AI_API_BASE_URL;
+  const apiFormat = import.meta.env.VITE_AI_API_FORMAT || 'anthropic';
+
+  // Determine the endpoint path based on format
+  const endpoint = apiFormat === 'openai' ? '/v1/chat/completions' : '/v1/messages';
+
   return {
     apiKey: import.meta.env.VITE_CLAUDE_API_KEY || '',
     // Use proxy path in dev, direct URL in production
     baseUrl: baseUrl && import.meta.env.DEV
       ? '/api/ai'
       : (baseUrl || CLAUDE_API_CONFIG.baseUrl),
+    endpoint,
+    format: apiFormat as 'anthropic' | 'openai',
     model: import.meta.env.VITE_AI_MODEL || AI_MODELS.SONNET,
   };
 }

@@ -42,15 +42,6 @@ const SYSTEM_PROMPTS = {
 请用友好、简洁的方式回答用户的问题。如果问题与当前笔记相关，请结合笔记内容回答。`,
 };
 
-// Detect API provider from base URL
-function detectProvider(baseUrl: string): 'openai' | 'anthropic' {
-  if (baseUrl.includes('openai') || baseUrl.includes('azure') || baseUrl.includes('groq')) {
-    return 'openai';
-  }
-  // Default to OpenAI compatible for other URLs
-  return 'openai';
-}
-
 // Rate limiting queue
 interface QueuedRequest {
   resolve: (value: string) => void;
@@ -102,13 +93,12 @@ class RateLimitQueue {
 
   private async executeRequest(body: object): Promise<string> {
     const config = getAIConfig();
-    const provider = detectProvider(config.baseUrl);
 
     let url: string;
     let headers: Record<string, string>;
     let requestBody: string;
 
-    if (provider === 'openai') {
+    if (config.format === 'openai') {
       // OpenAI / OpenAI-compatible format
       url = `${config.baseUrl}/v1/chat/completions`;
       headers = {
@@ -117,7 +107,7 @@ class RateLimitQueue {
       };
       requestBody = JSON.stringify(body);
     } else {
-      // Anthropic format
+      // Anthropic compatible format
       url = `${config.baseUrl}/v1/messages`;
       headers = {
         'Content-Type': 'application/json',
@@ -147,7 +137,7 @@ class RateLimitQueue {
       throw new AIError(
         response.status === 401 ? AIErrorType.API_KEY_MISSING :
         response.status === 429 ? AIErrorType.RATE_LIMIT :
-        response.status === 403 ? AIErrorType.API_KEY_MISSING : // 403 often means invalid key
+        response.status === 403 ? AIErrorType.API_KEY_MISSING :
         AIErrorType.NETWORK_ERROR,
         errorMessage,
       );
@@ -155,8 +145,8 @@ class RateLimitQueue {
 
     const data = await response.json();
 
-    // Parse response based on provider
-    if (provider === 'openai') {
+    // Parse response based on format
+    if (config.format === 'openai') {
       // OpenAI format: { choices: [{ message: { content } }] }
       return data.choices?.[0]?.message?.content || '';
     } else {
@@ -278,18 +268,17 @@ export class AIClient {
   }
 
   /**
-   * Core method to call AI API (OpenAI compatible)
+   * Core method to call AI API
    */
   private async callAI(
     content: string,
     operation: keyof typeof SYSTEM_PROMPTS
   ): Promise<string> {
     const config = getAIConfig();
-    const provider = detectProvider(config.baseUrl);
 
     let body: object;
 
-    if (provider === 'openai') {
+    if (config.format === 'openai') {
       // OpenAI format with system message
       body = {
         model: config.model,
