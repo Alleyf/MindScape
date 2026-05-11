@@ -482,7 +482,7 @@ out/
 
 # Gatsby
 .gatsby/
-public/
+# public/
 
 # Angular
 .angular/

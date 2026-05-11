@@ -1,0 +1,23 @@
+{
+  "name": "MindScape",
+  "short_name": "MindScape",
+  "description": "AI-Native 创意知识空间，记录 AI Coding、前端工程、知识管理与个人工作流实践。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF9F5",
+  "theme_color": "#D97757",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
