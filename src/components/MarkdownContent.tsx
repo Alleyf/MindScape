@@ -1,6 +1,32 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import hljs from 'highlight.js/lib/core';
+import bash from 'highlight.js/lib/languages/bash';
+import css from 'highlight.js/lib/languages/css';
+import javascript from 'highlight.js/lib/languages/javascript';
+import json from 'highlight.js/lib/languages/json';
+import markdown from 'highlight.js/lib/languages/markdown';
+import python from 'highlight.js/lib/languages/python';
+import typescript from 'highlight.js/lib/languages/typescript';
+import xml from 'highlight.js/lib/languages/xml';
+
+hljs.registerLanguage('bash', bash);
+hljs.registerLanguage('sh', bash);
+hljs.registerLanguage('shell', bash);
+hljs.registerLanguage('css', css);
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('js', javascript);
+hljs.registerLanguage('json', json);
+hljs.registerLanguage('markdown', markdown);
+hljs.registerLanguage('md', markdown);
+hljs.registerLanguage('python', python);
+hljs.registerLanguage('py', python);
+hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('ts', typescript);
+hljs.registerLanguage('tsx', typescript);
+hljs.registerLanguage('html', xml);
+hljs.registerLanguage('xml', xml);
 
 interface MarkdownContentProps {
   content: string;
@@ -28,6 +54,64 @@ function slugifyHeading(children: React.ReactNode): string {
     .toLowerCase()
     .replace(/[^\p{L}\p{N}\s-]/gu, '')
     .replace(/\s+/g, '-');
+}
+
+function getCodeChild(children: React.ReactNode): React.ReactElement<{ className?: string; children?: React.ReactNode }> | null {
+  if (React.isValidElement<{ className?: string; children?: React.ReactNode }>(children)) {
+    return children;
+  }
+
+  if (Array.isArray(children)) {
+    const child = children.find((item) => React.isValidElement(item));
+    return React.isValidElement<{ className?: string; children?: React.ReactNode }>(child) ? child : null;
+  }
+
+  return null;
+}
+
+function getLanguage(className?: string): string {
+  const match = className?.match(/language-([\w-]+)/);
+  return match?.[1] || 'text';
+}
+
+function CodeBlock({ children }: { children: React.ReactNode }) {
+  const [copied, setCopied] = useState(false);
+  const codeChild = getCodeChild(children);
+  const code = toText(codeChild?.props.children ?? children).replace(/\n$/, '');
+  const language = getLanguage(codeChild?.props.className);
+
+  const highlightedCode = useMemo(() => {
+    if (!code) return '';
+
+    if (language !== 'text' && hljs.getLanguage(language)) {
+      return hljs.highlight(code, { language }).value;
+    }
+
+    return hljs.highlightAuto(code).value;
+  }, [code, language]);
+
+  const copyCode = async () => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1500);
+  };
+
+  return (
+    <div className="code-block-shell">
+      <div className="code-block-toolbar">
+        <span>{language}</span>
+        <button type="button" onClick={copyCode}>
+          {copied ? '已复制' : '复制'}
+        </button>
+      </div>
+      <pre className="code-block">
+        <code
+          className={`hljs language-${language}`}
+          dangerouslySetInnerHTML={{ __html: highlightedCode }}
+        />
+      </pre>
+    </div>
+  );
 }
 
 export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => {
@@ -63,8 +147,8 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
           code: ({node, ...props}) => (
             <code className="markdown-code" {...props} />
           ),
-          pre: ({node, ...props}) => (
-            <pre className="my-4" {...props} />
+          pre: ({node, children}) => (
+            <CodeBlock>{children}</CodeBlock>
           ),
           a: ({node, ...props}) => (
             <a target="_blank" rel="noreferrer" className="text-blue-400 hover:text-blue-300 underline decoration-blue-400/50 hover:decoration-blue-300 transition-all" {...props} />

@@ -18,6 +18,11 @@ interface TocItem {
   level: number;
 }
 
+interface TocNode {
+  item: TocItem;
+  children: TocNode[];
+}
+
 interface ReferenceLink {
   title: string;
   url: string;
@@ -49,6 +54,43 @@ function extractTableOfContents(content: string): TocItem[] {
     .filter((item): item is TocItem => Boolean(item));
 }
 
+function buildTocTree(items: TocItem[]): TocNode[] {
+  const tree: TocNode[] = [];
+  let currentParent: TocNode | null = null;
+
+  for (const item of items) {
+    if (item.level === 2) {
+      currentParent = { item, children: [] };
+      tree.push(currentParent);
+    } else if (item.level >= 3 && currentParent) {
+      currentParent.children.push({ item, children: [] });
+    } else {
+      // orphan h3+ without a parent h2
+      tree.push({ item, children: [] });
+    }
+  }
+  return tree;
+}
+
+function TocTree({ nodes, depth = 0 }: { nodes: TocNode[]; depth?: number }) {
+  if (nodes.length === 0) return null;
+  return (
+    <ul className={`toc-tree${depth === 0 ? ' space-y-1' : ''}`}>
+      {nodes.map((node) => (
+        <li key={node.item.id + node.item.text} className="toc-tree-item">
+          <a
+            href={`#${node.item.id}`}
+            className={`toc-link${node.item.level === 3 ? ' toc-link-h3' : ''}`}
+          >
+            {node.item.text}
+          </a>
+          {node.children.length > 0 && <TocTree nodes={node.children} depth={depth + 1} />}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function getAllTags(notes: Note[]): string[] {
   return Array.from(new Set(notes.flatMap((note) => note.tags))).sort((a, b) => a.localeCompare(b, 'zh-CN'));
 }
@@ -63,6 +105,42 @@ function getRelatedNotes(currentNote: Note, notes: Note[], limit = 3): Note[] {
     .sort((a, b) => b.score - a.score || new Date(b.note.createdAt).getTime() - new Date(a.note.createdAt).getTime())
     .slice(0, limit)
     .map((item) => item.note);
+}
+
+function normalizeSearchText(value: string): string {
+  return value.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function scoreNote(note: Note, query: string): number {
+  const q = normalizeSearchText(query);
+  if (!q) return 0;
+
+  const title = normalizeSearchText(note.title);
+  const tags = normalizeSearchText(note.tags.join(' '));
+  const excerpt = normalizeSearchText(note.excerpt || '');
+  const content = normalizeSearchText(note.content);
+
+  let score = 0;
+  if (title.includes(q)) score += 8;
+  if (tags.includes(q)) score += 5;
+  if (excerpt.includes(q)) score += 3;
+  if (content.includes(q)) score += 1;
+  return score;
+}
+
+function getSearchSnippet(note: Note, query: string): string {
+  const source = note.content.replace(/[#>*_`\[\]()-]/g, ' ').replace(/\s+/g, ' ').trim();
+  const normalizedSource = normalizeSearchText(source);
+  const normalizedQuery = normalizeSearchText(query);
+  const index = normalizedQuery ? normalizedSource.indexOf(normalizedQuery) : -1;
+
+  if (index === -1) {
+    return note.excerpt || source.slice(0, 150);
+  }
+
+  const start = Math.max(0, index - 55);
+  const end = Math.min(source.length, index + normalizedQuery.length + 95);
+  return `${start > 0 ? '...' : ''}${source.slice(start, end)}${end < source.length ? '...' : ''}`;
 }
 
 function extractReferenceLinks(content: string): ReferenceLink[] {
@@ -425,6 +503,92 @@ function TagsPage() {
   );
 }
 
+function SearchPage() {
+  const notes = getNotes();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('q') || '';
+  const normalizedQuery = normalizeSearchText(query);
+  const results = useMemo(() => {
+    if (!normalizedQuery) return [];
+
+    return notes
+      .map((note) => ({
+        note,
+        score: scoreNote(note, normalizedQuery),
+        snippet: getSearchSnippet(note, normalizedQuery),
+      }))
+      .filter((result) => result.score > 0)
+      .sort((a, b) => b.score - a.score || new Date(b.note.createdAt).getTime() - new Date(a.note.createdAt).getTime());
+  }, [notes, normalizedQuery]);
+
+  const updateQuery = (value: string) => {
+    if (value.trim()) {
+      setSearchParams({ q: value });
+    } else {
+      setSearchParams({});
+    }
+  };
+
+  return (
+    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
+      <div className="max-w-5xl mx-auto">
+        <motion.h1
+          className="text-5xl font-bold mb-4 gradient-text"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          全文搜索
+        </motion.h1>
+        <p className="theme-muted mb-8 text-lg">
+          搜索标题、正文、摘要和标签，快速定位知识片段。
+        </p>
+
+        <div className="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" />
+          </svg>
+          <input
+            value={query}
+            onChange={(event) => updateQuery(event.target.value)}
+            placeholder="搜索 AI Coding、React、workflow..."
+            autoFocus
+          />
+          {query && (
+            <button type="button" onClick={() => updateQuery('')}>
+              清除
+            </button>
+          )}
+        </div>
+
+        <div className="search-meta">
+          {query ? `找到 ${results.length} 条结果` : `当前可搜索 ${notes.length} 篇笔记`}
+        </div>
+
+        <div className="search-results">
+          {results.map(({ note, snippet }) => (
+            <Link key={note.slug} to={`/note/${note.slug}`} className="search-result-card">
+              <div className="flex flex-wrap gap-2 mb-3">
+                {note.tags.slice(0, 4).map((tag) => (
+                  <span key={tag} className="tag-pill">#{tag}</span>
+                ))}
+              </div>
+              <h2>{note.title}</h2>
+              <p>{snippet}</p>
+              <small>{note.createdAt} · {note.personality}</small>
+            </Link>
+          ))}
+        </div>
+
+        {query && results.length === 0 && (
+          <div className="empty-search">
+            没找到匹配内容。换个关键词试试。
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function NotePage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -433,6 +597,13 @@ function NotePage() {
   const references = useMemo(() => (note ? extractReferenceLinks(note.content) : []), [note]);
   const relatedNotes = useMemo(() => (note ? getRelatedNotes(note, getNotes()) : []), [note]);
   const [randomNote, setRandomNote] = useState<Note | null>(null);
+  const noteMeta = useMemo(() => {
+    if (!note) return null;
+    const stripped = note.content.replace(/[#>*_`\[\]()\-]/g, ' ').replace(/\s+/g, '');
+    const charCount = stripped.length;
+    const readingTime = Math.max(1, Math.round(charCount / 400));
+    return { wordCount: charCount, readingTime };
+  }, [note]);
   
   useEffect(() => {
     if (slug) {
@@ -465,16 +636,8 @@ function NotePage() {
           <div className="toc-kicker">On this page</div>
           <p className="text-sm font-semibold theme-text mb-4">文章目录</p>
             {toc.length > 0 ? (
-              <nav className="space-y-2">
-                {toc.map((item) => (
-                  <a
-                    key={`${item.id}-${item.text}`}
-                    href={`#${item.id}`}
-                    className={`toc-link ${item.level === 3 ? 'pl-4' : ''}`}
-                  >
-                    {item.text}
-                  </a>
-                ))}
+              <nav>
+                <TocTree nodes={buildTocTree(toc)} />
               </nav>
             ) : (
               <p className="text-sm theme-subtle">这篇文章暂无小标题。</p>
@@ -487,7 +650,7 @@ function NotePage() {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="mb-8"
+          className="note-back-btn mb-8"
         >
           <Link
             to="/notes"
@@ -500,16 +663,8 @@ function NotePage() {
         <div className="xl:hidden mb-8">
           <details className="mobile-toc">
             <summary>文章目录</summary>
-            <nav className="mt-4 space-y-2">
-              {toc.map((item) => (
-                <a
-                  key={`${item.id}-${item.text}-mobile`}
-                  href={`#${item.id}`}
-                  className={`toc-link ${item.level === 3 ? 'pl-4' : ''}`}
-                >
-                  {item.text}
-                </a>
-              ))}
+            <nav className="mt-4">
+              <TocTree nodes={buildTocTree(toc)} />
             </nav>
           </details>
         </div>
@@ -547,9 +702,34 @@ function NotePage() {
             </motion.p>
           )}
           
-          <div className="flex items-center gap-6 text-sm theme-muted">
-            <span>📅 {note.createdAt}</span>
+          <div className="flex flex-wrap items-center gap-3 text-xs theme-muted mt-8 pt-5 border-t border-white/10">
+            <svg className="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>{note.createdAt}</span>
+
+            <span className="opacity-30">·</span>
+
+            <svg className="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>{noteMeta ? `${noteMeta.readingTime} 分钟阅读` : ''}</span>
+
+            <span className="opacity-30">·</span>
+
+            <svg className="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <span className="capitalize">{note.personality}</span>
+
+            {note.mood && (
+              <>
+                <span className="opacity-30">·</span>
+                <span>{note.mood}</span>
+              </>
+            )}
+
+            {noteMeta && (
+              <>
+                <span className="opacity-30">·</span>
+                <svg className="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span>{noteMeta.wordCount} 字</span>
+              </>
+            )}
           </div>
         </motion.header>
         
@@ -562,6 +742,22 @@ function NotePage() {
         >
           <div className="glass-card p-6 md:p-8 rounded-2xl">
             <MarkdownContent content={note.content} />
+            <div className="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm theme-muted">
+              {note.updatedAt && (
+                <span>更新于 {note.updatedAt}</span>
+              )}
+              {noteMeta && (
+                <>
+                  <span>约 {noteMeta.wordCount} 字</span>
+                  <span>预计阅读 {noteMeta.readingTime} 分钟</span>
+                </>
+              )}
+              <div className="flex flex-wrap gap-2 ml-auto">
+                {note.tags.map(tag => (
+                  <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-white/5 theme-subtle">#{tag}</span>
+                ))}
+              </div>
+            </div>
           </div>
         </motion.article>
         
