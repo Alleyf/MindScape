@@ -133,36 +133,32 @@ const DEFAULT_LEARNING_ROUTES = [
     steps: ['捕捉灵感', '标签归档', '主题串联', '定期修剪', '输出文章', '形成系统'],
   },
 ];
-// Load and parse MD files
-async function loadConfigData() {
-  try {
-    const modules = await Promise.all(Object.values(mdModules));
-    let resourceCategories = DEFAULT_RESOURCE_CATEGORIES;
-    let learningRoutes = DEFAULT_LEARNING_ROUTES;
+// Load and parse MD files at build time
+const parsedModules = Object.values(mdModules);
 
-    for (const raw of modules) {
-      if (typeof raw !== 'string') continue;
-      const { data } = matter(raw);
-      if (data.categories) {
-        resourceCategories = data.categories;
-      }
-      if (data.routes) {
-        learningRoutes = data.routes;
-      }
+function parseMdFiles() {
+  let resourceCategories = DEFAULT_RESOURCE_CATEGORIES;
+  let learningRoutes = DEFAULT_LEARNING_ROUTES;
+
+  for (const raw of parsedModules) {
+    if (typeof raw !== 'string') continue;
+    const { data } = matter(raw);
+    if (data.categories && Array.isArray(data.categories)) {
+      resourceCategories = data.categories;
     }
-
-    return { resourceCategories, learningRoutes };
-  } catch {
-    return {
-      resourceCategories: DEFAULT_RESOURCE_CATEGORIES,
-      learningRoutes: DEFAULT_LEARNING_ROUTES,
-    };
+    if (data.routes && Array.isArray(data.routes)) {
+      learningRoutes = data.routes;
+    }
   }
+
+  return { resourceCategories, learningRoutes };
 }
 
-// Synchronous exports with default fallback
-export const RESOURCE_CATEGORIES = DEFAULT_RESOURCE_CATEGORIES;
-export const LEARNING_ROUTES = DEFAULT_LEARNING_ROUTES;
+const { resourceCategories, learningRoutes } = parseMdFiles();
+
+// Synchronous exports — data loaded at build time via import.meta.glob
+export const RESOURCE_CATEGORIES = resourceCategories;
+export const LEARNING_ROUTES = learningRoutes;
 
 export const MICROLINK_API_URL = import.meta.env.VITE_MICROLINK_API_URL || 'https://api.microlink.io/?url=';
 export const FAVICON_YANDEX_URL = import.meta.env.VITE_FAVICON_YANDEX_URL || 'https://favicon.yandex.net/favicon/';
