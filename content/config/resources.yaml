@@ -1,4 +1,3 @@
----
 categories:
   - title: AI 编程
     icon: M12 3c-1.5 2-5 4-8 4 0 5 2 11 8 14 6-3 8-9 8-14-3 0-6.5-2-8-4Z
@@ -22,7 +21,7 @@ categories:
         desc: AI 编程生态聚合平台
         url: https://openclaw.ai/
   - title: 前端开发
-    icon: M14.7 6.3a1 1 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z
+    icon: M14.7 6.3a1 1 0 0 1.4l1.6 1.6a1 1 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z
     items:
       - name: React
         desc: 用于构建用户界面的 JavaScript 库
@@ -59,7 +58,7 @@ categories:
         url: https://iterm2.com/
       - name: Warp
         desc: Rust 编写的现代化终端，AI 辅助
-        url: https://www.warp.dev/
+        url: https://warp.dev/
       - name: Raycast
         desc: macOS 效率启动器，开发者友好
         url: https://www.raycast.com/
@@ -112,7 +111,7 @@ categories:
         desc: GSD 是一个基于 OpenAI 的规范，用于定义 API 设计和实现
         url: https://gdspec.dev/
       - name: ai-native-engineering
-        desc: 从"你写 AI 补"到"你说 AI 做"，把 AI 从一个时灵时不灵的外挂，变成一套能稳定推进大项目的工程工作流。
+        desc: 从「你写 AI 补」到「你说 AI 做」，把 AI 从一个时灵时不灵的外挂，变成一套能稳定推进大项目的工程工作流
         url: https://tatsukimeng.github.io/ai-native-engineering/
   - title: 部署与运维
     icon: M5 12h14M12 5l7 7-7 7
@@ -142,9 +141,8 @@ categories:
         desc: 减少AI废话，压缩 75% Token，结果更准确
         url: https://getcaveman.dev/
       - name: CC-commands-guide
-        desc: 梳理 CLI 中所有高频命令与交互快捷键，配合示例帮助你形成肌肉记忆。
+        desc: 梳理 CLI 中所有高频命令与交互快捷键，配合示例帮助你形成肌肉记忆
         url: https://claude-ai.net/posts/claude-code-commands-guide/
       - name: zcf
-        desc: 面向专业开发者的 CLI 工具，目标是在几分钟内完成 Claude Code 与 Codex 的端到端环境初始化。通过 npx zcf 可以一站式完成配置目录创建、API/代理接入、MCP 服务接入、工作流导入、输出风格与记忆配置，以及常用工具安装
+        desc: 面向专业开发者的 CLI 工具，目标是在几分钟内完成 Claude Code 与 Codex 的端到端环境初始化
         url: https://zcf.ufomiao.com/zh-CN/
----

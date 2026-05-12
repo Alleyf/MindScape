@@ -26,7 +26,11 @@
       "WebFetch(domain:skills.sh)",
       "Bash(claude *)",
       "Bash(npm run *)",
-      "Bash(npx zcf *)"
+      "Bash(npx zcf *)",
+      "Skill(gsd-execute-phase)",
+      "Bash(node -e ' *)",
+      "Bash(curl -s http://localhost:5173)",
+      "Bash(pkill -f \"vite\")"
     ]
   }
 }
