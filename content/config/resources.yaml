@@ -146,3 +146,12 @@ categories:
       - name: zcf
         desc: 面向专业开发者的 CLI 工具，目标是在几分钟内完成 Claude Code 与 Codex 的端到端环境初始化
         url: https://zcf.ufomiao.com/zh-CN/
+  - title: 博文推荐
+    icon: M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 0 1 .665 6.479A11.952 11.952 0 0 0 12 20.055a11.952 11.952 0 0 0-6.824-2.998 12.078 12.078 0 0 1 .665-6.479L12 14zm0 0l-6.16-3.422a12.083 12.083 0 0 0-.665 6.479A11.952 11.952 0 0 0 12 20.055
+    items:
+      - name: agentic-coding-trends-2026
+        desc: 2026 编程巨变：Anthropic 报告揭示 Agent 编程八大趋势
+        url: https://baoyu.io/blog/2026/02/09/anthropic-agentic-coding-trends-2026
+      - name: claude-code-teams-guide
+        desc: Claude Code --teammate-mode 详解：让多个 Agent 真正协作起来
+        url: https://www.heyuan110.com/zh/posts/ai/2026-02-28-claude-code-teams-guide/
