@@ -1,0 +1,93 @@
+---
+routes:
+  - id: ai-coding
+    title: AI Coding 入门到实战
+    summary: 从基础扫盲、工具安装到 Spec / GSD 工作流，适合想系统建立 AI 编程习惯的开发者。
+    accent: "#d97757"
+    resources:
+      - type: 扫盲
+        title: 云途 AGI
+        url: https://www.yuntuagi.cn/series/ai-literacy
+      - type: 扫盲
+        title: JavaGuide AI
+        url: https://javaguide.cn/ai/
+      - type: 工具
+        title: Claude Code
+        url: https://code.claude.com/docs/en/overview
+      - type: 工具
+        title: OpenAI Codex
+        url: https://github.com/openai/codex
+      - type: 工具
+        title: CC-Switch
+        url: https://github.com/farion1231/cc-switch
+      - type: 生态
+        title: OpenClaw
+        url: https://openclaw.ai/
+      - type: 生态
+        title: Hermes Agent
+        url: https://hermesagent.org.cn/
+      - type: 技能
+        title: SkillHub
+        url: https://skillhub.cn/
+      - type: 方法论
+        title: Superpowers
+        url: https://github.com/obra/superpowers
+      - type: 方法论
+        title: Spec Kit
+        url: https://github.github.com/spec-kit/
+      - type: 方法论
+        title: OpenSpec
+        url: https://openspec.dev/
+      - type: 方法论
+        title: GSD 2
+        url: https://github.com/gsd-build/gsd-2
+    steps:
+      - 概念扫盲
+      - 安装主力工具
+      - 小任务练习
+      - Plan 模式
+      - Spec 工作流
+      - 项目验证
+  - id: frontend
+    title: 前端工程成长路线
+    summary: 围绕 React、工程化、设计系统和 AI 辅助开发，建立可交付的前端能力。
+    accent: "#6f7669"
+    resources:
+      - type: 博文
+        title: React Hooks 深度探索
+        url: /note/react-hooks
+      - type: 视频
+        title: 组件设计与状态管理
+        url: https://www.bilibili.com/
+      - type: 网址
+        title: JavaScript 学习路径
+        url: https://developer.mozilla.org/zh-CN/docs/Web/JavaScript
+    steps:
+      - HTML/CSS 基础
+      - JavaScript
+      - React
+      - 状态管理
+      - 工程化
+      - 设计系统
+  - id: knowledge
+    title: 个人知识管理路线
+    summary: 从数字花园、标签组织到长期复盘，让知识在写作和项目中持续生长。
+    accent: "#8f4f32"
+    resources:
+      - type: 博文
+        title: 欢迎来到 MindScape
+        url: /note/welcome
+      - type: 博文
+        title: AI Coding 学习清单
+        url: /note/ai-coding-learning-checklist
+      - type: 网址
+        title: OpenSpec
+        url: https://openspec.dev/
+    steps:
+      - 捕捉灵感
+      - 标签归档
+      - 主题串联
+      - 定期修剪
+      - 输出文章
+      - 形成系统
+---
