@@ -1479,6 +1479,156 @@ function ResourcesPage() {
   );
 }
 
+function AIEngineeringPage() {
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [iframeError, setIframeError] = useState(false);
+
+  return (
+    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
+      <div className="max-w-6xl mx-auto">
+        {/* Hero */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 text-center"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-nebula-accent/10 border border-nebula-accent/20 text-nebula-accent text-sm font-semibold mb-6">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            外部资源 · AI Native Engineering
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">AI-Native Engineering</h1>
+          <p className="text-lg theme-muted max-w-2xl mx-auto leading-relaxed">
+            涵盖 AI 辅助编程、工具链、工作流和工程实践的深度思考与实操指南。
+          </p>
+          {/* <div className="flex items-center justify-center gap-4 mt-6">
+            <a
+              href="https://tatsukimeng.github.io/ai-native-engineering/"
+              target="_blank"
+              rel="noreferrer"
+              className="primary-button"
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              在新窗口打开
+            </a>
+            <a
+              href="https://github.com/tatsukimeng/ai-native-engineering"
+              target="_blank"
+              rel="noreferrer"
+              className="theme-outline-button"
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.58 9.58 0 0 1 12 6.8c.85.004 1.7.115 2.5.34 1.9-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/>
+              </svg>
+              源码仓库
+            </a>
+          </div> */}
+        </motion.div>
+
+        {/* Embedded iframe */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="engineer-embed-wrapper"
+        >
+          <div className="engineer-embed-header">
+            <div className="engineer-embed-dots">
+              <span />
+              <span />
+              <span />
+            </div>
+            <span className="engineer-embed-url">tatsukimeng.github.io/ai-native-engineering</span>
+            <a
+              href="https://tatsukimeng.github.io/ai-native-engineering/"
+              target="_blank"
+              rel="noreferrer"
+              className="engineer-embed-open"
+              title="在新窗口打开"
+            >
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+
+          {!iframeLoaded && !iframeError && (
+            <div className="engineer-embed-loading">
+              <div className="engineer-embed-spinner" />
+              <p>正在加载 AI-Native Engineering...</p>
+            </div>
+          )}
+
+          {iframeError ? (
+            <div className="engineer-embed-fallback">
+              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-nebula-accent mb-4">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4m0 4h.01"/>
+              </svg>
+              <p className="text-lg font-semibold mb-2">无法嵌入外部页面</p>
+              <p className="text-sm theme-muted mb-4">这可能是因为目标站点限制了嵌入。</p>
+              <a
+                href="https://tatsukimeng.github.io/ai-native-engineering/"
+                target="_blank"
+                rel="noreferrer"
+                className="primary-button"
+              >
+                直接访问 →
+              </a>
+            </div>
+          ) : (
+            <iframe
+              src="https://tatsukimeng.github.io/ai-native-engineering/"
+              title="AI-Native Engineering"
+              className={`engineer-iframe ${iframeLoaded ? 'engineer-iframe-loaded' : ''}`}
+              onLoad={() => setIframeLoaded(true)}
+              onError={() => setIframeError(true)}
+              referrerPolicy="no-referrer"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            />
+          )}
+        </motion.div>
+
+        {/* Bottom info */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mt-6 text-center"
+        >
+          {/* <p className="text-xs theme-subtle">
+            嵌入来自{' '}
+            <a
+              href="https://github.com/tatsukimeng"
+              target="_blank"
+              rel="noreferrer"
+              className="text-nebula-accent hover:underline"
+            >
+              @tatsukimeng
+            </a>{' '}
+            的 AI Native Engineering ·{' '}
+            <a
+              href="https://tatsukimeng.github.io/ai-native-engineering/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-nebula-accent hover:underline"
+            >
+              访问原站
+            </a>
+          </p> */}
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
 function AboutPage() {
   const notes = getNotes();
   const tags = getAllTags(notes);
@@ -1779,6 +1929,13 @@ function App() {
                 资源库
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
               </Link>
+              <Link to="/ai-native-engineering" className="nav-link group">
+                <svg viewBox="0 0 24 24" width="18" height="18" className="nav-icon" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                AI 工程
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nebula-accent transition-all group-hover:w-full" />
+              </Link>
               <Link to="/about" className="nav-link group">
                 <NavIcon name="about" />
                 关于
@@ -1812,6 +1969,7 @@ function App() {
           <Route path="/roadmap" element={<RoadmapPage />} />
           <Route path="/graph" element={<GraphPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
+          <Route path="/ai-native-engineering" element={<AIEngineeringPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
         
