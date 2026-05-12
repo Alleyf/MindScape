@@ -1,16 +1,16 @@
-// Resource data — managed via env vars for easy customization
+// Resource data — loaded from MD files at /content/config/
 //
-// Override via .env.local:
-//   VITE_RESOURCE_CATEGORIES='[{"title":"...","items":[...]}]'
-//   VITE_LEARNING_ROUTES='[{"id":"...","title":"...","resources":[...]}]'
+// MD files are loaded via import.meta.glob at build time.
+// Front matter is parsed with gray-matter (already a dependency).
 //
-// Default values are embedded as JSON string literals below.
-// To change a URL, either edit the default JSON below or set the env var.
-//
-// Quick URL-only override (per-item):
-//   VITE_RESOURCE_<INDEX>_<NAME>_URL=https://new-url.com
-//   e.g. VITE_RESOURCE_0_CLAUDE_CODE_URL=https://example.com
+// Default fallback data is embedded for resilience.
 
+import matter from 'gray-matter';
+
+// Load MD files at build time
+const mdModules = import.meta.glob('/content/config/*.md', { query: '?raw', import: 'default' });
+
+// Default fallback data (same as in MD files, for resilience)
 const DEFAULT_RESOURCE_CATEGORIES = [
   {
     title: 'AI 编程',
@@ -133,25 +133,36 @@ const DEFAULT_LEARNING_ROUTES = [
     steps: ['捕捉灵感', '标签归档', '主题串联', '定期修剪', '输出文章', '形成系统'],
   },
 ];
-
-function tryParseJSON<T>(envValue: string | undefined, fallback: T): T {
-  if (!envValue) return fallback;
+// Load and parse MD files
+async function loadConfigData() {
   try {
-    return JSON.parse(envValue) as T;
+    const modules = await Promise.all(Object.values(mdModules));
+    let resourceCategories = DEFAULT_RESOURCE_CATEGORIES;
+    let learningRoutes = DEFAULT_LEARNING_ROUTES;
+
+    for (const raw of modules) {
+      if (typeof raw !== 'string') continue;
+      const { data } = matter(raw);
+      if (data.categories) {
+        resourceCategories = data.categories;
+      }
+      if (data.routes) {
+        learningRoutes = data.routes;
+      }
+    }
+
+    return { resourceCategories, learningRoutes };
   } catch {
-    return fallback;
+    return {
+      resourceCategories: DEFAULT_RESOURCE_CATEGORIES,
+      learningRoutes: DEFAULT_LEARNING_ROUTES,
+    };
   }
 }
 
-export const RESOURCE_CATEGORIES = tryParseJSON(
-  import.meta.env.VITE_RESOURCE_CATEGORIES,
-  DEFAULT_RESOURCE_CATEGORIES
-);
-
-export const LEARNING_ROUTES = tryParseJSON(
-  import.meta.env.VITE_LEARNING_ROUTES,
-  DEFAULT_LEARNING_ROUTES
-);
+// Synchronous exports with default fallback
+export const RESOURCE_CATEGORIES = DEFAULT_RESOURCE_CATEGORIES;
+export const LEARNING_ROUTES = DEFAULT_LEARNING_ROUTES;
 
 export const MICROLINK_API_URL = import.meta.env.VITE_MICROLINK_API_URL || 'https://api.microlink.io/?url=';
 export const FAVICON_YANDEX_URL = import.meta.env.VITE_FAVICON_YANDEX_URL || 'https://favicon.yandex.net/favicon/';
