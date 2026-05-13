@@ -10,6 +10,7 @@ export interface Note {
   mood?: string;
   personality?: string;
   aiSubtitle?: string;
+  cover?: string;
 }
 
 export interface NoteFrontmatter {
@@ -19,4 +20,5 @@ export interface NoteFrontmatter {
   mood?: string;
   aiSubtitle?: string;
   personality?: string;
+  cover?: string;
 }

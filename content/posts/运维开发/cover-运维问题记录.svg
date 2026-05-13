@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g fill="#334155" stroke="#475569" stroke-width="2">
+    <rect x="200" y="120" width="800" height="60" rx="4"/>
+    <rect x="200" y="200" width="800" height="60" rx="4"/>
+    <rect x="200" y="280" width="800" height="60" rx="4"/>
+    <rect x="200" y="360" width="800" height="60" rx="4"/>
+  </g>
+  <g fill="#64748b">
+    <circle cx="240" cy="150" r="8"/><circle cx="270" cy="150" r="8"/>
+    <circle cx="240" cy="230" r="8"/><circle cx="270" cy="230" r="8"/>
+    <circle cx="240" cy="310" r="8"/><circle cx="270" cy="310" r="8"/>
+    <circle cx="240" cy="390" r="8"/><circle cx="270" cy="390" r="8"/>
+  </g>
+  <g>
+    <circle cx="920" cy="150" r="10" fill="#22c55e"/>
+    <circle cx="920" cy="230" r="10" fill="#f59e0b"/>
+    <circle cx="920" cy="310" r="10" fill="#ef4444"/>
+    <circle cx="920" cy="390" r="10" fill="#22c55e"/>
+  </g>
+  <g stroke="#64748b" stroke-width="2" stroke-dasharray="8,4" opacity="0.5">
+    <line x1="200" y1="400" x2="200" y2="500"/>
+    <line x1="400" y1="400" x2="400" y2="500"/>
+    <line x1="600" y1="400" x2="600" y2="500"/>
+    <line x1="800" y1="400" x2="800" y2="500"/>
+    <line x1="1000" y1="400" x2="1000" y2="500"/>
+    <line x1="150" y1="500" x2="1050" y2="500"/>
+  </g>
+  <g transform="translate(920, 310)" fill="#ef4444">
+    <polygon points="0,-20 17,10 -17,10"/>
+    <text x="0" y="6" text-anchor="middle" font-family="system-ui" font-size="16" font-weight="bold" fill="#fff">!</text>
+  </g>
+  <g transform="translate(350, 450)">
+    <rect x="0" y="0" width="500" height="120" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+    <text x="20" y="30" font-family="monospace" font-size="14" fill="#22c55e">$ systemctl status</text>
+    <text x="20" y="55" font-family="monospace" font-size="14" fill="#64748b">> Checking logs...</text>
+    <text x="20" y="80" font-family="monospace" font-size="14" fill="#f59e0b">> Warning: High memory usage</text>
+    <text x="20" y="105" font-family="monospace" font-size="14" fill="#ef4444">> Error: Connection timeout</text>
+  </g>
+  <text x="600" y="70" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#ffffff">运维问题记录</text>
+  <text x="600" y="105" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#64748b" letter-spacing="4">OPS TROUBLESHOOTING</text>
+</svg>

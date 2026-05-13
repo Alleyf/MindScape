@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0c0a09"/><stop offset="50%" stop-color="#1c1917"/><stop offset="100%" stop-color="#0c0a09"/></linearGradient>
+    <linearGradient id="ga" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient>
+    <linearGradient id="gb" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#06b6d4"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient>
+    <filter id="g"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g transform="translate(600,280)">
+    <g transform="translate(-200,-120)">
+      <circle cx="0" cy="0" r="20" fill="#8b5cf6" opacity="0.3" stroke="#8b5cf6" stroke-width="1.5"/>
+      <circle cx="50" cy="-30" r="15" fill="#06b6d4" opacity="0.3"/>
+      <circle cx="100" cy="0" r="20" fill="#8b5cf6" opacity="0.3"/>
+      <circle cx="50" cy="30" r="15" fill="#06b6d4" opacity="0.3"/>
+      <line x1="0" y1="0" x2="50" y2="-30" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="0" y1="0" x2="100" y2="0" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="0" y1="0" x2="50" y2="30" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="50" y1="-30" x2="100" y2="0" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="100" y1="0" x2="50" y2="30" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="50" y1="-30" x2="50" y2="30" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <text x="50" y="-55" text-anchor="middle" fill="#a78bfa" font-size="11">t1</text>
+    </g>
+    <g transform="translate(0,0)">
+      <circle cx="0" cy="0" r="22" fill="#06b6d4" opacity="0.3" stroke="#06b6d4" stroke-width="2"/>
+      <circle cx="60" cy="-35" r="16" fill="#8b5cf6" opacity="0.3"/>
+      <circle cx="120" cy="0" r="22" fill="#06b6d4" opacity="0.3"/>
+      <circle cx="60" cy="35" r="16" fill="#8b5cf6" opacity="0.3"/>
+      <line x1="0" y1="0" x2="60" y2="-35" stroke="#22d3ee" stroke-width="1.5" opacity="0.7"/>
+      <line x1="0" y1="0" x2="120" y2="0" stroke="#22d3ee" stroke-width="1.5" opacity="0.7"/>
+      <line x1="0" y1="0" x2="60" y2="35" stroke="#22d3ee" stroke-width="1.5" opacity="0.7"/>
+      <line x1="60" y1="-35" x2="120" y2="0" stroke="#22d3ee" stroke-width="1.5" opacity="0.7"/>
+      <line x1="120" y1="0" x2="60" y2="35" stroke="#22d3ee" stroke-width="1.5" opacity="0.7"/>
+      <line x1="60" y1="-35" x2="60" y2="35" stroke="#22d3ee" stroke-width="1.5" opacity="0.7"/>
+      <text x="60" y="-60" text-anchor="middle" fill="#22d3ee" font-size="12" font-weight="bold">t2</text>
+    </g>
+    <g transform="translate(200,120)">
+      <circle cx="0" cy="0" r="20" fill="#8b5cf6" opacity="0.3"/>
+      <circle cx="-50" cy="30" r="15" fill="#06b6d4" opacity="0.3"/>
+      <circle cx="-100" cy="0" r="20" fill="#8b5cf6" opacity="0.3"/>
+      <circle cx="-50" cy="-30" r="15" fill="#06b6d4" opacity="0.3"/>
+      <line x1="0" y1="0" x2="-50" y2="30" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="0" y1="0" x2="-100" y2="0" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="0" y1="0" x2="-50" y2="-30" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="-50" y1="30" x2="-100" y2="0" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="-100" y1="0" x2="-50" y2="-30" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <line x1="-50" y1="30" x2="-50" y2="-30" stroke="#a78bfa" stroke-width="1" opacity="0.6"/>
+      <text x="-50" y="55" text-anchor="middle" fill="#a78bfa" font-size="11">t3</text>
+    </g>
+  </g>
+  <g transform="translate(80,420)">
+    <rect x="0" y="0" width="160" height="100" rx="6" fill="#1c1917" stroke="#8b5cf6" stroke-width="1.5" opacity="0.8"/>
+    <text x="80" y="20" text-anchor="middle" fill="#a78bfa" font-size="10">REPRESENTATION</text>
+    <g transform="translate(20,35)">
+      <rect width="50" height="50" fill="none" stroke="#8b5cf6" stroke-width="1"/>
+      <g fill="#8b5cf6" opacity="0.6"><rect x="3" y="3" width="12" height="12" rx="1"/><rect x="19" y="3" width="12" height="12" rx="1"/><rect x="35" y="3" width="12" height="12" rx="1"/><rect x="3" y="19" width="12" height="12" rx="1"/><rect x="19" y="19" width="12" height="12" rx="1"/><rect x="35" y="19" width="12" height="12" rx="1"/><rect x="3" y="35" width="12" height="12" rx="1"/><rect x="19" y="35" width="12" height="12" rx="1"/><rect x="35" y="35" width="12" height="12" rx="1"/></g>
+      <path d="M 60 25 L 75 25 L 85 50 L 95 0 L 105 50 L 115 25 L 130 25" stroke="#06b6d4" stroke-width="2" fill="none"/>
+    </g>
+  </g>
+  <g transform="translate(980,420)">
+    <rect x="0" y="0" width="160" height="100" rx="6" fill="#1c1917" stroke="#06b6d4" stroke-width="1.5" opacity="0.8"/>
+    <text x="80" y="20" text-anchor="middle" fill="#22d3ee" font-size="10">APPLICATIONS</text>
+    <g transform="translate(20,35)" fill="#06b6d4" opacity="0.8">
+      <circle cx="25" cy="20" r="12" fill="none" stroke="#06b6d4" stroke-width="1.5"/><text x="25" y="25" text-anchor="middle" font-size="14">?</text>
+      <g transform="translate(60,8)"><circle cx="0" cy="0" r="8" fill="none"/><circle cx="30" cy="0" r="8" fill="none"/><line x1="8" y1="0" x2="22" y2="0"/><path d="M 18 -4 L 22 0 L 18 4" fill="none"/></g>
+      <g transform="translate(20,50)"><rect x="0" y="0" width="25" height="18" rx="2" fill="none" stroke="#06b6d4"/><rect x="35" y="0" width="25" height="18" rx="2" fill="none" stroke="#8b5cf6"/><path d="M 25 9 L 35 9" stroke="#a78bfa" stroke-dasharray="2,2"/></g>
+    </g>
+  </g>
+  <text x="600" y="530" text-anchor="middle" fill="url(#ga)" font-size="22" font-weight="bold" filter="url(#g)">Temporal Knowledge Graph</text>
+  <text x="600" y="565" text-anchor="middle" fill="url(#gb)" font-size="22" font-weight="bold" filter="url(#g)">Representation Learning</text>
+  <text x="600" y="600" text-anchor="middle" fill="#a78bfa" font-size="16" opacity="0.8">& Applications - A Survey</text>
+</svg>

@@ -83,6 +83,7 @@ export function getNotes(): Note[] {
       mood: data.mood || '✨',
       personality: data.personality || '沉思者',
       aiSubtitle: data.aiSubtitle || '',
+      cover: data.cover || '',
     });
   });
 

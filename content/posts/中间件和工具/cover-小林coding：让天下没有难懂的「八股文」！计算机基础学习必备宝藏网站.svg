@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g transform="translate(600, 280)">
+    <rect x="-400" y="-180" width="800" height="360" rx="16" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <g transform="translate(-350, -120)">
+      <rect x="0" y="0" width="160" height="70" rx="8" fill="#3b82f6" opacity="0.2" stroke="#3b82f6" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="#3b82f6">MySQL</text>
+      <text x="80" y="50" text-anchor="middle" font-family="system-ui" font-size="11" fill="#64748b">索引·存储引擎·事务</text>
+    </g>
+    <g transform="translate(-170, -120)">
+      <rect x="0" y="0" width="160" height="70" rx="8" fill="#ef4444" opacity="0.2" stroke="#ef4444" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="#ef4444">Redis</text>
+      <text x="80" y="50" text-anchor="middle" font-family="system-ui" font-size="11" fill="#64748b">数据结构·持久化·高可用</text>
+    </g>
+    <g transform="translate(10, -120)">
+      <rect x="0" y="0" width="160" height="70" rx="8" fill="#22c55e" opacity="0.2" stroke="#22c55e" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="#22c55e">OS</text>
+      <text x="80" y="50" text-anchor="middle" font-family="system-ui" font-size="11" fill="#64748b">进程·内存·文件系统</text>
+    </g>
+    <g transform="translate(190, -120)">
+      <rect x="0" y="0" width="160" height="70" rx="8" fill="#f59e0b" opacity="0.2" stroke="#f59e0b" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="#f59e0b">Network</text>
+      <text x="80" y="50" text-anchor="middle" font-family="system-ui" font-size="11" fill="#64748b">TCP·HTTP·UDP·IP</text>
+    </g>
+    <g transform="translate(-350, -30)">
+      <rect x="0" y="0" width="160" height="70" rx="8" fill="#8b5cf6" opacity="0.2" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="#8b5cf6">Algorithms</text>
+      <text x="80" y="50" text-anchor="middle" font-family="system-ui" font-size="11" fill="#64748b">数据结构·动态规划</text>
+    </g>
+    <g transform="translate(-170, -30)">
+      <rect x="0" y="0" width="160" height="70" rx="8" fill="#ec4899" opacity="0.2" stroke="#ec4899" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="#ec4899">System Design</text>
+      <text x="80" y="50" text-anchor="middle" font-family="system-ui" font-size="11" fill="#64748b">架构·分布式·缓存</text>
+    </g>
+    <g transform="translate(10, -30)">
+      <rect x="0" y="0" width="160" height="70" rx="8" fill="#06b6d4" opacity="0.2" stroke="#06b6d4" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="#06b6d4">C++</text>
+      <text x="80" y="50" text-anchor="middle" font-family="system-ui" font-size="11" fill="#64748b">八股文·面试题</text>
+    </g>
+    <g transform="translate(190, -30)">
+      <rect x="0" y="0" width="160" height="70" rx="8" fill="#14b8a6" opacity="0.2" stroke="#14b8a6" stroke-width="2"/>
+      <text x="80" y="30" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="#14b8a6">Go</text>
+      <text x="80" y="50" text-anchor="middle" font-family="system-ui" font-size="11" fill="#64748b">并发·协程·微服务</text>
+    </g>
+    <g transform="translate(-170, 60)">
+      <rect x="0" y="0" width="340" height="60" rx="8" fill="#334155" opacity="0.5" stroke="#475569" stroke-width="2"/>
+      <text x="170" y="38" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="600" fill="#e2e8f0">+ 500+ 图解文章</text>
+    </g>
+  </g>
+  <text x="600" y="70" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="#ffffff">小林coding</text>
+  <text x="600" y="105" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#64748b" letter-spacing="4">CS FUNDAMENTALS · INTERVIEW</text>
+</svg>
