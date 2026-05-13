@@ -749,6 +749,7 @@ function NotesPage() {
                 <Link to={`/note/${note.slug}`} className="notes-timeline-card">
                   <NoteCoverImage
                     src={note.cover?.trim() || defaultCoverUrlFromSlug(note.slug)}
+                    slug={note.slug}
                     alt=""
                     className="notes-timeline-cover"
                   />

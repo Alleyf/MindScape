@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="国际会议记录">
-  <rect width="800" height="450" fill="#f1f5f9"/>
-  <circle cx="280" cy="220" r="8" fill="none" stroke="#cbd5e1" stroke-width="2" opacity="0.5"/><circle cx="105" cy="64" r="11" fill="none" stroke="#cbd5e1" stroke-width="2" opacity="0.5"/><circle cx="560" cy="180" r="14" fill="none" stroke="#cbd5e1" stroke-width="2" opacity="0.5"/><circle cx="380" cy="100" r="17" fill="none" stroke="#cbd5e1" stroke-width="2" opacity="0.5"/><circle cx="515" cy="116" r="8" fill="none" stroke="#cbd5e1" stroke-width="2" opacity="0.5"/>
-  <rect x="48" y="48" width="704" height="354" rx="20" fill="none" stroke="#334155" stroke-width="2" opacity="0.35"/>
-  <text x="72" y="130" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="32" font-weight="700" fill="#0f172a">国际会议记录</text>
-  <text x="72" y="180" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="15" fill="#334155" opacity="0.85">会议讨论 / 国际会议</text>
-</svg>

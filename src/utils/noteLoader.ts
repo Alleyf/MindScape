@@ -1,36 +1,17 @@
 import { Note } from '../types';
 export { getRandomNote } from './noteData';
 
-<<<<<<< HEAD
-/** FNV-1a 32-bit，与 `scripts/normalize-posts-and-covers.mjs` 中封面文件名算法一致。 */
-function fnv1a32SlugHash(slug: string): number {
-=======
 /**
- * 当 front matter 未提供 `cover`（或为空）时，使用 picsum.photos 的确定性 seed URL：
- * 同一 slug 始终对应同一张图，列表刷新不会「随机换封面」。
+ * 当 front matter 未提供 `cover`（或为空）时，使用本地 SVG 封面：
+ * 同一 slug 始终对应同一张封面图。
  */
 export function defaultCoverUrlFromSlug(slug: string): string {
->>>>>>> 0732f1a59cd15e66d87a504579597a8525591295
   let h = 2166136261 >>> 0;
   for (let i = 0; i < slug.length; i++) {
     h ^= slug.charCodeAt(i);
     h = Math.imul(h, 16777619) >>> 0;
   }
-<<<<<<< HEAD
-  return h >>> 0;
-}
-
-/** `public/images/covers/` 下的 ASCII 文件名（避免 Windows 非法路径字符）。 */
-export function coverBasenameFromSlug(slug: string): string {
-  return `ms-${fnv1a32SlugHash(slug).toString(16)}.svg`;
-}
-
-export function coverUrlFromSlug(slug: string): string {
-  return `/images/covers/${coverBasenameFromSlug(slug)}`;
-=======
-  const seed = `ms-${h.toString(16)}`;
-  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/800/450`;
->>>>>>> 0732f1a59cd15e66d87a504579597a8525591295
+  return `/images/covers/ms-${h.toString(16)}.svg`;
 }
 
 // 使用 Vite 的 import.meta.glob 动态导入 content/posts 下的所有 .md 文件
@@ -102,11 +83,10 @@ export function getNotes(): Note[] {
     const { data, content: body } = parseFrontMatter(content as string);
     const date = data.date || new Date().toISOString().split('T')[0];
     const excerpt = body.trim().slice(0, 150) + (body.length > 150 ? '...' : '');
-    const coverRaw = typeof data.cover === 'string' ? data.cover.trim() : '';
-    const cover = coverRaw ? coverRaw : defaultCoverUrlFromSlug(rawSlug);
+    
+    // 优先使用 front matter 中指定的 cover，否则使用默认的 picsum.photos 随机图片
+    const cover = data.cover?.trim() || defaultCoverUrlFromSlug(rawSlug);
 
-    const coverRaw = typeof data.cover === 'string' ? data.cover.trim() : '';
-    const cover = coverRaw || coverUrlFromSlug(rawSlug);
 
     notes.push({
       id: rawSlug,

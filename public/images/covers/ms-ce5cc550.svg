@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="Chain-of-Thought Reasoning Without Pro…">
-  <rect width="800" height="450" fill="#ecfeff"/>
-  <rect x="25" y="100" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="92" y="190" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="159" y="280" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="226" y="100" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="293" y="190" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="360" y="280" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="427" y="100" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="494" y="190" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="561" y="280" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="628" y="100" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="695" y="190" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/><rect x="762" y="280" width="4" height="40" rx="2" fill="#0e7490" opacity="0.2"/>
-  <rect x="48" y="48" width="704" height="354" rx="20" fill="none" stroke="#0e7490" stroke-width="2" opacity="0.35"/>
-  <text x="72" y="130" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="32" font-weight="700" fill="#134e4a">Chain-of-Thought Reasoning Without Pro…</text>
-  <text x="72" y="180" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="15" fill="#0e7490" opacity="0.85">论文总结 / Chain-of-Thought Reasoning Without Prompting</text>
-</svg>

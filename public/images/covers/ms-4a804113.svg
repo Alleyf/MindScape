@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="《MetaTKG：让“时间知识图谱”秒变“元学习小机灵”》——一篇能让研一萌…">
-  <rect width="800" height="450" fill="#fafaf9"/>
-  <path d="M0 380 Q200 300 400 380 T800 360 L800 450 L0 450 Z" fill="#d6d3d1" opacity="0.25"/>
-  <rect x="48" y="48" width="704" height="354" rx="20" fill="none" stroke="#57534e" stroke-width="2" opacity="0.35"/>
-  <text x="72" y="130" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="32" font-weight="700" fill="#1c1917">《MetaTKG：让“时间知识图谱”秒变“元学习小机灵”》——一篇能让研一萌…</text>
-  <text x="72" y="180" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="15" fill="#57534e" opacity="0.85">论文总结 / 《MetaTKG：让“时间知识图谱”秒变“元学习小机灵”》  ——一篇能让研一萌新看懂 EMNLP’22 最佳“穿越”外挂的脱口秀</text>
-</svg>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="后端 学习清单">
-  <rect width="800" height="450" fill="#fffbeb"/>
-  <rect x="60" y="320" width="160" height="160" rx="20" transform="rotate(-15 140 400)" fill="none" stroke="#fde68a" stroke-width="3" opacity="0.35"/><rect x="110" y="280" width="160" height="160" rx="20" transform="rotate(-7 190 400)" fill="none" stroke="#fde68a" stroke-width="3" opacity="0.35"/><rect x="160" y="240" width="160" height="160" rx="20" transform="rotate(1 240 400)" fill="none" stroke="#fde68a" stroke-width="3" opacity="0.35"/><rect x="210" y="200" width="160" height="160" rx="20" transform="rotate(9 290 400)" fill="none" stroke="#fde68a" stroke-width="3" opacity="0.35"/>
-  <rect x="48" y="48" width="704" height="354" rx="20" fill="none" stroke="#b45309" stroke-width="2" opacity="0.35"/>
-  <text x="72" y="130" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="32" font-weight="700" fill="#451a03">后端 学习清单</text>
-  <text x="72" y="180" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="15" fill="#b45309" opacity="0.85">backend-learning0checklist</text>
-</svg>

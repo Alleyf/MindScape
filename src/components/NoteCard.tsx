@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Note } from '../types';
 import { NoteCoverImage } from './NoteCoverImage';
-import { defaultCoverUrlFromSlug } from '../utils/noteLoader';
 
 interface NoteCardProps {
   note: Note;
@@ -10,8 +9,6 @@ interface NoteCardProps {
 }
 
 export function NoteCard({ note, index }: NoteCardProps) {
-  const coverSrc = note.cover?.trim() || defaultCoverUrlFromSlug(note.slug);
-
   return (
     <motion.div
       initial={{
@@ -46,10 +43,15 @@ export function NoteCard({ note, index }: NoteCardProps) {
         </div>
       )}
 
-      <Link to={`/note/${note.slug}`} className="relative z-10 flex flex-col md:flex-row md:items-stretch note-card-link">
-        <NoteCoverImage src={coverSrc} alt="" className="note-cover-card-thumb shrink-0" />
+      <Link to={`/note/${note.slug}`} className="relative z-10 block note-card-link">
+        <NoteCoverImage 
+          src={note.cover} 
+          slug={note.slug}
+          alt="" 
+          className="note-cover-full-width" 
+        />
 
-        <div className="p-6 flex-1 min-w-0 flex flex-col">
+        <div className="p-6">
           {note.aiSubtitle && (
             <p className="text-sm text-nebula-accent mb-2 font-medium tracking-wide">
               ✦ {note.aiSubtitle}
