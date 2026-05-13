@@ -1,6 +1,20 @@
 import { Note } from '../types';
 export { getRandomNote } from './noteData';
 
+/**
+ * 当 front matter 未提供 `cover`（或为空）时，使用 picsum.photos 的确定性 seed URL：
+ * 同一 slug 始终对应同一张图，列表刷新不会「随机换封面」。
+ */
+export function defaultCoverUrlFromSlug(slug: string): string {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < slug.length; i++) {
+    h ^= slug.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  const seed = `ms-${h.toString(16)}`;
+  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/800/450`;
+}
+
 // 使用 Vite 的 import.meta.glob 动态导入 content/posts 下的所有 .md 文件
 // query: '?raw', import: 'default' 表示以原始文本形式加载（替代已弃用的 as: 'raw'）
 const markdownModules = import.meta.glob('../../content/posts/**/*.md', { eager: true, query: '?raw', import: 'default' });
@@ -70,6 +84,8 @@ export function getNotes(): Note[] {
     const { data, content: body } = parseFrontMatter(content as string);
     const date = data.date || new Date().toISOString().split('T')[0];
     const excerpt = body.trim().slice(0, 150) + (body.length > 150 ? '...' : '');
+    const coverRaw = typeof data.cover === 'string' ? data.cover.trim() : '';
+    const cover = coverRaw ? coverRaw : defaultCoverUrlFromSlug(rawSlug);
 
     notes.push({
       id: rawSlug,
@@ -83,7 +99,7 @@ export function getNotes(): Note[] {
       mood: data.mood || '✨',
       personality: data.personality || '沉思者',
       aiSubtitle: data.aiSubtitle || '',
-      cover: data.cover || '',
+      cover,
     });
   });
 
