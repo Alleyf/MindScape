@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0f23"/>
+      <stop offset="100%" style="stop-color:#1a1a3e"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Grid pattern -->
+  <g stroke="#8b5cf6" stroke-opacity="0.08" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="630"/>
+    <line x1="100" y1="0" x2="100" y2="630"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="500" y1="0" x2="500" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="700" y1="0" x2="700" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+    <line x1="1100" y1="0" x2="1100" y2="630"/>
+    <line x1="1200" y1="0" x2="1200" y2="630"/>
+    <line x1="0" y1="0" x2="1200" y2="0"/>
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="0" y1="600" x2="1200" y2="600"/>
+    <line x1="0" y1="630" x2="1200" y2="630"/>
+  </g>
+
+  <!-- Neural network nodes - left side -->
+  <g filter="url(#glow)">
+    <!-- Layer 1 -->
+    <circle cx="120" cy="120" r="12" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="120" cy="250" r="12" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="120" cy="380" r="12" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="120" cy="510" r="12" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+
+    <!-- Layer 2 -->
+    <circle cx="260" cy="180" r="14" fill="none" stroke="#06b6d4" stroke-width="2"/>
+    <circle cx="260" cy="320" r="14" fill="none" stroke="#06b6d4" stroke-width="2"/>
+    <circle cx="260" cy="460" r="14" fill="none" stroke="#06b6d4" stroke-width="2"/>
+
+    <!-- Layer 3 -->
+    <circle cx="420" cy="260" r="16" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="420" cy="420" r="16" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+
+    <!-- Layer 4 -->
+    <circle cx="580" cy="340" r="18" fill="none" stroke="#06b6d4" stroke-width="2"/>
+
+    <!-- Connections -->
+    <g stroke="#8b5cf6" stroke-opacity="0.3" stroke-width="1">
+      <line x1="120" y1="120" x2="260" y2="180"/>
+      <line x1="120" y1="250" x2="260" y2="180"/>
+      <line x1="120" y1="250" x2="260" y2="320"/>
+      <line x1="120" y1="380" x2="260" y2="320"/>
+      <line x1="120" y1="380" x2="260" y2="460"/>
+      <line x1="120" y1="510" x2="260" y2="460"/>
+      <line x1="260" y1="180" x2="420" y2="260"/>
+      <line x1="260" y1="320" x2="420" y2="260"/>
+      <line x1="260" y1="320" x2="420" y2="420"/>
+      <line x1="260" y1="460" x2="420" y2="420"/>
+      <line x1="420" y1="260" x2="580" y2="340"/>
+      <line x1="420" y1="420" x2="580" y2="340"/>
+    </g>
+  </g>
+
+  <!-- Neural network nodes - right side -->
+  <g filter="url(#glow)">
+    <!-- Layer 1 -->
+    <circle cx="1080" cy="140" r="12" fill="none" stroke="#06b6d4" stroke-width="2"/>
+    <circle cx="1080" cy="280" r="12" fill="none" stroke="#06b6d4" stroke-width="2"/>
+    <circle cx="1080" cy="420" r="12" fill="none" stroke="#06b6d4" stroke-width="2"/>
+    <circle cx="1080" cy="560" r="12" fill="none" stroke="#06b6d4" stroke-width="2"/>
+
+    <!-- Layer 2 -->
+    <circle cx="940" cy="200" r="14" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="940" cy="350" r="14" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="940" cy="500" r="14" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+
+    <!-- Layer 3 -->
+    <circle cx="780" cy="280" r="16" fill="none" stroke="#06b6d4" stroke-width="2"/>
+    <circle cx="780" cy="440" r="16" fill="none" stroke="#06b6d4" stroke-width="2"/>
+
+    <!-- Layer 4 -->
+    <circle cx="620" cy="360" r="18" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+
+    <!-- Connections -->
+    <g stroke="#06b6d4" stroke-opacity="0.3" stroke-width="1">
+      <line x1="1080" y1="140" x2="940" y2="200"/>
+      <line x1="1080" y1="280" x2="940" y2="200"/>
+      <line x1="1080" y1="280" x2="940" y2="350"/>
+      <line x1="1080" y1="420" x2="940" y2="350"/>
+      <line x1="1080" y1="420" x2="940" y2="500"/>
+      <line x1="1080" y1="560" x2="940" y2="500"/>
+      <line x1="940" y1="200" x2="780" y2="280"/>
+      <line x1="940" y1="350" x2="780" y2="280"/>
+      <line x1="940" y1="350" x2="780" y2="440"/>
+      <line x1="940" y1="500" x2="780" y2="440"/>
+      <line x1="780" y1="280" x2="620" y2="360"/>
+      <line x1="780" y1="440" x2="620" y2="360"/>
+    </g>
+  </g>
+
+  <!-- Central document icon -->
+  <g transform="translate(540, 180)">
+    <rect x="0" y="0" width="120" height="160" rx="8" fill="none" stroke="#8b5cf6" stroke-width="3" filter="url(#glow)"/>
+    <line x1="20" y1="40" x2="100" y2="40" stroke="#06b6d4" stroke-width="2"/>
+    <line x1="20" y1="60" x2="100" y2="60" stroke="#06b6d4" stroke-width="2"/>
+    <line x1="20" y1="80" x2="80" y2="80" stroke="#06b6d4" stroke-width="2"/>
+    <line x1="20" y1="100" x2="90" y2="100" stroke="#06b6d4" stroke-width="2"/>
+    <line x1="20" y1="120" x2="85" y2="120" stroke="#06b6d4" stroke-width="2"/>
+    <line x1="20" y1="140" x2="75" y2="140" stroke="#06b6d4" stroke-width="2"/>
+  </g>
+
+  <!-- Title text -->
+  <text x="600" y="520" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="36" fill="#e0e0ff" font-weight="bold" letter-spacing="4">选题预选方案</text>
+  <text x="600" y="560" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="18" fill="#06b6d4" letter-spacing="2">Research Topic Selection</text>
+
+  <!-- Decorative corner elements -->
+  <g stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="2">
+    <line x1="40" y1="40" x2="40" y2="80"/>
+    <line x1="40" y1="40" x2="80" y2="40"/>
+    <line x1="1160" y1="40" x2="1120" y2="40"/>
+    <line x1="1160" y1="40" x2="1160" y2="80"/>
+    <line x1="40" y1="590" x2="40" y2="550"/>
+    <line x1="40" y1="590" x2="80" y2="590"/>
+    <line x1="1160" y1="590" x2="1160" y2="550"/>
+    <line x1="1160" y1="590" x2="1120" y2="590"/>
+  </g>
+</svg>

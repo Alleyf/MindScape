@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0f23"/>
+      <stop offset="100%" style="stop-color:#1a1a3e"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Grid pattern -->
+  <g stroke="#8b5cf6" stroke-opacity="0.06" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="630"/>
+    <line x1="100" y1="0" x2="100" y2="630"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="500" y1="0" x2="500" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="700" y1="0" x2="700" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+    <line x1="1100" y1="0" x2="1100" y2="630"/>
+    <line x1="1200" y1="0" x2="1200" y2="630"/>
+    <line x1="0" y1="0" x2="1200" y2="0"/>
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="0" y1="600" x2="1200" y2="600"/>
+    <line x1="0" y1="630" x2="1200" y2="630"/>
+  </g>
+
+  <!-- Notebook / Jupyter-style cells -->
+  <g filter="url(#glow)">
+    <!-- Cell 1: Code -->
+    <g transform="translate(100, 150)">
+      <rect x="0" y="0" width="300" height="120" rx="8" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+      <rect x="0" y="0" width="8" height="120" fill="#8b5cf6" rx="4"/>
+      <text x="20" y="30" font-family="Consolas, monospace" font-size="14" fill="#06b6d4">import pandas as pd</text>
+      <text x="20" y="55" font-family="Consolas, monospace" font-size="14" fill="#06b6d4">import numpy as np</text>
+      <text x="20" y="80" font-family="Consolas, monospace" font-size="14" fill="#06b6d4">df = pd.read_csv("data.csv")</text>
+      <text x="20" y="105" font-family="Consolas, monospace" font-size="14" fill="#e0e0ff">df.head()</text>
+    </g>
+
+    <!-- Cell 2: Output -->
+    <g transform="translate(450, 150)">
+      <rect x="0" y="0" width="300" height="120" rx="8" fill="none" stroke="#06b6d4" stroke-width="2"/>
+      <rect x="0" y="0" width="8" height="120" fill="#06b6d4" rx="4"/>
+      <text x="20" y="30" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="13" fill="#e0e0ff">    name    age    score</text>
+      <text x="20" y="55" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="13" fill="#e0e0ff">0  Alice   25     95.5</text>
+      <text x="20" y="80" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="13" fill="#e0e0ff">1    Bob   30     88.0</text>
+      <text x="20" y="105" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="13" fill="#e0e0ff">2  Carol   28     92.3</text>
+    </g>
+
+    <!-- Cell 3: Markdown -->
+    <g transform="translate(800, 150)">
+      <rect x="0" y="0" width="300" height="120" rx="8" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+      <rect x="0" y="0" width="8" height="120" fill="#8b5cf6" rx="4"/>
+      <text x="20" y="30" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="16" fill="#e0e0ff" font-weight="bold"># Data Analysis</text>
+      <text x="20" y="60" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="14" fill="#06b6d4">Exploratory data analysis</text>
+      <text x="20" y="85" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="14" fill="#06b6d4">with Python &amp; Jupyter</text>
+      <text x="20" y="110" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="14" fill="#8b5cf6">Notebook Tools Guide</text>
+    </g>
+  </g>
+
+  <!-- Code cells grid at bottom -->
+  <g transform="translate(150, 380)">
+    <!-- Input cell -->
+    <rect x="0" y="0" width="200" height="60" rx="6" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <rect x="0" y="0" width="6" height="60" fill="#8b5cf6" rx="3"/>
+    <text x="100" y="38" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="14" fill="#e0e0ff">[In]  Code Cell</text>
+
+    <!-- Arrow -->
+    <polygon points="205,30 220,20 220,40" fill="#06b6d4"/>
+
+    <!-- Output cell -->
+    <rect x="230" y="0" width="200" height="60" rx="6" fill="none" stroke="#06b6d4" stroke-width="2"/>
+    <rect x="230" y="0" width="6" height="60" fill="#06b6d4" rx="3"/>
+    <text x="330" y="38" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="14" fill="#e0e0ff">[Out] Output Cell</text>
+
+    <!-- Arrow -->
+    <polygon points="435,30 450,20 450,40" fill="#06b6d4"/>
+
+    <!-- Markdown cell -->
+    <rect x="460" y="0" width="200" height="60" rx="6" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <rect x="460" y="0" width="6" height="60" fill="#8b5cf6" rx="3"/>
+    <text x="560" y="38" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="14" fill="#e0e0ff">[MD] Markdown Cell</text>
+
+    <!-- Arrow -->
+    <polygon points="665,30 680,20 680,40" fill="#06b6d4"/>
+
+    <!-- Interactive -->
+    <rect x="690" y="0" width="200" height="60" rx="6" fill="none" stroke="#06b6d4" stroke-width="2"/>
+    <rect x="690" y="0" width="6" height="60" fill="#06b6d4" rx="3"/>
+    <text x="790" y="38" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="14" fill="#e0e0ff">Interactive Plot</text>
+  </g>
+
+  <!-- Data visualization mini-chart -->
+  <g transform="translate(700, 480)">
+    <rect x="0" y="0" width="200" height="80" rx="6" fill="none" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.5"/>
+    <!-- Bars -->
+    <rect x="20" y="40" width="20" height="30" fill="#8b5cf6" fill-opacity="0.7"/>
+    <rect x="60" y="25" width="20" height="45" fill="#06b6d4" fill-opacity="0.7"/>
+    <rect x="100" y="35" width="20" height="35" fill="#8b5cf6" fill-opacity="0.7"/>
+    <rect x="140" y="15" width="20" height="55" fill="#06b6d4" fill-opacity="0.7"/>
+  </g>
+
+  <!-- Title text -->
+  <text x="600" y="100" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="36" fill="#e0e0ff" font-weight="bold" letter-spacing="4">NoteBook Tools</text>
+  <text x="600" y="140" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="18" fill="#06b6d4" letter-spacing="2">笔记本工具指南</text>
+
+  <!-- Decorative elements -->
+  <g stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="2">
+    <line x1="40" y1="40" x2="40" y2="80"/>
+    <line x1="40" y1="40" x2="80" y2="40"/>
+    <line x1="1160" y1="40" x2="1120" y2="40"/>
+    <line x1="1160" y1="40" x2="1160" y2="80"/>
+    <line x1="40" y1="590" x2="40" y2="550"/>
+    <line x1="40" y1="590" x2="80" y2="590"/>
+    <line x1="1160" y1="590" x2="1160" y2="550"/>
+    <line x1="1160" y1="590" x2="1120" y2="590"/>
+  </g>
+
+  <!-- Floating particles -->
+  <g fill="#06b6d4" opacity="0.6">
+    <circle cx="150" cy="100" r="3"/>
+    <circle cx="1050" cy="150" r="4"/>
+    <circle cx="200" cy="550" r="2"/>
+    <circle cx="1000" cy="500" r="3"/>
+    <circle cx="700" cy="120" r="2"/>
+  </g>
+</svg>
