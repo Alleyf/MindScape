@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-hidden="true">
+  <defs>
+    <pattern id="g" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="12" height="24" fill="#64748b" fill-opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <rect x="0" y="0" width="800" height="450" fill="#64748b" fill-opacity="0.08"/>
+  <path d="M360 150h80v150h-80zM300 210h200v30H300z" fill="#64748b" fill-opacity="0.35"/>
+</svg>

@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { ParticleField } from './components/ParticleField';
 import { MouseGlow } from './components/MouseGlow';
 import { NoteCard } from './components/NoteCard';
+import { NoteCoverImage } from './components/NoteCoverImage';
 import { AIPanel } from './components/AIPanel';
 import { AISummaryPanel } from './components/AISummaryPanel';
 import { MarkdownContent } from './components/MarkdownContent';
@@ -13,8 +14,8 @@ import { NoteGraph } from './components/NoteGraph';
 import { NoteGraphSidebar } from './components/NoteGraphSidebar';
 import { FloatingTools } from './components/FloatingTools';
 import { ThemeDrawer } from './components/ThemeDrawer';
-import { getNotes, getNoteBySlug, getRandomNote } from './utils/noteLoader';
-import { Note } from './utils/noteLoader';
+import { getNotes, getNoteBySlug, getRandomNote, defaultCoverUrlFromSlug } from './utils/noteLoader';
+import type { Note } from './types';
 import { RESOURCE_CATEGORIES, LEARNING_ROUTES, MICROLINK_API_URL, FAVICON_YANDEX_URL } from './config/resources';
 
 interface TocItem {
@@ -746,24 +747,31 @@ function NotesPage() {
               >
                 <div className="notes-timeline-dot" />
                 <Link to={`/note/${note.slug}`} className="notes-timeline-card">
-                  <div className="notes-timeline-meta">
-                    <svg viewBox="0 0 24 24" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    <span>{formatDateTime(note.createdAt)}</span>
-                    {note.personality && (
-                      <>
-                        <span className="opacity-30 mx-1">·</span>
-                        <span>{note.personality}</span>
-                      </>
+                  <NoteCoverImage
+                    src={note.cover?.trim() || defaultCoverUrlFromSlug(note.slug)}
+                    alt=""
+                    className="notes-timeline-cover"
+                  />
+                  <div className="notes-timeline-card-main">
+                    <div className="notes-timeline-meta">
+                      <svg viewBox="0 0 24 24" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      <span>{formatDateTime(note.createdAt)}</span>
+                      {note.personality && (
+                        <>
+                          <span className="opacity-30 mx-1">·</span>
+                          <span>{note.personality}</span>
+                        </>
+                      )}
+                    </div>
+                    <h3 className="notes-timeline-title">{note.title}</h3>
+                    {note.excerpt && (
+                      <p className="notes-timeline-excerpt">{note.excerpt}</p>
                     )}
-                  </div>
-                  <h3 className="notes-timeline-title">{note.title}</h3>
-                  {note.excerpt && (
-                    <p className="notes-timeline-excerpt">{note.excerpt}</p>
-                  )}
-                  <div className="notes-timeline-tags">
-                    {note.tags.map((tag) => (
-                      <span key={tag}>#{tag}</span>
-                    ))}
+                    <div className="notes-timeline-tags">
+                      {note.tags.map((tag) => (
+                        <span key={tag}>#{tag}</span>
+                      ))}
+                    </div>
                   </div>
                 </Link>
               </motion.div>
