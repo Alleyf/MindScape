@@ -1,9 +1,10 @@
 ---
 title: "SpringCloud-微服务应用"
 date: "2023-11-23"
-tags: ["SpringCloud", "Redis", "MySQL"]
-personality: "guide"
+tags: ["SpringCloud","Redis","MySQL"]
+personality: "引路人"
 description: "微服务应用实战：分布式权限校验、数据库分布式等"
+cover: "/images/covers/ms-697b5a95.svg"
 ---
 ![](https://picsum.photos/800/250)
 # 微服务应用

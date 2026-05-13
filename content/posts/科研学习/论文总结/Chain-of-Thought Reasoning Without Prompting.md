@@ -1,24 +1,10 @@
 ---
-title: Chain-of-Thought Reasoning Without Prompting
+title: "Chain-of-Thought Reasoning Without Prompting"
 date: "2024-04-05"
-tags: 科研，CoT
-sticky: 80
-excerpt: 无提示的思维链推理：模型内在CoT推理能力的激发
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-theme: am_blue
-_class: lead
-paginate: true
-headingDivider: 
-  - 1
-  - 2
-  - 3
-footer: \ *[范财胜](http://alleyf.github.io)*  *alleyf@qq.com* *2024-04-19*
-backgroundImage: url('https://marp.app/assets/hero-background.svg')
-size: 16:9
+tags: ["科研","CoT"]
 personality: "沉思者"
-description: "<!-- class: covera -->"
+description: "无提示的思维链推理：模型内在CoT推理能力的激发"
+cover: "/images/covers/ms-ce5cc550.svg"
 ---
 <!-- _class: cover_a -->
 <!-- _header: "" --> 

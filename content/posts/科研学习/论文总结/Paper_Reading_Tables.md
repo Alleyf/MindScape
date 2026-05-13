@@ -1,16 +1,10 @@
 ---
-title: Paper_Reading_Tables
-date: 2026-03-08 23:09:10
-tags:
-  - NLP
-sticky: 80
-excerpt: some overview about NLP papers。
-author: fcs
-index_img: https://picsum.photos/800/300.webp?random=202603082309
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+title: "Paper_Reading_Tables"
+date: "2026-03-08"
+tags: ["NLP"]
 personality: "沉思者"
 description: "| 序号  | 作者               | 来源                |                                                          标题..."
+cover: "/images/covers/ms-46c3c144.svg"
 ---
 
 | 序号  | 作者               | 来源                |                                                          标题                                                           | 关键词                           | 研究对象      | 主要实验方法        | 结论                             | 阅读日期                |

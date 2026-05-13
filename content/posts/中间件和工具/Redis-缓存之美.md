@@ -1,9 +1,10 @@
 ---
 title: "Redis-缓存之美"
 date: "2023-11-25"
-tags: ["Redis", "缓存", "NoSQL"]
-personality: "guide"
+tags: ["Redis","缓存","NoSQL"]
+personality: "引路人"
 description: "Redis 缓存数据库学习笔记"
+cover: "/images/covers/ms-4caaf04b.svg"
 ---
 
 ![](https://picsum.photos/800/250)

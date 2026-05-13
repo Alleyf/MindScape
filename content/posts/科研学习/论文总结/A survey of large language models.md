@@ -1,26 +1,10 @@
 ---
-title: A survey of large language models
+title: "A survey of large language models"
 date: "2024-06-09"
-tags:
-  - 科研
-  - 大语言模型
-sticky: 80
-excerpt: 大语言模型综述
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-theme: am_blue
-_class: lead
-paginate: true
-headingDivider:
-  - 1
-  - 2
-  - 3
-header: \ ![](http://www.whut.edu.cn/images/whutlogo.png)
-footer: \ *[<i class="fa-solid fa-home"></i>范财胜（武汉理工大学）](http://alleyf.github.io)*  *alleyf@qq.com* *<i class="fa-solid fa-clock"></i>2024-01-02*
-backgroundColor: ""
+tags: ["科研","大语言模型"]
 personality: "沉思者"
-description: "<!-- class: covera -->"
+description: "大语言模型综述"
+cover: "/images/covers/ms-d406d97a.svg"
 ---
 ---
 

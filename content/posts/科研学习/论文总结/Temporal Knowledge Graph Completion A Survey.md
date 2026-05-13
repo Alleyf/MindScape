@@ -1,17 +1,10 @@
 ---
-title: Temporal Knowledge Graph Completion A Survey
-date: 2025-10-11 20:47:15
-tags:
-  - 科研
-  - 知识图谱
-sticky: 80
-excerpt: 时序知识图谱补全综述
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+title: "Temporal Knowledge Graph Completion A Survey"
+date: "2025-10-11"
+tags: ["科研","知识图谱"]
 personality: "沉思者"
 description: "嘿，各位研一的新生小伙伴们！👋 是不是刚接触知识图谱补全（KGC）就觉得头大？别担心，今天咱们来聊一篇超实用的综述论文——《Temporal Knowledge Graph Completion: A Survey》。这篇论文就像你的专属"
+cover: "/images/covers/ms-3cef013c.svg"
 ---
 # 1 🔥时序知识图谱补全全攻略：从菜鸟到高手，一文搞定！🚀
 

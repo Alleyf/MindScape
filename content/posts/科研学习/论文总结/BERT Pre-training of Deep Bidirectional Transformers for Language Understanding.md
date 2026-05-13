@@ -1,29 +1,10 @@
 ---
-title: BERT Pre-training of Deep Bidirectional Transformers for Language Understanding
+title: "BERT Pre-training of Deep Bidirectional Transformers for Language Understanding"
 date: "2024-02-28"
-tags:
-  - NLP
-  - 科研
-  - Transformer
-  - DL
-sticky: 60
-excerpt: BERT（Bidirectional Encoder Representations from Transformers）是一种创新的语言表示模型，它通过从无标签文本中预训练深度双向表示，利用Transformers架构在每一层都同时考虑了词汇的左右上下文。这种方法使得BERT模型在经过简单的微调后，就能在多种NLP任务上达到最先进的水平，包括但不限于问答和语言推断任务。BERT的设计理念简单而有效，它在十一个自然语言处理任务上取得了新的最先进结果，显著提高了GLUE、MultiNLI、SQuAD v1.1和SQuAD v2.0等基准测试的得分。
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-theme: am_blue
-_class: lead
-paginate: true
-headingDivider:
-  - 1
-  - 2
-  - 3
-  - 4
-header: \ *学术汇报*
-footer: \ *[范财胜（华中科技大学）](http://alleyf.github.io)* *alleyf@qq.com* *2024-01-02*
-backgroundImage: url('https://marp.app/assets/hero-background.svg')
+tags: ["NLP","科研","Transformer","DL"]
 personality: "沉思者"
-description: "<!-- class: covera -->"
+description: "BERT（Bidirectional Encoder Representations from Transformers）是一种创新的语言表示模型，它通过从无标签文本中预训练深度双向表示，利用Transformers架构在每一层都同时考虑了词汇的左右上下文。这种方法使得BERT模型在经过简单的微调后，就能在多种NLP任务上达到最先进的水平，包括但不限于问答和语言推断任务。BERT的设计理念简单而有效，它在十一个自然语言处理任务上取得了新的最先进结果，显著提高了GLUE、Mul"
+cover: "/images/covers/ms-ea557261.svg"
 ---
 <!-- _class: cover_a -->
 <!-- _header: "" --> 

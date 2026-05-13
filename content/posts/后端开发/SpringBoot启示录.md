@@ -1,9 +1,10 @@
 ---
 title: "SpringBoot启示录"
 date: "2023-04-28"
-tags: ["SpringBoot", "Java"]
-personality: "guide"
+tags: ["SpringBoot","Java"]
+personality: "引路人"
 description: "SpringBoot 快速入门与实战指南"
+cover: "/images/covers/ms-709e3831.svg"
 ---
 
 # 1.开发环境热部署

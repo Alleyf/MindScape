@@ -1,9 +1,10 @@
 ---
 title: "初识Vue"
 date: "2023-04-16"
-tags: ["Vue", "前端"]
-personality: "guide"
+tags: ["Vue","前端"]
+personality: "引路人"
 description: "Vue 框架快速入门教程"
+cover: "/images/covers/ms-c6090edd.svg"
 ---
 # 1 生命周期函数
 | 生命周期钩子函数 | 实例处于阶段 | 描述                                                                                  | 能否获取到 el (this.$el) | 能否获取到 data (this. Xxx) | 能否使用 methods 中的方法 (this. Xxx ()) |

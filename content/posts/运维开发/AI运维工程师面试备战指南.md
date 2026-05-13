@@ -1,9 +1,10 @@
 ---
 title: "AI运维工程师面试备战指南"
 date: "2026-03-08"
-tags: ["AI运维", "面试", "DevOps"]
-personality: "owl"
+tags: ["AI运维","面试","DevOps"]
+personality: "沉思者"
 description: "AI运维工程师面试备战指南"
+cover: "/images/covers/ms-a444617.svg"
 ---
 
 # AI运维工程师面试备战指南

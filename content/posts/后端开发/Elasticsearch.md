@@ -1,9 +1,10 @@
 ---
 title: "Elasticsearch"
 date: "2026-03-18"
-tags: ["Elasticsearch", "搜索"]
-personality: "guide"
+tags: ["Elasticsearch","搜索"]
+personality: "引路人"
 description: "Elasticsearch 搜索引擎学习指南"
+cover: "/images/covers/ms-5160f441.svg"
 ---
 
 这是一篇为您精心整理的 **Elasticsearch (ES) 从 0 到 1 面试指南**。它涵盖了从基础概念、核心原理、实战优化到高级架构的全方位考点，适合准备中高级后端或搜索工程师岗位的候选人。

@@ -20,5 +20,6 @@ export interface NoteFrontmatter {
   mood?: string;
   aiSubtitle?: string;
   personality?: string;
+  description?: string;
   cover?: string;
 }

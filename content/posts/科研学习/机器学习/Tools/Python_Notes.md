@@ -1,12 +1,10 @@
 ---
-title: Python_Notes
-tags: python
-categories: python,program_study
+title: "Python_Notes"
 date: "2022-09-10"
-sticky: 40
-excerpt: introducing some package usage of machine_learning. 
+tags: ["python"]
 personality: "沉思者"
 description: "<u>/为浮点除，返回一个浮点数</u>"
+cover: "/images/covers/ms-3ded6b18.svg"
 ---
 ---
 

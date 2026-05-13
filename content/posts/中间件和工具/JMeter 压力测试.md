@@ -1,9 +1,10 @@
 ---
 title: "JMeter 压力测试"
 date: "2026-03-17"
-tags: ["JMeter", "性能测试"]
-personality: "guide"
+tags: ["JMeter","性能测试"]
+personality: "引路人"
 description: "JMeter 压力测试学习指南"
+cover: "/images/covers/ms-5bbe15b2.svg"
 ---
 
 ### 0.1.1 功能测试

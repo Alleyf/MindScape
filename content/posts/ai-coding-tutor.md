@@ -1,9 +1,10 @@
 ---
 title: "AI 编程导师"
 date: "2026-05-11"
-tags: ["ai", "coding", "tutor"]
+tags: ["ai","coding","tutor"]
 personality: "未来主义者"
 description: "探索你的创意知识库之旅"
+cover: "/images/covers/ms-dbb1b231.svg"
 ---
 
 

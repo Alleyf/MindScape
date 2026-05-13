@@ -2,8 +2,9 @@
 title: "Spring"
 date: "2026-03-08"
 tags: ["Spring"]
-personality: "guide"
+personality: "引路人"
 description: "Spring 框架学习笔记"
+cover: "/images/covers/ms-d2fd2873.svg"
 ---
 
 ## 0.1 Bean

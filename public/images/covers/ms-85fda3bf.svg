@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="MongoDB 面试全攻略">
+  <rect width="800" height="450" fill="#f0fdf4"/>
+  <g stroke="#bbf7d0" stroke-width="2" opacity="0.4"><line x1="40" y1="80" x2="100" y2="200"/><line x1="140" y1="80" x2="200" y2="200"/><line x1="240" y1="80" x2="300" y2="200"/><line x1="340" y1="80" x2="400" y2="200"/><line x1="440" y1="80" x2="500" y2="200"/><line x1="540" y1="80" x2="600" y2="200"/><line x1="640" y1="80" x2="700" y2="200"/><line x1="740" y1="80" x2="800" y2="200"/></g>
+  <rect x="48" y="48" width="704" height="354" rx="20" fill="none" stroke="#15803d" stroke-width="2" opacity="0.35"/>
+  <text x="72" y="130" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="32" font-weight="700" fill="#14532d">MongoDB 面试全攻略</text>
+  <text x="72" y="180" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="15" fill="#15803d" opacity="0.85">后端开发 / MongoDB 面试全攻略</text>
+</svg>

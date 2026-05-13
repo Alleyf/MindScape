@@ -1,16 +1,10 @@
 ---
-title: DL概念知识库
+title: "DL概念知识库"
 date: "2024-04-06"
-tags:
-  - 深度学习
-  - 机器学习
-sticky: 60
-excerpt: 深度学习概念知识库
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
+tags: ["深度学习","机器学习"]
 personality: "沉思者"
 description: "模型的 logits 是模型在训练过程中输出的原始预测值（Tensor张量），它们是模型最后一层（通常是 softmax 层）之前的输出。在自然语言处理（NLP）中，logits 通常是一个实数向量，其长度等于模型词汇表的大..."
+cover: "/images/covers/ms-7130a6ab.svg"
 ---
 ![](https://picsum.photos/800/250)
 

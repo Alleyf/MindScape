@@ -1,10 +1,10 @@
 ---
 title: "ACM模式"
 date: "2026-04-04"
-tags: ["算法", "ACM", "Java", "ACM模式"]
+tags: ["算法","ACM","Java","ACM模式"]
 personality: "沉思者"
 description: "ACM竞赛模式的Java代码模板与常用技巧总结"
-cover: "https://picsum.photos/seed/acm-pattern/1200/630"
+cover: "/images/covers/ms-b457d07f.svg"
 ---
 
 ![ACM竞赛](https://picsum.photos/seed/acm-contest/800/400)

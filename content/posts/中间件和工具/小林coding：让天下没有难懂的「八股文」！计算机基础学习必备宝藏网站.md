@@ -1,9 +1,10 @@
 ---
 title: "小林coding：让天下没有难懂的「八股文」！计算机基础学习必备宝藏网站"
 date: "2026-01-07"
-tags: ["计算机基础", "学习网站", "八股文"]
-personality: "guide"
+tags: ["计算机基础","学习网站","八股文"]
+personality: "引路人"
 description: "小林coding网站介绍：图解系列计算机基础学习宝藏网站"
+cover: "/images/covers/ms-c85568cd.svg"
 ---
 
 ![file-1.jpg](http://img.fcs.cloudns.ch/pics/20260107203438952.jpg)

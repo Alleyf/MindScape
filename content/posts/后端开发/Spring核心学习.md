@@ -1,9 +1,10 @@
 ---
 title: "Spring核心学习"
 date: "2026-03-08"
-tags: ["Spring", "IOC", "AOP"]
-personality: "guide"
+tags: ["Spring","IOC","AOP"]
+personality: "引路人"
 description: "Spring 核心概念学习：IOC、DI、AOP"
+cover: "/images/covers/ms-fdf80c10.svg"
 ---
 
 # 数据库基础

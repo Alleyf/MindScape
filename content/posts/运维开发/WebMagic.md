@@ -1,9 +1,10 @@
 ---
 title: "WebMagic"
 date: "2023-12-22"
-tags: ["WebMagic", "爬虫", "Puppeteer"]
-personality: "guide"
+tags: ["WebMagic","爬虫","Puppeteer"]
+personality: "引路人"
 description: "WebMagic 爬虫框架学习指南"
+cover: "/images/covers/ms-4a897ea6.svg"
 ---
 
 ![](https://picsum.photos/800/250)

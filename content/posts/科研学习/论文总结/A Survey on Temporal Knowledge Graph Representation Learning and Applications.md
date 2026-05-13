@@ -1,17 +1,10 @@
 ---
-title: A Survey on Temporal Knowledge Graph Representation Learning and Applications
-date: 2025-10-11 19:32:34
-tags:
-  - 科研
-  - 知识图谱
-sticky: 80
-excerpt: 时序知识图谱表示学习综述
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+title: "A Survey on Temporal Knowledge Graph Representation Learning and Applications"
+date: "2025-10-11"
+tags: ["科研","知识图谱"]
 personality: "沉思者"
 description: "嘿，各位研一的新生小伙伴们！👋 是不是刚接触知识图谱就觉得头大？别担心，今天咱们来聊一篇超实用的综述论文——《A Survey on Temporal Knowledge Graph: Representation Learning and..."
+cover: "/images/covers/ms-70ca524.svg"
 ---
 # 1 🔥时序知识图谱表示学习大揭秘：从入门到精通，研一新生必看！🚀
 

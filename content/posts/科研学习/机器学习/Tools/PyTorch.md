@@ -1,13 +1,10 @@
 ---
-title: PyTorch快速入门
-tags:
-  - DL
-date: 2023-05-31 14:27:39
-sticky: 80
-excerpt: Machine and Deep learning
-author: fcs
+title: "PyTorch快速入门"
+date: "2023-05-31"
+tags: ["DL"]
 personality: "沉思者"
 description: "1. #1.python|1.python"
+cover: "/images/covers/ms-c053a1fb.svg"
 ---
 
 1. [[#1.python|1.python]]

@@ -1,9 +1,10 @@
 ---
 title: "SpringBoot 简记"
 date: "2023-10-31"
-tags: ["SpringBoot", "Java"]
-personality: "guide"
+tags: ["SpringBoot","Java"]
+personality: "引路人"
 description: "SpringBoot 基础入门教程"
+cover: "/images/covers/ms-b9739b7f.svg"
 ---
 ![image-20230710170222399](https://s2.loli.net/2023/07/10/VBkHuWr83jzpnXe.png)
 

@@ -1,9 +1,10 @@
 ---
 title: "OSS备份方案"
 date: "2024-07-11"
-tags: ["OSS", "备份", "阿里云"]
-personality: "guide"
+tags: ["OSS","备份","阿里云"]
+personality: "引路人"
 description: "阿里云 OSS 备份方案详解"
+cover: "/images/covers/ms-e22c7727.svg"
 ---
 
 # 概述

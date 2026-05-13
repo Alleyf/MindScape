@@ -1,15 +1,10 @@
 ---
-title: ​《历史链推理：让LLM像侦探一样破解时序知识图谱！高阶信息+分步推理=预测开挂》
+title: "​《历史链推理：让LLM像侦探一样破解时序知识图谱！高阶信息+分步推理=预测开挂》"
 date: "2026-03-08"
-tags: research
-sticky: 93
-excerpt: 历史链分步探索 + LLM与图模型「插拔式融合」，解决高阶历史信息利用不足的复杂TKGF。
-author: fcs
-index_img: https://picsum.photos/800/300.webp?random=202603082313
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+tags: ["research"]
 personality: "沉思者"
 description: "| 项目           | 内容                                                                  |"
+cover: "/images/covers/ms-ce45613e.svg"
 ---
 ### 0.1.1 📋 ​**​论文
 

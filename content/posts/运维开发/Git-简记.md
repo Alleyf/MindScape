@@ -1,9 +1,10 @@
 ---
 title: "Git-简记"
 date: "2023-11-21"
-tags: ["Git", "版本控制"]
-personality: "guide"
+tags: ["Git","版本控制"]
+personality: "引路人"
 description: "Git 常用操作简记"
+cover: "/images/covers/ms-2b6f908c.svg"
 ---
 
 ![](https://picsum.photos/800/250)

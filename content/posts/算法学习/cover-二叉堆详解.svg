@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f43f5e"/>
+      <stop offset="100%" style="stop-color:#fb7185"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#a78bfa"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Decorative background pattern -->
+  <g opacity="0.05">
+    <circle cx="100" cy="100" r="80" fill="none" stroke="#f43f5e" stroke-width="2"/>
+    <circle cx="1100" cy="530" r="100" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <rect x="900" y="50" width="200" height="150" fill="none" stroke="#f43f5e" stroke-width="1" rx="10"/>
+  </g>
+
+  <!-- Binary Heap Tree Visualization -->
+  <g transform="translate(150, 80)" filter="url(#shadow)">
+    <!-- Tree lines -->
+    <line x1="200" y1="180" x2="100" y2="100" stroke="url(#purpleGrad)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="200" y1="180" x2="300" y2="100" stroke="url(#purpleGrad)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="100" y1="100" x2="50" y2="40" stroke="url(#purpleGrad)" stroke-width="2" stroke-linecap="round"/>
+    <line x1="100" y1="100" x2="150" y2="40" stroke="url(#purpleGrad)" stroke-width="2" stroke-linecap="round"/>
+    <line x1="300" y1="100" x2="250" y2="40" stroke="url(#purpleGrad)" stroke-width="2" stroke-linecap="round"/>
+    <line x1="300" y1="100" x2="350" y2="40" stroke="url(#purpleGrad)" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Root node (Max) -->
+    <circle cx="200" cy="180" r="40" fill="url(#roseGrad)" filter="url(#glow)"/>
+    <text x="200" y="188" text-anchor="middle" fill="white" font-size="28" font-weight="bold" font-family="Arial">10</text>
+
+    <!-- Level 1 nodes -->
+    <circle cx="100" cy="100" r="35" fill="url(#purpleGrad)" filter="url(#glow)"/>
+    <text x="100" y="108" text-anchor="middle" fill="white" font-size="24" font-weight="bold" font-family="Arial">8</text>
+    <circle cx="300" cy="100" r="35" fill="url(#purpleGrad)" filter="url(#glow)"/>
+    <text x="300" y="108" text-anchor="middle" fill="white" font-size="24" font-weight="bold" font-family="Arial">9</text>
+
+    <!-- Level 2 nodes -->
+    <circle cx="50" cy="40" r="28" fill="#6d28d9"/>
+    <text x="50" y="48" text-anchor="middle" fill="white" font-size="20" font-weight="bold" font-family="Arial">7</text>
+    <circle cx="150" cy="40" r="28" fill="#6d28d9"/>
+    <text x="150" y="48" text-anchor="middle" fill="white" font-size="20" font-weight="bold" font-family="Arial">6</text>
+    <circle cx="250" cy="40" r="28" fill="#6d28d9"/>
+    <text x="250" y="48" text-anchor="middle" fill="white" font-size="20" font-weight="bold" font-family="Arial">5</text>
+    <circle cx="350" cy="40" r="28" fill="#6d28d9"/>
+    <text x="350" y="48" text-anchor="middle" fill="white" font-size="20" font-weight="bold" font-family="Arial">4</text>
+  </g>
+
+  <!-- Array representation -->
+  <g transform="translate(700, 120)">
+    <rect x="0" y="0" width="380" height="180" rx="15" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <text x="190" y="40" text-anchor="middle" fill="#94a3b8" font-size="16" font-family="Arial">Array Representation</text>
+    <g transform="translate(30, 70)">
+      <rect x="0" y="0" width="45" height="45" rx="8" fill="url(#roseGrad)"/>
+      <text x="22" y="30" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="Arial">10</text>
+      <rect x="55" y="0" width="45" height="45" rx="8" fill="url(#purpleGrad)"/>
+      <text x="77" y="30" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="Arial">8</text>
+      <rect x="110" y="0" width="45" height="45" rx="8" fill="url(#purpleGrad)"/>
+      <text x="132" y="30" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="Arial">9</text>
+      <rect x="165" y="0" width="45" height="45" rx="8" fill="#6d28d9"/>
+      <text x="187" y="30" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="Arial">7</text>
+      <rect x="220" y="0" width="45" height="45" rx="8" fill="#6d28d9"/>
+      <text x="242" y="30" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="Arial">6</text>
+      <rect x="275" y="0" width="45" height="45" rx="8" fill="#6d28d9"/>
+      <text x="297" y="30" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="Arial">5</text>
+      <rect x="330" y="0" width="45" height="45" rx="8" fill="#6d28d9"/>
+      <text x="352" y="30" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="Arial">4</text>
+    </g>
+    <text x="190" y="155" text-anchor="middle" fill="#64748b" font-size="14" font-family="monospace">[10, 8, 9, 7, 6, 5, 4]</text>
+  </g>
+
+  <!-- Title -->
+  <g transform="translate(150, 480)">
+    <rect x="0" y="0" width="900" height="120" rx="20" fill="#1e293b" opacity="0.8"/>
+    <text x="450" y="55" text-anchor="middle" fill="white" font-size="42" font-weight="bold" font-family="Arial, sans-serif">Binary Heap</text>
+    <text x="450" y="95" text-anchor="middle" fill="#94a3b8" font-size="22" font-family="Arial, sans-serif">二叉堆详解 · 优先级队列 · 堆排序</text>
+  </g>
+
+  <!-- Decorative elements -->
+  <g opacity="0.6">
+    <path d="M1050 200 L1100 250 L1050 300 Z" fill="url(#roseGrad)"/>
+    <path d="M100 450 L150 500 L100 550 Z" fill="url(#purpleGrad)"/>
+  </g>
+
+  <!-- Algorithm tags -->
+  <g transform="translate(150, 420)">
+    <rect x="0" y="0" width="120" height="35" rx="18" fill="url(#roseGrad)"/>
+    <text x="60" y="23" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="Arial">算法</text>
+    <rect x="135" y="0" width="140" height="35" rx="18" fill="url(#purpleGrad)"/>
+    <text x="205" y="23" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="Arial">数据结构</text>
+  </g>
+</svg>

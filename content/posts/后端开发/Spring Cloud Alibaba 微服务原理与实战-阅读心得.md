@@ -1,9 +1,10 @@
 ---
 title: "Spring Cloud Alibaba 微服务原理与实战-阅读心得"
 date: "2023-11-28"
-tags: ["SpringCloud-Alibaba", "微服务", "Java"]
-personality: "gardener"
+tags: ["SpringCloud-Alibaba","微服务","Java"]
+personality: "沉思者"
 description: "Spring Cloud Alibaba 微服务原理与实战阅读心得"
+cover: "/images/covers/ms-6efef882.svg"
 ---
 
 ![](https://picsum.photos/0/700)

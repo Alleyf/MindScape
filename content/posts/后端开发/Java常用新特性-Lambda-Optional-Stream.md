@@ -1,9 +1,10 @@
 ---
 title: "Java常用新特性-Lambda-Optional-Stream"
 date: "2023-11-30"
-tags: ["Java", "Lambda"]
-personality: "gardener"
+tags: ["Java","Lambda"]
+personality: "沉思者"
 description: "Java 8+ 新特性学习笔记：Lambda、Optional、Stream"
+cover: "/images/covers/ms-34cebff4.svg"
 ---
 
 ![](https://picsum.photos/800/250)

@@ -1,9 +1,10 @@
 ---
 title: "RabbitMQ"
 date: "2026-03-17"
-tags: ["RabbitMQ", "消息队列"]
-personality: "guide"
+tags: ["RabbitMQ","消息队列"]
+personality: "引路人"
 description: "RabbitMQ 消息队列学习指南"
+cover: "/images/covers/ms-722a1dac.svg"
 ---
 
 # 1 保证消息不丢失（可靠性）

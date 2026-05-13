@@ -1,9 +1,10 @@
 ---
-date: "2026-05-11"
 title: "前端 学习清单"
-tags: ["frontend", "learning", "html", "css", "javascript", "react"]
+date: "2026-05-11"
+tags: ["frontend","learning","html","css","javascript","react"]
 personality: "未来主义者"
 description: "一份面向前端开发的学习清单"
+cover: "/images/covers/ms-5dbd915f.svg"
 ---
 
 

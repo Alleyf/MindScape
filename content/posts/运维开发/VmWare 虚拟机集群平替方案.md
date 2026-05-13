@@ -1,9 +1,10 @@
 ---
 title: "VmWare 虚拟机集群平替方案"
 date: "2026-02-26"
-tags: ["VMware", "虚拟化", "DevOps"]
-personality: "guide"
+tags: ["VMware","虚拟化","DevOps"]
+personality: "引路人"
 description: "VmWare 虚拟机集群替代方案对比"
+cover: "/images/covers/ms-8e72ee45.svg"
 ---
 具体环境：**5 台物理服务器，运行着 60 多台 CentOS 7 虚拟机**
 

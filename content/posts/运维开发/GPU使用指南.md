@@ -1,9 +1,10 @@
 ---
 title: "GPU使用指南"
 date: "2025-10-23"
-tags: ["GPU", "K8s"]
-personality: "guide"
+tags: ["GPU","K8s"]
+personality: "引路人"
 description: "GPU Pod 使用方法指南"
+cover: "/images/covers/ms-52ed2902.svg"
 ---
 # 1 登录
 

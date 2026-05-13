@@ -1,9 +1,10 @@
 ---
 title: "Kafka"
 date: "2026-03-17"
-tags: ["Kafka", "消息队列"]
-personality: "guide"
+tags: ["Kafka","消息队列"]
+personality: "引路人"
 description: "Kafka 消息队列学习指南"
+cover: "/images/covers/ms-1aba93ec.svg"
 ---
 
 # 1 消息丢失

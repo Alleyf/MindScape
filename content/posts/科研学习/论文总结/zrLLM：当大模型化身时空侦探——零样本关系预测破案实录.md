@@ -1,16 +1,10 @@
 ---
-title: zrLLM：当大模型化身时空侦探——零样本关系预测破案实录
-date: 2025-09-21T20:10:00
-tags:
-  - research
-sticky: 80
-excerpt: LLM生成关系描述（ERD）+GRU构建历史推理链（RHL），解决零样本TKGF。
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+title: "zrLLM：当大模型化身时空侦探——零样本关系预测破案实录"
+date: "2025-09-21"
+tags: ["research"]
 personality: "沉思者"
 description: "| ​​项目​​   | ​​内容​​                                        |"
+cover: "/images/covers/ms-80092e08.svg"
 ---
 ![](http://picsum.photos/800/250)
 

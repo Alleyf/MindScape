@@ -1,11 +1,10 @@
 ---
-title: algorithm  
-date: 2023-03-17 19:06:15  
-tags: [Algorithm]  
-sticky: 70
-excerpt: some solutions about common algorithms
+title: "algorithm"
+date: "2023-03-17"
+tags: ["Algorithm"]
 personality: "沉思者"
 description: "1. #1.1递归|1.1递归"
+cover: "/images/covers/ms-28ac6285.svg"
 ---
 
 1. [[#1.1递归|1.1递归]]

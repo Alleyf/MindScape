@@ -1,26 +1,10 @@
 ---
-title: Large Language Models for Generative Information Extraction A Survey
+title: "Large Language Models for Generative Information Extraction A Survey"
 date: "2024-06-10"
-tags:
-  - 科研
-sticky: 80
-excerpt: ""
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-theme: am_blue
-_class: lead
-paginate: true
-headingDivider:
-  - 1
-  - 2
-  - 3
-header: \ ![](http://www.whut.edu.cn/images/whutlogo.png)
-footer: \ *[<i class="fa-solid fa-home"></i>范财胜（武汉理工大学）](http://alleyf.github.io)*  *alleyf@qq.com* *<i class="fa-solid fa-clock"></i>2024-01-02*
-backgroundColor: 
-backgroundImage: url('https://marp.app/assets/hero-background.svg')
+tags: ["科研"]
 personality: "沉思者"
-description: "<!-- class: covera -->"
+description: "Large Language Models for Generative Information Extraction A Survey — 笔记摘录"
+cover: "/images/covers/ms-5d3306a9.svg"
 ---
 <!-- _class: cover_a -->
 <!-- _header: "" --> 

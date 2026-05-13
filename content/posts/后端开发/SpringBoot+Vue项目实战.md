@@ -1,9 +1,10 @@
 ---
 title: "SpringBoot+Vue项目实战"
 date: "2026-03-08"
-tags: ["SpringBoot", "Vue", "MySQL", "Redis", "RabbitMQ", "JWT"]
-personality: "guide"
+tags: ["SpringBoot","Vue","MySQL","Redis","RabbitMQ","JWT"]
+personality: "引路人"
 description: "SpringBoot + Vue 前后端分离实战项目"
+cover: "/images/covers/ms-e74c250d.svg"
 ---
 
 # 1 Spingboot+Vue 前后端分离实战项目

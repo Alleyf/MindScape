@@ -1,19 +1,10 @@
 ---
-title: ML_DL
-tags:
-  - Numpy
-  - Pandas
-  - PIL
-  - Matplotlib
+title: "ML_DL"
 date: "2026-03-08"
-sticky: 80
-excerpt: Deep_learning
-author: fcs
-index_img: https://picsum.photos/800/300.webp?random=202603082302
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+tags: ["Numpy","Pandas","PIL","Matplotlib"]
 personality: "沉思者"
 description: "|         目录                |       功能和包含的API            |"
+cover: "/images/covers/ms-540dd59a.svg"
 ---
 # 1 开发工具
 

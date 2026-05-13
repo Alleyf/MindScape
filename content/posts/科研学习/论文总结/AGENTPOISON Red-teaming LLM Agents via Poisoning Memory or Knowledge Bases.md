@@ -1,17 +1,10 @@
 ---
 title: "AGENTPOISON: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases"
 date: "2025-03-20"
-tags:
-  - LLM
-sticky: 80
-excerpt: ""
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-header-left: "![](D:/开发图片/logo32.png)"
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+tags: ["LLM"]
 personality: "沉思者"
 description: "深入分析LLM代理记忆污染攻击技术，探讨AI安全边界"
+cover: "/images/covers/ms-fcb37fa.svg"
 ---
 # 1 第一部分：大纲详细叙述
 

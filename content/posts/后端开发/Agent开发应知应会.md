@@ -1,9 +1,10 @@
 ---
 title: "Agent开发应知应会：从入门到实践完整指南"
 date: "2025-02-03"
-tags: ["Claude", "OpenCode", "人工智能", "Agent"]
-personality: "futurist"
+tags: ["Claude","OpenCode","人工智能","Agent"]
+personality: "沉思者"
 description: "全面解析AI Agent开发的核心概念、架构设计、最佳实践和工具链"
+cover: "/images/covers/ms-c6721c7d.svg"
 ---
 
 # Agent开发应知应会：从入门到实践完整指南

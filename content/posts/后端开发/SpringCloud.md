@@ -1,9 +1,10 @@
 ---
 title: "SpringCloud"
 date: "2026-03-10"
-tags: ["SpringCloud", "微服务"]
-personality: "guide"
+tags: ["SpringCloud","微服务"]
+personality: "引路人"
 description: "SpringCloud 微服务框架学习"
+cover: "/images/covers/ms-99fa6828.svg"
 ---
 
 ## 0.1 组件

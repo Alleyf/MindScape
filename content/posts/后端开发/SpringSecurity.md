@@ -1,9 +1,10 @@
 ---
 title: "SpringSecurity"
 date: "2023-11-13"
-tags: ["SpringSecurity", "JWT"]
-personality: "guide"
+tags: ["SpringSecurity","JWT"]
+personality: "引路人"
 description: "SpringSecurity 权限验证框架全面指南"
+cover: "/images/covers/ms-d575ad75.svg"
 ---
 ![](https://picsum.photos/800/250)
 

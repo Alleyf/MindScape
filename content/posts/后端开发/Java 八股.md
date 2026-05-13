@@ -1,9 +1,10 @@
 ---
 title: "Java 八股"
 date: "2026-03-19"
-tags: ["Java", "面试", "八股文"]
-personality: "owl"
+tags: ["Java","面试","八股文"]
+personality: "沉思者"
 description: "Java 面试八股文复习指南"
+cover: "/images/covers/ms-2d79b586.svg"
 ---
 
 ## 准备篇

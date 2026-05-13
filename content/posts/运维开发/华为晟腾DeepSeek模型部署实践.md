@@ -1,9 +1,10 @@
 ---
 title: "华为晟腾DeepSeek模型部署实践"
 date: "2025-02-26"
-tags: ["DeepSeek", "华为晟腾", "LLM"]
-personality: "futurist"
+tags: ["DeepSeek","华为晟腾","LLM"]
+personality: "沉思者"
 description: "华为晟腾 Atlas 800I A2 部署 DeepSeek 模型实践"
+cover: "/images/covers/ms-17bd93a7.svg"
 ---
 
 ![](https://picsum.photos/800/250)

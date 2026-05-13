@@ -1,9 +1,10 @@
 ---
 title: "MarkDown-真经"
 date: "2023-11-21"
-tags: ["Markdown", "Mermaid"]
-personality: "guide"
+tags: ["Markdown","Mermaid"]
+personality: "引路人"
 description: "Markdown 语法教程与 Mermaid 图表绘制"
+cover: "/images/covers/ms-9fc6c81f.svg"
 ---
 
 ![](https://picsum.photos/800/250)

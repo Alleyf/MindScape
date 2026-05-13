@@ -1,9 +1,10 @@
 ---
 title: "DRF速通"
 date: "2023-04-25"
-tags: ["Django", "DRF"]
-personality: "guide"
+tags: ["Django","DRF"]
+personality: "引路人"
 description: "Django REST Framework 快速入门指南"
+cover: "/images/covers/ms-cf20f08e.svg"
 ---
 
 >  其他相关文章-> [[网页开发]]， #DRF #Django

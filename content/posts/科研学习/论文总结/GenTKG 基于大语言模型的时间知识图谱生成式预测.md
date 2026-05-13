@@ -1,16 +1,10 @@
 ---
 title: "GenTKG: 基于大语言模型的时间知识图谱生成式预测"
-date: 2025-09-23T20:20:00
-tags:
-  - research
-sticky: 80
-excerpt: 时序规则检索（一阶检索，可借鉴COH高阶检索实现复杂推理）+少样本微调（lora），解决少样本TKGF。
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+date: "2025-09-23"
+tags: ["research"]
 personality: "沉思者"
 description: "| ​​项目​​   | ​​内容​​                                               |"
+cover: "/images/covers/ms-5a728972.svg"
 ---
 
 ![](http://picsum.photos/800/250)

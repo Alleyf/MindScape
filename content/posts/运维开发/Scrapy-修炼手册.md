@@ -1,9 +1,10 @@
 ---
 title: "Scrapy-修炼手册"
 date: "2026-03-08"
-tags: ["Scrapy", "Python", "爬虫"]
-personality: "guide"
+tags: ["Scrapy","Python","爬虫"]
+personality: "引路人"
 description: "Scrapy 爬虫框架学习手册"
+cover: "/images/covers/ms-541d06b7.svg"
 ---
 
 ![](https://picsum.photos/800/250)

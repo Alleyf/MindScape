@@ -1,9 +1,10 @@
 ---
 title: "ArrayList-LinkedList-HashSet-TreeSet"
 date: "2026-03-17"
-tags: ["Java", "数据结构", "集合"]
-personality: "guide"
+tags: ["Java","数据结构","集合"]
+personality: "引路人"
 description: "Java 集合框架学习：ArrayList、LinkedList、HashSet、TreeSet"
+cover: "/images/covers/ms-fee29b73.svg"
 ---
 
 # 1 数组

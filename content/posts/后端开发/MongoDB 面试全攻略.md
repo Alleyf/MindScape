@@ -1,9 +1,10 @@
 ---
 title: "MongoDB 面试全攻略"
 date: "2026-03-19"
-tags: ["MongoDB", "NoSQL", "面试"]
-personality: "owl"
+tags: ["MongoDB","NoSQL","面试"]
+personality: "沉思者"
 description: "MongoDB 面试全面复习指南"
+cover: "/images/covers/ms-85fda3bf.svg"
 ---
 
 这是一份为您精心整理的 **MongoDB 从 0 到 1 面试指南**。这份指南涵盖了从基础概念、架构原理、实战优化到高频面试题的全方位内容，旨在帮助您系统性地准备面试。

@@ -1,11 +1,10 @@
 ---
-title: AI热点技术趋势
-created: 2026-01-21
-source: Cherry Studio
-tags:
+title: "AI热点技术趋势"
 date: "2026-01-15"
+tags: ["科研学习"]
 personality: "沉思者"
 description: "日期：2025 年 11 月 15 日"
+cover: "/images/covers/ms-4c332973.svg"
 ---
 
 ## 🤖 Assistant

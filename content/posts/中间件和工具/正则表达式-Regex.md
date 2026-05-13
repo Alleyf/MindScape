@@ -1,9 +1,10 @@
 ---
 title: "正则表达式-Regex"
 date: "2023-12-01"
-tags: ["正则表达式", "Regex"]
-personality: "guide"
+tags: ["正则表达式","Regex"]
+personality: "引路人"
 description: "正则表达式学习指南"
+cover: "/images/covers/ms-9b7a3ad8.svg"
 ---
 
 ![](https://picsum.photos/800/250)

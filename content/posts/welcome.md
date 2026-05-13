@@ -1,9 +1,10 @@
 ---
 title: "欢迎来到 MindScape"
 date: "2026-01-15"
-tags: ["intro", "welcome", "getting-started"]
+tags: ["intro","welcome","getting-started"]
 personality: "引路人"
 description: "探索你的创意知识库之旅"
+cover: "/images/covers/ms-27e17df3.svg"
 ---
 
 # 🌌 欢迎来到 MindScape

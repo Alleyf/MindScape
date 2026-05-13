@@ -1,9 +1,10 @@
 ---
 title: "后端 学习清单"
 date: "2026-05-11"
-tags: ["backend", "learning", "java", "spring-boot", "mysql", "redis", "rocketmq"]
+tags: ["backend","learning","java","spring-boot","mysql","redis","rocketmq"]
 personality: "未来主义者"
 description: "一份面向后端开发的学习清单"
+cover: "/images/covers/ms-f1c3fcf0.svg"
 ---
 
 

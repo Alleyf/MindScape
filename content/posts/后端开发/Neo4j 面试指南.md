@@ -1,9 +1,10 @@
 ---
 title: "Neo4j 面试指南"
 date: "2026-03-19"
-tags: ["Neo4j", "图数据库", "面试"]
-personality: "owl"
+tags: ["Neo4j","图数据库","面试"]
+personality: "沉思者"
 description: "Neo4j 图数据库面试指南"
+cover: "/images/covers/ms-df9338b1.svg"
 ---
 
 这是一篇为您精心整理的 **Neo4j 从 0 到 1 面试指南**。

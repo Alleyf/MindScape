@@ -1,9 +1,10 @@
 ---
 title: "MyBatis"
 date: "2026-03-08"
-tags: ["MyBatis", "后端"]
-personality: "guide"
+tags: ["MyBatis","后端"]
+personality: "引路人"
 description: "MyBatis 框架学习笔记"
+cover: "/images/covers/ms-40f90e2f.svg"
 ---
 
 ## 0.1 执行流程

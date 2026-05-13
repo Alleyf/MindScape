@@ -1,26 +1,10 @@
 ---
-title: 基于 LLM 的时序知识图谱推理与可解释性增强研究
-date: 2025-09-22
-tags:
-  - 科研
-sticky: 80
-excerpt: 知识图谱（KG）通过"实体-关系-实体"的结构化三元组表达现实世界事实，**时序知识图谱（TKG）** 进一步引入时间维度（记为 `(h, r, t, τ)`，其中 `h` =头实体、`r` =关系、`t` =尾实体、`τ` =时间戳），能够表示动态演化的世界知识，例如：可精准刻画科研项目研究周期、专家合作时序、成果产出节点等动态事实。
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-theme: am_blue
-_class: lead
-paginate: true
-headingDivider:
-  - 1
-  - 2
-  - 3
-header:
-footer: \ *[范财胜（华中科技大学）](http://alleyf.github.io)*  *csfan@hust.edu.cn* *2025-09-24*
-backgroundColor:
-backgroundImage: url('https://marp.app/assets/hero-background.svg')
+title: "基于 LLM 的时序知识图谱推理与可解释性增强研究"
+date: "2025-09-22"
+tags: ["科研"]
 personality: "沉思者"
-description: "<!-- class: covera -->"
+description: "知识图谱（KG）通过'实体-关系-实体'的结构化三元组表达现实世界事实，**时序知识图谱（TKG）** 进一步引入时间维度（记为 `(h, r, t, τ)`，其中 `h` =头实体、`r` =关系、`t` =尾实体、`τ` =时间戳），能够表示动态演化的世界知识，例如：可精准刻画科研项目研究周期、专家合作时序、成果产出节点等动态事实。"
+cover: "/images/covers/ms-7cb46cd1.svg"
 ---
 
 <!-- _class: cover_a -->

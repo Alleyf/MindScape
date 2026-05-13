@@ -1,16 +1,10 @@
 ---
-title: 《MetaTKG：让“时间知识图谱”秒变“元学习小机灵”》——一篇能让研一萌新看懂 EMNLP’22 最佳“穿越”外挂的脱口秀
-date: 2025-09-21T20:20:00
-tags:
-  - research
-sticky: 80
-excerpt: 元学习分段学习掌握TKG演化模式+门控整合模块智能权重分配传递知识，解决少样本和长序列TKGF。
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+title: "《MetaTKG：让“时间知识图谱”秒变“元学习小机灵”》——一篇能让研一萌新看懂 EMNLP’22 最佳“穿越”外挂的脱口秀"
+date: "2025-09-21"
+tags: ["research"]
 personality: "沉思者"
 description: "!..."
+cover: "/images/covers/ms-4a804113.svg"
 ---
 
 ### 0.1.1 🎯 ​**​一、痛点暴击：传统模型为啥翻车？​**​

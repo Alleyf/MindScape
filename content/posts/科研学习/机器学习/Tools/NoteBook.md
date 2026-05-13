@@ -1,12 +1,10 @@
 ---
-title: NoteBook_notes
-tags: [NoteBook]
-categories: PaddleIDE
-date: 2022-9-10 10:00:00
-sticky: 65
-excerpt: a lot of notes dealing with notebook
+title: "NoteBook_notes"
+date: "2022-09-10"
+tags: ["NoteBook"]
 personality: "沉思者"
-description: "<img src=\"/NoteBook.png\" width = \"800\">"
+description: "<img src='/NoteBook.png' width = '800'>"
+cover: "/images/covers/ms-180d99a5.svg"
 ---
 # NoteBook
 

@@ -1,12 +1,10 @@
 ---
-title: TreeMap 与 TreeSet 的简单实现
-date: 2026-03-08 12:00:00
-tags:
-  - 算法
-  - 数据结构
-categories: 算法学习
+title: "TreeMap 与 TreeSet 的简单实现"
+date: "2026-03-08"
+tags: ["算法","数据结构"]
 personality: "沉思者"
 description: "- TreeMap 实现#tree-map-实现"
+cover: "/images/covers/ms-6fcf79b6.svg"
 ---
 # TreeMap 与 TreeSet 的简单实现
 

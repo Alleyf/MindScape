@@ -1,9 +1,10 @@
- ---
+---
 title: "Captainbed.cn 人工智能教程"
 date: "2026-01-07"
-tags: ["人工智能", "机器学习", "教程网站"]
-personality: "guide"
+tags: ["人工智能","机器学习","教程网站"]
+personality: "引路人"
 description: "Captainbed.cn 人工智能教程网站介绍"
+cover: "/images/covers/ms-ebfbf2a9.svg"
 ---
 
 # 🚀 探索人工智能的奥秘，从这里开始！——Captainbed.cn 人工智能教程

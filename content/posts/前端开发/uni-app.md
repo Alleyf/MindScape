@@ -1,9 +1,10 @@
 ---
 title: "初识 uni-app"
 date: "2023-04-16"
-tags: ["uni-app", "前端"]
-personality: "guide"
+tags: ["uni-app","前端"]
+personality: "引路人"
 description: "uni-app 跨平台开发框架入门"
+cover: "/images/covers/ms-d255f3f1.svg"
 ---
 
 # 1 快速上手

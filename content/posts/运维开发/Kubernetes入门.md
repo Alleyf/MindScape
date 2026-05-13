@@ -1,9 +1,10 @@
 ---
 title: "Kubernetes入门"
 date: "2026-03-08"
-tags: ["Kubernetes", "K8s"]
-personality: "guide"
+tags: ["Kubernetes","K8s"]
+personality: "引路人"
 description: "Kubernetes 入门指南：基础介绍、核心概念、实战演练"
+cover: "/images/covers/ms-29ce91f2.svg"
 ---
 
 ![](https://picsum.photos/800/250)

@@ -1,9 +1,10 @@
 ---
 title: "HashTable-HashMap-TreeMap"
 date: "2026-03-18"
-tags: ["Java", "数据结构", "Map"]
-personality: "guide"
+tags: ["Java","数据结构","Map"]
+personality: "引路人"
 description: "Java Map 集合学习：HashTable、HashMap、TreeMap"
+cover: "/images/covers/ms-912752fa.svg"
 ---
 
 # 1 二叉树

@@ -1,9 +1,10 @@
 ---
 title: "SpringCloud-微服务基础"
 date: "2023-11-14"
-tags: ["SpringCloud", "微服务"]
-personality: "guide"
+tags: ["SpringCloud","微服务"]
+personality: "引路人"
 description: "SpringCloud 微服务基础入门教程"
+cover: "/images/covers/ms-c56da8e3.svg"
 ---
 
 ![](https://picsum.photos/800/250)

@@ -1,9 +1,10 @@
 ---
 title: "云计算 学习清单"
 date: "2026-05-11"
-tags: ["cloud", "learning", "linux", "kubernetes"]
+tags: ["cloud","learning","linux","kubernetes"]
 personality: "未来主义者"
 description: "一份面向云计算的学习清单"
+cover: "/images/covers/ms-41fd7aca.svg"
 ---
 
 

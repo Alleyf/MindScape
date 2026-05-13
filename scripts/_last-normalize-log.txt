@@ -1,0 +1,472 @@
+{
+  "markdownCount": 148,
+  "modifiedMd": [
+    "content/posts/ai-coding-learning-checklist.md",
+    "content/posts/ai-coding-tutor.md",
+    "content/posts/backend-learning0checklist.md",
+    "content/posts/cloud-learning-checklist.md",
+    "content/posts/frontend-learning-checklist.md",
+    "content/posts/welcome.md",
+    "content/posts/中间件和工具/Captainbed.cn 人工智能教程.md",
+    "content/posts/中间件和工具/JMeter 压力测试.md",
+    "content/posts/中间件和工具/Redis-缓存之美.md",
+    "content/posts/中间件和工具/小林coding：让天下没有难懂的「八股文」！计算机基础学习必备宝藏网站.md",
+    "content/posts/中间件和工具/常用软件和环境.md",
+    "content/posts/中间件和工具/正则表达式-Regex.md",
+    "content/posts/前端开发/Html5_Css_Js.md",
+    "content/posts/前端开发/Vue.md",
+    "content/posts/前端开发/uni-app.md",
+    "content/posts/前端开发/前端三件套-后端必备.md",
+    "content/posts/后端开发/20250622_后端学习清单.md",
+    "content/posts/后端开发/Agent开发应知应会.md",
+    "content/posts/后端开发/ArrayList-LinkedList-HashSet-TreeSet.md",
+    "content/posts/后端开发/DDD-领域驱动设计.md",
+    "content/posts/后端开发/DRF.md",
+    "content/posts/后端开发/Dubbo 面试全攻略.md",
+    "content/posts/后端开发/Elasticsearch.md",
+    "content/posts/后端开发/HashTable-HashMap-TreeMap.md",
+    "content/posts/后端开发/Java 八股.md",
+    "content/posts/后端开发/Java常用新特性-Lambda-Optional-Stream.md",
+    "content/posts/后端开发/Java设计模式.md",
+    "content/posts/后端开发/Kafka.md",
+    "content/posts/后端开发/MongoDB 面试全攻略.md",
+    "content/posts/后端开发/MyBatis.md",
+    "content/posts/后端开发/Neo4j 面试指南.md",
+    "content/posts/后端开发/RabbitMQ.md",
+    "content/posts/后端开发/RocketMQ.md",
+    "content/posts/后端开发/Spring Cloud Alibaba 微服务原理与实战-阅读心得.md",
+    "content/posts/后端开发/Spring.md",
+    "content/posts/后端开发/SpringBoot+Vue项目实战.md",
+    "content/posts/后端开发/SpringBoot.md",
+    "content/posts/后端开发/SpringBoot启示录.md",
+    "content/posts/后端开发/SpringCloud Alibaba-微服务进阶.md",
+    "content/posts/后端开发/SpringCloud-微服务基础.md",
+    "content/posts/后端开发/SpringCloud-微服务应用.md",
+    "content/posts/后端开发/SpringCloud.md",
+    "content/posts/后端开发/SpringSecurity.md",
+    "content/posts/后端开发/Spring核心学习.md",
+    "content/posts/后端开发/事务.md",
+    "content/posts/后端开发/全栈+运维-技术架构成熟解决方案.md",
+    "content/posts/后端开发/分布式系统业务问题.md",
+    "content/posts/后端开发/后端学习.md",
+    "content/posts/后端开发/后端开发手册.md",
+    "content/posts/后端开发/开发踩坑日记.md",
+    "content/posts/后端开发/站内信、活动、公告和推送技术调研.md",
+    "content/posts/后端开发/缓存场景.md",
+    "content/posts/后端开发/网页开发.md",
+    "content/posts/后端开发/若依脚手架-学习.md",
+    "content/posts/后端开发/计算机网络面试全攻略.md",
+    "content/posts/后端开发/调优.md",
+    "content/posts/后端开发/集群.md",
+    "content/posts/后端开发/面试过程.md",
+    "content/posts/科研学习/会议讨论/国际会议.md",
+    "content/posts/科研学习/学习方法/DL概念知识库.md",
+    "content/posts/科研学习/学习方法/Paper_Reading_Method.md",
+    "content/posts/科研学习/学习方法/latex手册.md",
+    "content/posts/科研学习/学习方法/科研思路.md",
+    "content/posts/科研学习/机器学习/CV/卷积神经网络基础.md",
+    "content/posts/科研学习/机器学习/CV/图像分类.md",
+    "content/posts/科研学习/机器学习/CV/目标检测.md",
+    "content/posts/科研学习/机器学习/CV/计算机视觉概述.md",
+    "content/posts/科研学习/机器学习/ML_DL.md",
+    "content/posts/科研学习/机器学习/Tools/NoteBook.md",
+    "content/posts/科研学习/机器学习/Tools/PyTorch.md",
+    "content/posts/科研学习/机器学习/Tools/Python_Notes.md",
+    "content/posts/科研学习/机器学习/入门机器学习.md",
+    "content/posts/科研学习/机器学习/深度学习入门篇.md",
+    "content/posts/科研学习/研究思考-毕业/基于 LLM 的时序知识图谱推理与可解释性增强研究.md",
+    "content/posts/科研学习/研究思考-毕业/基于大语言模型的时序知识图谱推理研究.md",
+    "content/posts/科研学习/研究思考-毕业/研究思路.md",
+    "content/posts/科研学习/研究思考-毕业/选题预选方案.md",
+    "content/posts/科研学习/论文总结/A Survey on Temporal Knowledge Graph Representation Learning and Applications.md",
+    "content/posts/科研学习/论文总结/A survey of large language models.md",
+    "content/posts/科研学习/论文总结/AGENTPOISON Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases.md",
+    "content/posts/科研学习/论文总结/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding.md",
+    "content/posts/科研学习/论文总结/Chain-of-Thought Reasoning Without Prompting.md",
+    "content/posts/科研学习/论文总结/Deep residual learning for image recognition.md",
+    "content/posts/科研学习/论文总结/Explainability for large language models A survey.md",
+    "content/posts/科研学习/论文总结/GenTKG 基于大语言模型的时间知识图谱生成式预测.md",
+    "content/posts/科研学习/论文总结/Large Language Models for Generative Information  Extraction A Survey.md",
+    "content/posts/科研学习/论文总结/Paper_Reading_Tables.md",
+    "content/posts/科研学习/论文总结/Papers Reading.md",
+    "content/posts/科研学习/论文总结/Temporal Knowledge Graph Completion A Survey.md",
+    "content/posts/科研学习/论文总结/zrLLM：当大模型化身时空侦探——零样本关系预测破案实录.md",
+    "content/posts/科研学习/论文总结/​《历史链推理：让LLM像侦探一样破解时序知识图谱！高阶信息+分步推理=预测开挂》.md",
+    "content/posts/科研学习/论文总结/《MetaTKG：让“时间知识图谱”秒变“元学习小机灵”》  ——一篇能让研一萌新看懂 EMNLP’22 最佳“穿越”外挂的脱口秀.md",
+    "content/posts/科研学习/论文总结/《时序图谱遇上大模型 TGL-LLM如何用 时空双修 突破预测瓶颈》.md",
+    "content/posts/科研学习/论文总结/时序知识图谱表示与推理的研究进展与趋势.md",
+    "content/posts/科研学习/论文总结/让AI学会时间管理 腾讯元宝揭秘时序知识图谱推理黑科技——当大模型遇上动态规则进化，预测未来事件像刷朋友圈一样简单​.md",
+    "content/posts/科研学习/调研报告/AI热点技术趋势.md",
+    "content/posts/科研学习/调研报告/司法领域大模型调研一.md",
+    "content/posts/科研学习/调研报告/司法领域大模型调研三.md",
+    "content/posts/科研学习/调研报告/司法领域大模型调研二.md",
+    "content/posts/科研学习/调研报告/司法领域大模型调研四.md",
+    "content/posts/科研学习/调研报告/国家重点研究计划课题四-任务三-调研.md",
+    "content/posts/科研学习/调研报告/多源异构司法数据汇聚融合-解决方案调研.md",
+    "content/posts/科研学习/调研报告/数据集汇总与评测.md",
+    "content/posts/算法学习/10大经典排序算法.md",
+    "content/posts/算法学习/ACM模式.md",
+    "content/posts/算法学习/Dateframe—Algorithm.md",
+    "content/posts/算法学习/TreeMap-TreeSet简单实现.md",
+    "content/posts/算法学习/algorithm.md",
+    "content/posts/算法学习/二叉堆详解.md",
+    "content/posts/算法学习/二叉树技巧.md",
+    "content/posts/算法学习/二叉树最小深度算法解析.md",
+    "content/posts/算法学习/前缀和数组.md",
+    "content/posts/算法学习/动态规划解题技巧.md",
+    "content/posts/算法学习/华为手撕必考.md",
+    "content/posts/算法学习/单调栈技巧.md",
+    "content/posts/算法学习/单调队列技巧.md",
+    "content/posts/算法学习/回溯解题技巧.md",
+    "content/posts/算法学习/多叉树遍历算法详解.md",
+    "content/posts/算法学习/差分数组.md",
+    "content/posts/算法学习/框架模版.md",
+    "content/posts/算法学习/秒杀数组技巧.md",
+    "content/posts/算法学习/秒杀链表技巧.md",
+    "content/posts/算法学习/算法框架模板.md",
+    "content/posts/算法学习/算法框架模版.md",
+    "content/posts/算法学习/美团开发岗.md",
+    "content/posts/算法学习/贪心技巧.md",
+    "content/posts/艺术生活/摄影/人像摄影技巧.md",
+    "content/posts/艺术生活/摄影/摄影基础指南.md",
+    "content/posts/艺术生活/摄影/摄影审美.md",
+    "content/posts/艺术生活/摄影/调色基础.md",
+    "content/posts/运维开发/20250622_云计算及基础平台学习清单.md",
+    "content/posts/运维开发/AI运维工程师面试备战指南.md",
+    "content/posts/运维开发/DeepSeek国产和Nvidia GPU部署方案.md",
+    "content/posts/运维开发/GPU使用指南.md",
+    "content/posts/运维开发/Git-简记.md",
+    "content/posts/运维开发/Kubernetes入门.md",
+    "content/posts/运维开发/MarkDown-真经.md",
+    "content/posts/运维开发/OSS备份方案.md",
+    "content/posts/运维开发/Scrapy-修炼手册.md",
+    "content/posts/运维开发/VmWare 虚拟机集群平替方案.md",
+    "content/posts/运维开发/WebMagic.md",
+    "content/posts/运维开发/华为晟腾DeepSeek模型部署实践.md",
+    "content/posts/运维开发/各种环境配置.md",
+    "content/posts/运维开发/性能测试.md",
+    "content/posts/运维开发/测试环境搭建方案.md",
+    "content/posts/运维开发/运维排忧解难.md",
+    "content/posts/运维开发/运维问题记录.md",
+    "content/posts/运维开发/阿里云大规模并发配置及资源消耗记录.md"
+  ],
+  "svgCount": 148,
+  "judgments": [
+    {
+      "slug": "中间件和工具/Captainbed.cn 人工智能教程",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "中间件和工具/JMeter 压力测试",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "中间件和工具/Redis-缓存之美",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "中间件和工具/小林coding：让天下没有难懂的「八股文」！计算机基础学习必备宝藏网站",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "中间件和工具/常用软件和环境",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "中间件和工具/正则表达式-Regex",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "前端开发/Html5_Css_Js",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "前端开发/Vue",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "前端开发/uni-app",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "前端开发/前端三件套-后端必备",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/20250622_后端学习清单",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/Agent开发应知应会",
+      "judgment": "personality-unknown-futurist-defaulted"
+    },
+    {
+      "slug": "后端开发/ArrayList-LinkedList-HashSet-TreeSet",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/DDD-领域驱动设计",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/DRF",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/Dubbo 面试全攻略",
+      "judgment": "personality-unknown-owl-defaulted"
+    },
+    {
+      "slug": "后端开发/Elasticsearch",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/HashTable-HashMap-TreeMap",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/Java 八股",
+      "judgment": "personality-unknown-owl-defaulted"
+    },
+    {
+      "slug": "后端开发/Java常用新特性-Lambda-Optional-Stream",
+      "judgment": "personality-unknown-gardener-defaulted"
+    },
+    {
+      "slug": "后端开发/Java设计模式",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/Kafka",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/MongoDB 面试全攻略",
+      "judgment": "personality-unknown-owl-defaulted"
+    },
+    {
+      "slug": "后端开发/MyBatis",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/Neo4j 面试指南",
+      "judgment": "personality-unknown-owl-defaulted"
+    },
+    {
+      "slug": "后端开发/RabbitMQ",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/RocketMQ",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/Spring Cloud Alibaba 微服务原理与实战-阅读心得",
+      "judgment": "personality-unknown-gardener-defaulted"
+    },
+    {
+      "slug": "后端开发/Spring",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/SpringBoot+Vue项目实战",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/SpringBoot",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/SpringBoot启示录",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/SpringCloud Alibaba-微服务进阶",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/SpringCloud-微服务基础",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/SpringCloud-微服务应用",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/SpringCloud",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/SpringSecurity",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/Spring核心学习",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/事务",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/全栈+运维-技术架构成熟解决方案",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/分布式系统业务问题",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/后端学习",
+      "judgment": "personality-unknown-gardener-defaulted"
+    },
+    {
+      "slug": "后端开发/后端开发手册",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/开发踩坑日记",
+      "judgment": "personality-unknown-companion-defaulted"
+    },
+    {
+      "slug": "后端开发/站内信、活动、公告和推送技术调研",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/缓存场景",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/网页开发",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/若依脚手架-学习",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/计算机网络面试全攻略",
+      "judgment": "personality-unknown-owl-defaulted"
+    },
+    {
+      "slug": "后端开发/调优",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/集群",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "后端开发/面试过程",
+      "judgment": "personality-unknown-owl-defaulted"
+    },
+    {
+      "slug": "科研学习/调研报告/AI热点技术趋势",
+      "judgment": "empty-tags-filled-from-folder-or-default"
+    },
+    {
+      "slug": "算法学习/二叉树技巧",
+      "judgment": "empty-tags-filled-from-folder-or-default"
+    },
+    {
+      "slug": "算法学习/动态规划解题技巧",
+      "judgment": "empty-tags-filled-from-folder-or-default"
+    },
+    {
+      "slug": "算法学习/华为手撕必考",
+      "judgment": "empty-tags-filled-from-folder-or-default"
+    },
+    {
+      "slug": "算法学习/单调栈技巧",
+      "judgment": "empty-tags-filled-from-folder-or-default"
+    },
+    {
+      "slug": "算法学习/单调队列技巧",
+      "judgment": "empty-tags-filled-from-folder-or-default"
+    },
+    {
+      "slug": "算法学习/回溯解题技巧",
+      "judgment": "empty-tags-filled-from-folder-or-default"
+    },
+    {
+      "slug": "算法学习/差分数组",
+      "judgment": "empty-tags-filled-from-folder-or-default"
+    },
+    {
+      "slug": "算法学习/贪心技巧",
+      "judgment": "empty-tags-filled-from-folder-or-default"
+    },
+    {
+      "slug": "运维开发/20250622_云计算及基础平台学习清单",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/AI运维工程师面试备战指南",
+      "judgment": "personality-unknown-owl-defaulted"
+    },
+    {
+      "slug": "运维开发/DeepSeek国产和Nvidia GPU部署方案",
+      "judgment": "personality-unknown-futurist-defaulted"
+    },
+    {
+      "slug": "运维开发/GPU使用指南",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/Git-简记",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/Kubernetes入门",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/MarkDown-真经",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/OSS备份方案",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/Scrapy-修炼手册",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/VmWare 虚拟机集群平替方案",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/WebMagic",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/华为晟腾DeepSeek模型部署实践",
+      "judgment": "personality-unknown-futurist-defaulted"
+    },
+    {
+      "slug": "运维开发/各种环境配置",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/性能测试",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/测试环境搭建方案",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/运维排忧解难",
+      "judgment": "personality-guide-mapped-to-引路人"
+    },
+    {
+      "slug": "运维开发/运维问题记录",
+      "judgment": "personality-unknown-companion-defaulted"
+    },
+    {
+      "slug": "运维开发/阿里云大规模并发配置及资源消耗记录",
+      "judgment": "personality-guide-mapped-to-引路人"
+    }
+  ]
+}

@@ -1,15 +1,10 @@
 ---
-title: 让AI学会时间管理 腾讯元宝揭秘时序知识图谱推理黑科技​——当大模型遇上动态规则进化，预测未来事件像刷朋友圈一样简单
+title: "让AI学会时间管理 腾讯元宝揭秘时序知识图谱推理黑科技​——当大模型遇上动态规则进化，预测未来事件像刷朋友圈一样简单"
 date: "2025-10-10"
-tags: research
-sticky: 80
-excerpt: ""
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+tags: ["research"]
 personality: "沉思者"
 description: "|​​标题​​|Large Language Models-guided Dynamic Adaptation for Temporal Knowledge Graph Reasoning|"
+cover: "/images/covers/ms-93bcd9e8.svg"
 ---
 #### 0.1.1.1 📋 ​**​论文元信息速览表​**​
 

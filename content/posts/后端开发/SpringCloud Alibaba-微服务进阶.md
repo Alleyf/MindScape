@@ -1,9 +1,10 @@
 ---
 title: "SpringCloud Alibaba-微服务进阶"
 date: "2023-11-16"
-tags: ["SpringCloud", "SpringCloud-Alibaba", "微服务"]
-personality: "guide"
+tags: ["SpringCloud","SpringCloud-Alibaba","微服务"]
+personality: "引路人"
 description: "SpringCloud Alibaba 微服务框架进阶学习"
+cover: "/images/covers/ms-dbf0e350.svg"
 ---
 ![](https://picsum.photos/800/250)
 

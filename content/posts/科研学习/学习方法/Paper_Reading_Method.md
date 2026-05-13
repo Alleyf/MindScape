@@ -1,12 +1,10 @@
 ---
-title: Paper_Reading_Method
-date: 2023-11-13 23:40:30
-tags:
-  - Paper
-sticky: 60
-excerpt: some keypoints about paperReading
+title: "Paper_Reading_Method"
+date: "2023-11-13"
+tags: ["Paper"]
 personality: "沉思者"
 description: "1. 论文标题：所有工作的凝练总结"
+cover: "/images/covers/ms-e1f4a2c7.svg"
 ---
 
 ## 1. 论文主要有那些组成部分及其相应的作用？

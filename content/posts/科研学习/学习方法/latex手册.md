@@ -1,16 +1,10 @@
 ---
-title: latex手册
+title: "latex手册"
 date: "2024-05-11"
-tags:
-  - latex
-sticky: 80
-excerpt: LaTeX使用手册
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+tags: ["latex"]
 personality: "沉思者"
-description: "- \documentclass{…}、\usepackage{…}为设定区域，规定论文格式，导入相关依赖包等"
+description: "LaTeX 设定区域：documentclass、usepackage 等用于规定论文格式与依赖包"
+cover: "/images/covers/ms-7668119f.svg"
 ---
 ![](https://picsum.photos/800/250)
 

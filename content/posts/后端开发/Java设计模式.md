@@ -1,9 +1,10 @@
 ---
 title: "Java设计模式"
 date: "2024-05-12"
-tags: ["Java", "设计模式"]
-personality: "guide"
+tags: ["Java","设计模式"]
+personality: "引路人"
 description: "Java 设计模式学习指南"
+cover: "/images/covers/ms-c41132db.svg"
 ---
 
 ![](https://picsum.photos/800/250)

@@ -1,9 +1,10 @@
 ---
 title: "Dubbo 面试全攻略"
 date: "2026-03-19"
-tags: ["Dubbo", "RPC", "面试"]
-personality: "owl"
+tags: ["Dubbo","RPC","面试"]
+personality: "沉思者"
 description: "Dubbo 面试全面复习指南"
+cover: "/images/covers/ms-ad54f179.svg"
 ---
 
 这是一份为您精心整理的 **Dubbo 从 0 到 1 面试指南**。Dubbo 是阿里巴巴开源的高性能 Java RPC 框架，在国内互联网企业（尤其是中大型公司）的面试中占据极高权重。

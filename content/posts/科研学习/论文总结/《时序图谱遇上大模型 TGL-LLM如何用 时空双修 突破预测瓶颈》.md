@@ -1,15 +1,10 @@
 ---
-title: 《时序图谱遇上大模型 TGL-LLM如何用 时空双修 突破预测瓶颈》
-date: 2025-10-03 12:40:45
-tags: research
-sticky: 80
-excerpt: ""
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-number headings: auto, first-level 1, max 5, start-at 1, 1.1
+title: "《时序图谱遇上大模型 TGL-LLM如何用 时空双修 突破预测瓶颈》"
+date: "2025-10-03"
+tags: ["research"]
 personality: "沉思者"
 description: "| 项目           | 内容                                                                              |"
+cover: "/images/covers/ms-b6174a24.svg"
 ---
 
 ### 0.1.1 ​**​📊 论文元信息速览表​**​

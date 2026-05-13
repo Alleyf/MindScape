@@ -1,9 +1,10 @@
 ---
 title: "DDD-领域驱动设计"
 date: "2024-04-18"
-tags: ["DDD", "微服务", "架构"]
-personality: "guide"
+tags: ["DDD","微服务","架构"]
+personality: "引路人"
 description: "领域驱动设计（DDD）数据库设计落地"
+cover: "/images/covers/ms-fbb31e86.svg"
 ---
 
 ![](https://picsum.photos/800/250)

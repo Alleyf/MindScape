@@ -1,22 +1,10 @@
 ---
-title: Explainability for large language models A survey
-date: 2024-01-09 14:53:44
-tags:
-  - LLM
-  - 可解释性
-sticky: 60
-excerpt: 大语言模型可解释性调查综述
-author: fcs
-index_img: https://picsum.photos/800/250
-lang: zh-CN
-theme: default
-_class: lead
-paginate: true
-backgroundImage: url('https://marp.app/assets/hero-background.svg')
-headingDivider: "[1,2,3,4,5]"
-number headings: auto, first-level 2, max 5, start-at 1, 1.1
+title: "Explainability for large language models A survey"
+date: "2024-01-09"
+tags: ["LLM","可解释性"]
 personality: "沉思者"
-description: "<table><tbody><tr><th style="background-color: rgb219, 238, 221;"><p style="text-align: left"><span style="background-..."
+description: "大语言模型可解释性调查综述（论文阅读笔记）"
+cover: "/images/covers/ms-9d942273.svg"
 ---
 
 ## 1 📕 Meta Data

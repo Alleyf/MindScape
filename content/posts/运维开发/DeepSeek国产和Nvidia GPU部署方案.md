@@ -1,9 +1,10 @@
 ---
 title: "DeepSeek国产和Nvidia GPU部署方案"
 date: "2025-03-05"
-tags: ["DeepSeek", "GPU", "部署"]
-personality: "futurist"
+tags: ["DeepSeek","GPU","部署"]
+personality: "沉思者"
 description: "DeepSeek-R1-671B 国产和 Nvidia GPU 部署方案"
+cover: "/images/covers/ms-29f40489.svg"
 ---
 
 # 1 模型概述🌟​

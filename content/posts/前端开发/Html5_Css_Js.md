@@ -1,9 +1,10 @@
 ---
 title: "Html5+Css+Js"
 date: "2022-09-10"
-tags: ["HTML", "CSS", "JavaScript"]
-personality: "guide"
+tags: ["HTML","CSS","JavaScript"]
+personality: "引路人"
 description: "HTML5、CSS、JavaScript 前端三件套学习"
+cover: "/images/covers/ms-da2702c5.svg"
 ---
 # Html5
 

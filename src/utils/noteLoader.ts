@@ -1,6 +1,25 @@
 import { Note } from '../types';
 export { getRandomNote } from './noteData';
 
+/** FNV-1a 32-bit，与 `scripts/normalize-posts-and-covers.mjs` 中封面文件名算法一致。 */
+function fnv1a32SlugHash(slug: string): number {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < slug.length; i++) {
+    h ^= slug.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h >>> 0;
+}
+
+/** `public/images/covers/` 下的 ASCII 文件名（避免 Windows 非法路径字符）。 */
+export function coverBasenameFromSlug(slug: string): string {
+  return `ms-${fnv1a32SlugHash(slug).toString(16)}.svg`;
+}
+
+export function coverUrlFromSlug(slug: string): string {
+  return `/images/covers/${coverBasenameFromSlug(slug)}`;
+}
+
 // 使用 Vite 的 import.meta.glob 动态导入 content/posts 下的所有 .md 文件
 // query: '?raw', import: 'default' 表示以原始文本形式加载（替代已弃用的 as: 'raw'）
 const markdownModules = import.meta.glob('../../content/posts/**/*.md', { eager: true, query: '?raw', import: 'default' });
@@ -71,6 +90,9 @@ export function getNotes(): Note[] {
     const date = data.date || new Date().toISOString().split('T')[0];
     const excerpt = body.trim().slice(0, 150) + (body.length > 150 ? '...' : '');
 
+    const coverRaw = typeof data.cover === 'string' ? data.cover.trim() : '';
+    const cover = coverRaw || coverUrlFromSlug(rawSlug);
+
     notes.push({
       id: rawSlug,
       slug: rawSlug,
@@ -83,7 +105,7 @@ export function getNotes(): Note[] {
       mood: data.mood || '✨',
       personality: data.personality || '沉思者',
       aiSubtitle: data.aiSubtitle || '',
-      cover: data.cover || '',
+      cover,
     });
   });
 

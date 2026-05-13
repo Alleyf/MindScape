@@ -1,11 +1,10 @@
 ---
-title: Dateframe—Algorithm  
-date: "2023-03-17"  
-tags: [Dataframe-Algorithm] 
-sticky: 65
-excerpt: some key points with respect to dataframe-algorithm
+title: "Dateframe—Algorithm"
+date: "2023-03-17"
+tags: ["Dataframe-Algorithm"]
 personality: "沉思者"
 description: "关于Dateframe—Algorithm的学习笔记与总结。"
+cover: "/images/covers/ms-dfef77d4.svg"
 ---
 # 1.线性表
 

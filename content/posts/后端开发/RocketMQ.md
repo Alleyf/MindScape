@@ -1,9 +1,10 @@
 ---
 title: "RocketMQ"
 date: "2026-03-17"
-tags: ["RocketMQ", "消息队列"]
-personality: "guide"
+tags: ["RocketMQ","消息队列"]
+personality: "引路人"
 description: "RocketMQ 消息队列学习指南"
+cover: "/images/covers/ms-5fdea088.svg"
 ---
 
 # 1 RocketMQ 面试指南：从 0 到 1 完全备战手册
