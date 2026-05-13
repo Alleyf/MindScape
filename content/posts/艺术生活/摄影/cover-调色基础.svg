@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#2d2d2d"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="colorBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ef4444"/>
+      <stop offset="14%" style="stop-color:#f97316"/>
+      <stop offset="28%" style="stop-color:#f59e0b"/>
+      <stop offset="42%" style="stop-color:#10b981"/>
+      <stop offset="57%" style="stop-color:#06b6d4"/>
+      <stop offset="71%" style="stop-color:#3b82f6"/>
+      <stop offset="85%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#ec4899"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <rect width="1200" height="630" fill="url(#accentGrad)" opacity="0.05"/>
+
+  <!-- Color grading curve -->
+  <g transform="translate(150, 150)" filter="url(#glow)">
+    <rect x="0" y="0" width="280" height="200" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <!-- Grid -->
+    <g stroke="#3b82f6" stroke-opacity="0.2" stroke-width="1">
+      <line x1="0" y1="50" x2="280" y2="50"/>
+      <line x1="0" y1="100" x2="280" y2="100"/>
+      <line x1="0" y1="150" x2="280" y2="150"/>
+      <line x1="70" y1="0" x2="70" y2="200"/>
+      <line x1="140" y1="0" x2="140" y2="200"/>
+      <line x1="210" y1="0" x2="210" y2="200"/>
+    </g>
+    <!-- Diagonal reference line -->
+    <line x1="0" y1="200" x2="280" y2="0" stroke="#3b82f6" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="5,5"/>
+    <!-- Color curve -->
+    <path d="M 0,200 C 50,180 100,140 140,100 C 180,60 230,30 280,0" fill="none" stroke="#10b981" stroke-width="3"/>
+    <!-- Control points -->
+    <circle cx="0" cy="200" r="5" fill="#f59e0b"/>
+    <circle cx="140" cy="100" r="6" fill="#10b981"/>
+    <circle cx="280" cy="0" r="5" fill="#f59e0b"/>
+    <text x="140" y="225" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="12" fill="#e0e0e0">Curves Adjustment</text>
+  </g>
+
+  <!-- Color wheel on right -->
+  <g transform="translate(900, 200)" filter="url(#glow)">
+    <circle cx="0" cy="0" r="90" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <circle cx="0" cy="0" r="75" fill="url(#colorBarGrad)" fill-opacity="0.6"/>
+    <circle cx="0" cy="0" r="55" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="30" fill="#1a1a1a" stroke="#f59e0b" stroke-width="2"/>
+    <!-- Hue ring -->
+    <circle cx="0" cy="0" r="95" fill="none" stroke="url(#colorBarGrad)" stroke-width="6"/>
+  </g>
+
+  <!-- Color bar at bottom -->
+  <g transform="translate(100, 450)">
+    <rect x="0" y="0" width="1000" height="30" rx="4" fill="url(#colorBarGrad)"/>
+    <rect x="0" y="0" width="1000" height="30" rx="4" fill="none" stroke="#f59e0b" stroke-width="1"/>
+    <!-- Labels -->
+    <text x="50" y="55" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="10" fill="#ef4444">Red</text>
+    <text x="200" y="55" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="10" fill="#f97316">Orange</text>
+    <text x="350" y="55" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="10" fill="#f59e0b">Yellow</text>
+    <text x="500" y="55" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="10" fill="#10b981">Green</text>
+    <text x="650" y="55" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="10" fill="#06b6d4">Cyan</text>
+    <text x="800" y="55" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="10" fill="#3b82f6">Blue</text>
+    <text x="950" y="55" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="10" fill="#8b5cf6">Purple</text>
+  </g>
+
+  <!-- RGB sliders -->
+  <g transform="translate(500, 400)">
+    <text x="0" y="0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="12" fill="#e0e0e0">RGB Channels</text>
+    <!-- R slider -->
+    <rect x="0" y="15" width="150" height="8" rx="4" fill="#333"/>
+    <rect x="0" y="15" width="100" height="8" rx="4" fill="#ef4444"/>
+    <circle cx="100" cy="19" r="8" fill="#ef4444" stroke="#1a1a1a" stroke-width="2"/>
+    <!-- G slider -->
+    <rect x="0" y="30" width="150" height="8" rx="4" fill="#333"/>
+    <rect x="0" y="30" width="80" height="8" rx="4" fill="#10b981"/>
+    <circle cx="80" cy="34" r="8" fill="#10b981" stroke="#1a1a1a" stroke-width="2"/>
+    <!-- B slider -->
+    <rect x="0" y="45" width="150" height="8" rx="4" fill="#333"/>
+    <rect x="0" y="45" width="120" height="8" rx="4" fill="#3b82f6"/>
+    <circle cx="120" cy="49" r="8" fill="#3b82f6" stroke="#1a1a1a" stroke-width="2"/>
+  </g>
+
+  <!-- Temperature and tint -->
+  <g transform="translate(750, 400)">
+    <text x="0" y="0" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="12" fill="#e0e0e0">Temp &amp; Tint</text>
+    <!-- Temperature -->
+    <rect x="0" y="15" width="150" height="8" rx="4" fill="#333"/>
+    <rect x="0" y="15" width="90" height="8" rx="4" fill="url(#colorBarGrad)"/>
+    <circle cx="90" cy="19" r="8" fill="#f59e0b" stroke="#1a1a1a" stroke-width="2"/>
+    <!-- Tint -->
+    <rect x="0" y="30" width="150" height="8" rx="4" fill="#333"/>
+    <rect x="0" y="30" width="70" height="8" rx="4" fill="#10b981"/>
+    <circle cx="70" cy="34" r="8" fill="#10b981" stroke="#1a1a1a" stroke-width="2"/>
+  </g>
+
+  <!-- Title text -->
+  <text x="600" y="100" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="36" fill="#e0e0e0" font-weight="bold" letter-spacing="4">调色基础</text>
+  <text x="600" y="140" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="18" fill="#f59e0b" letter-spacing="2">Color Grading Basics</text>
+
+  <!-- Decorative elements -->
+  <g stroke="#f59e0b" stroke-opacity="0.4" stroke-width="2">
+    <line x1="40" y1="40" x2="40" y2="80"/>
+    <line x1="40" y1="40" x2="80" y2="40"/>
+    <line x1="1160" y1="40" x2="1120" y2="40"/>
+    <line x1="1160" y1="40" x2="1160" y2="80"/>
+    <line x1="40" y1="590" x2="40" y2="550"/>
+    <line x1="40" y1="590" x2="80" y2="590"/>
+    <line x1="1160" y1="590" x2="1160" y2="550"/>
+    <line x1="1160" y1="590" x2="1120" y2="590"/>
+  </g>
+
+  <!-- Floating particles -->
+  <g fill="#f59e0b" opacity="0.5">
+    <circle cx="100" cy="100" r="3"/>
+    <circle cx="1100" cy="150" r="4"/>
+    <circle cx="150" cy="550" r="2"/>
+    <circle cx="1050" cy="500" r="3"/>
+    <circle cx="800" cy="100" r="2"/>
+  </g>
+</svg>

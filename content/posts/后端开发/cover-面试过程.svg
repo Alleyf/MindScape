@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f97316"/>
+      <stop offset="100%" style="stop-color:#fb923c"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g stroke="#334155" stroke-width="0.5" opacity="0.25">
+    <line x1="0" y1="157" x2="1200" y2="157"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="473" x2="1200" y2="473"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+  <g transform="translate(600, 315)" opacity="0.08">
+    <rect x="-150" y="-90" width="300" height="180" rx="10" fill="none" stroke="#f97316" stroke-width="50"/>
+  </g>
+  <g transform="translate(600, 315)">
+    <rect x="-95" y="-55" width="190" height="110" rx="8" fill="none" stroke="url(#accent)" stroke-width="4"/>
+    <rect x="-70" y="-35" width="140" height="70" rx="4" fill="url(#glow)"/>
+    <line x1="-55" y1="-15" x2="55" y2="-15" stroke="#f97316" stroke-width="2" opacity="0.5"/>
+    <line x1="-55" y1="5" x2="40" y2="5" stroke="#f97316" stroke-width="2" opacity="0.5"/>
+    <line x1="-55" y1="25" x2="45" y2="25" stroke="#f97316" stroke-width="2" opacity="0.5"/>
+    <rect x="60" y="-25" width="15" height="50" rx="3" fill="#f97316" opacity="0.6"/>
+    <circle cx="-70" cy="-45" r="6" fill="#f97316"/>
+    <circle cx="-40" cy="-45" r="6" fill="#fb923c"/>
+    <circle cx="-10" cy="-45" r="6" fill="#f97316"/>
+  </g>
+  <g opacity="0.3">
+    <rect x="150" y="120" width="70" height="45" rx="6" fill="none" stroke="#f97316" stroke-width="2"/>
+    <rect x="980" y="120" width="70" height="45" rx="6" fill="none" stroke="#fb923c" stroke-width="2"/>
+    <rect x="150" y="465" width="70" height="45" rx="6" fill="none" stroke="#f97316" stroke-width="2"/>
+    <rect x="980" y="465" width="70" height="45" rx="6" fill="none" stroke="#fb923c" stroke-width="2"/>
+  </g>
+  <text x="600" y="270" text-anchor="middle" fill="#f97316" font-family="Arial, sans-serif" font-size="60" font-weight="bold">面试</text>
+  <text x="600" y="350" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="30" font-weight="300" letter-spacing="8">P R O C E S S</text>
+  <g transform="translate(600, 410)">
+    <rect x="-60" y="-18" width="120" height="36" rx="18" fill="#f97316" opacity="0.15"/>
+    <text x="0" y="6" text-anchor="middle" fill="#fb923c" font-family="Arial, sans-serif" font-size="14">Journey Log</text>
+  </g>
+  <text x="600" y="560" text-anchor="middle" fill="#64748b" font-family="Arial, sans-serif" font-size="18" letter-spacing="2">Interview Experience &amp; Reflections</text>
+  <path d="M0,50 L0,0 L50,0" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>
+  <path d="M1200,50 L1200,0 L1150,0" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>
+  <path d="M0,580 L0,630 L50,630" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>
+  <path d="M1200,580 L1200,630 L1150,630" fill="none" stroke="#f97316" stroke-width="2" opacity="0.5"/>
+</svg>
