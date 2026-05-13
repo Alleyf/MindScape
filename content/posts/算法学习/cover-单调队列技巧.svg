@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f43f5e"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="queueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22d3ee"/>
+      <stop offset="100%" style="stop-color:#fbbf24"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid -->
+  <g stroke="#1e293b" stroke-width="0.5" opacity="0.3">
+    <line x1="0" y1="100" x2="1200" y2="100"/><line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/><line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="630"/><line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/><line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Monotonic queue visualization -->
+  <g transform="translate(100, 80)">
+    <rect x="0" y="0" width="450" height="260" rx="12" fill="#1e293b" stroke="#22d3ee" stroke-width="1"/>
+    <text x="225" y="30" text-anchor="middle" fill="#22d3ee" font-family="system-ui, sans-serif" font-size="16" font-weight="bold">Monotonic Queue (Deque)</text>
+
+    <!-- Queue representation -->
+    <g transform="translate(30, 60)">
+      <!-- Front -->
+      <rect x="0" y="0" width="80" height="50" rx="6" fill="#22d3ee" opacity="0.9"/>
+      <text x="40" y="32" text-anchor="middle" fill="#fff" font-family="monospace" font-size="18" font-weight="bold">7</text>
+      <text x="40" y="65" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">front</text>
+
+      <rect x="90" y="0" width="80" height="50" rx="6" fill="#8b5cf6" opacity="0.9"/>
+      <text x="130" y="32" text-anchor="middle" fill="#fff" font-family="monospace" font-size="18" font-weight="bold">5</text>
+
+      <rect x="180" y="0" width="80" height="50" rx="6" fill="#fbbf24" opacity="0.9"/>
+      <text x="220" y="32" text-anchor="middle" fill="#fff" font-family="monospace" font-size="18" font-weight="bold">3</text>
+
+      <!-- Back -->
+      <rect x="270" y="0" width="80" height="50" rx="6" fill="#f43f5e" opacity="0.9"/>
+      <text x="310" y="32" text-anchor="middle" fill="#fff" font-family="monospace" font-size="18" font-weight="bold">1</text>
+      <text x="310" y="65" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">back</text>
+
+      <!-- Arrows -->
+      <line x1="80" y1="25" x2="90" y2="25" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="170" y1="25" x2="180" y2="25" stroke="#94a3b8" stroke-width="2"/>
+      <line x1="260" y1="25" x2="270" y2="25" stroke="#94a3b8" stroke-width="2"/>
+    </g>
+
+    <!-- Operations -->
+    <g transform="translate(30, 140)">
+      <text x="0" y="0" fill="#94a3b8" font-family="monospace" font-size="13">push_back(x):</text>
+      <text x="130" y="0" fill="#f43f5e">while (!dq.empty() &amp;&amp; dq.back() &lt;= x) dq.pop_back();</text>
+      <text x="0" y="25" fill="#94a3b8" font-family="monospace" font-size="13">push_front(x):</text>
+      <text x="130" y="25" fill="#8b5cf6">while (!dq.empty() &amp;&amp; dq.front() &lt;= x) dq.pop_front();</text>
+      <text x="0" y="50" fill="#94a3b8" font-family="monospace" font-size="13">front():</text>
+      <text x="130" y="50" fill="#22d3ee">return dq.front(); // O(1) max/min</text>
+    </g>
+
+    <!-- Complexity badge -->
+    <rect x="120" y="200" width="150" height="35" rx="17" fill="#22d3ee" opacity="0.2" stroke="#22d3ee" stroke-width="2"/>
+    <text x="195" y="223" text-anchor="middle" fill="#22d3ee" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">O(n) Time</text>
+  </g>
+
+  <!-- Sliding window maximum -->
+  <g transform="translate(600, 80)">
+    <rect x="0" y="0" width="500" height="260" rx="12" fill="#1e293b" stroke="#fbbf24" stroke-width="1"/>
+    <text x="250" y="30" text-anchor="middle" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="16" font-weight="bold">Sliding Window Maximum</text>
+
+    <!-- Input array -->
+    <g transform="translate(20, 60)">
+      <text x="0" y="0" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13">Input: [1, 3, -1, -3, 5, 3, 6, 7]</text>
+      <text x="0" y="25" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13">k = 3</text>
+    </g>
+
+    <!-- Window visualization -->
+    <g transform="translate(20, 100)">
+      <rect x="0" y="0" width="460" height="40" rx="6" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+      <g font-family="monospace" font-size="16" font-weight="bold">
+        <rect x="10" y="5" width="45" height="30" rx="3" fill="#f43f5e"/>
+        <text x="32" y="27" text-anchor="middle" fill="#fff">1</text>
+        <rect x="60" y="5" width="45" height="30" rx="3" fill="#8b5cf6"/>
+        <text x="82" y="27" text-anchor="middle" fill="#fff">3</text>
+        <rect x="110" y="5" width="45" height="30" rx="3" fill="#22d3ee"/>
+        <text x="132" y="27" text-anchor="middle" fill="#fff">-1</text>
+        <rect x="160" y="5" width="45" height="30" rx="3" fill="#fbbf24" opacity="0.6"/>
+        <text x="182" y="27" text-anchor="middle" fill="#fff">-3</text>
+        <rect x="210" y="5" width="45" height="30" rx="3" fill="#fbbf24" opacity="0.6"/>
+        <text x="232" y="27" text-anchor="middle" fill="#fff">5</text>
+        <rect x="260" y="5" width="45" height="30" rx="3" fill="#fbbf24" opacity="0.6"/>
+        <text x="282" y="27" text-anchor="middle" fill="#fff">3</text>
+        <rect x="310" y="5" width="45" height="30" rx="3" fill="#f43f5e" opacity="0.6"/>
+        <text x="332" y="27" text-anchor="middle" fill="#fff">6</text>
+        <rect x="360" y="5" width="45" height="30" rx="3" fill="#8b5cf6" opacity="0.6"/>
+        <text x="382" y="27" text-anchor="middle" fill="#fff">7</text>
+      </g>
+
+      <!-- Window highlight -->
+      <rect x="10" y="0" width="135" height="40" rx="6" fill="none" stroke="#fbbf24" stroke-width="2"/>
+      <text x="77" y="60" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="12">max = 3</text>
+    </g>
+
+    <!-- Output -->
+    <g transform="translate(20, 170)">
+      <text x="0" y="0" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13">Output: [3, 3, 5, 5, 6, 7]</text>
+      <rect x="0" y="20" width="200" height="35" rx="8" fill="#22d3ee" opacity="0.2" stroke="#22d3ee" stroke-width="1"/>
+      <text x="100" y="43" text-anchor="middle" fill="#22d3ee" font-family="system-ui, sans-serif" font-size="13">O(n) with Deque</text>
+    </g>
+  </g>
+
+  <!-- Code template -->
+  <g transform="translate(100, 370)">
+    <rect x="0" y="0" width="1000" height="120" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="20" y="25" fill="#22d3ee" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">Sliding Window Template:</text>
+    <g font-family="monospace" font-size="13">
+      <text x="20" y="50" fill="#8b5cf6">Deque&lt;Integer&gt;</text>
+      <text x="170" y="50" fill="#94a3b8">dq = new ArrayDeque&lt;&gt;();</text>
+      <text x="20" y="75" fill="#8b5cf6">for</text>
+      <text x="90" y="75" fill="#94a3b8">(int i = 0; i &lt; nums.length; i++) {</text>
+      <text x="40" y="100" fill="#f43f5e">while</text>
+      <text x="100" y="100" fill="#94a3b8">(!dq.isEmpty() &amp;&amp; dq.peekFirst() &lt;= i - k) dq.pollFirst();</text>
+    </g>
+  </g>
+
+  <!-- Applications -->
+  <g transform="translate(100, 510)">
+    <rect x="0" y="0" width="1000" height="70" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="25" fill="#f43f5e" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">Applications:</text>
+    <g font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">
+      <text x="150" y="25" fill="#22d3ee">Sliding Window Maximum</text>
+      <text x="380" y="25" fill="#64748b">|</text>
+      <text x="400" y="25" fill="#8b5cf6">Shortest Subarray with Sum at Least K</text>
+      <text x="680" y="25" fill="#64748b">|</text>
+      <text x="700" y="25" fill="#fbbf24">Max Sliding Window</text>
+      <text x="20" y="50" fill="#f43f5e" font-weight="bold">Variations:</text>
+      <text x="120" y="50" fill="#22d3ee">Fixed window</text>
+      <text x="230" y="50" fill="#64748b">|</text>
+      <text x="250" y="50" fill="#8b5cf6">Variable window</text>
+      <text x="360" y="50" fill="#64748b">|</text>
+      <text x="380" y="50" fill="#fbbf24">Sliding window + hash map</text>
+    </g>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="585" text-anchor="middle" fill="url(#accent1)" font-family="system-ui, sans-serif" font-size="36" font-weight="bold" filter="url(#glow)">Monotonic Queue</text>
+  <text x="600" y="610" text-anchor="middle" fill="#64748b" font-family="system-ui, sans-serif" font-size="18">单调队列技巧</text>
+</svg>

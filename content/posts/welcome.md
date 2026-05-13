@@ -4,6 +4,7 @@ date: "2026-01-15"
 tags: ["intro", "welcome", "getting-started"]
 personality: "引路人"
 description: "探索你的创意知识库之旅"
+cover: "https://picsum.photos/seed/mindscape-welcome/800/450"
 ---
 
 # 🌌 欢迎来到 MindScape
