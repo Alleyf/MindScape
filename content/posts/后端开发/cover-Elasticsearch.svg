@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="esGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#fbbf24"/>
+    </linearGradient>
+    <linearGradient id="searchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b" opacity="0.3"/>
+      <stop offset="100%" style="stop-color:#fbbf24" opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g transform="translate(600, 300)">
+    <circle cx="0" cy="-30" r="100" fill="url(#searchGrad)" stroke="url(#esGrad)" stroke-width="6"/>
+    <line x1="70" y1="40" x2="150" y2="120" stroke="url(#esGrad)" stroke-width="12" stroke-linecap="round"/>
+    <ellipse cx="-30" cy="-50" rx="25" ry="15" fill="none" stroke="#fff" stroke-width="2" opacity="0.3" transform="rotate(-30 -30 -50)"/>
+  </g>
+  <g transform="translate(600, 270)" opacity="0.6">
+    <rect x="-40" y="-30" width="30" height="40" rx="3" fill="#f59e0b" opacity="0.5"/>
+    <rect x="-5" y="-25" width="30" height="35" rx="3" fill="#fbbf24" opacity="0.6"/>
+    <rect x="30" y="-30" width="30" height="40" rx="3" fill="#f59e0b" opacity="0.5"/>
+  </g>
+  <g transform="translate(600, 100)">
+    <rect x="-200" y="-25" width="400" height="50" rx="25" fill="#1e293b" stroke="url(#esGrad)" stroke-width="2"/>
+    <text x="0" y="8" text-anchor="middle" fill="#f59e0b" font-family="Arial, sans-serif" font-size="20">Search Documents...</text>
+  </g>
+  <g transform="translate(600, 480)">
+    <rect x="-250" y="-60" width="500" height="120" rx="10" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <text x="-220" y="-30" fill="#f59e0b" font-family="monospace" font-size="14" font-weight="bold">Term</text>
+    <text x="-100" y="-30" fill="#64748b" font-family="monospace" font-size="14">-&gt;</text>
+    <text x="-60" y="-30" fill="#fbbf24" font-family="monospace" font-size="14">Doc IDs</text>
+    <line x1="-230" y1="-10" x2="230" y2="-10" stroke="#334155" stroke-width="1"/>
+    <text x="-220" y="20" fill="#94a3b8" font-family="monospace" font-size="12">"elasticsearch"</text>
+    <text x="-80" y="20" fill="#64748b" font-family="monospace" font-size="12">-&gt;</text>
+    <rect x="-50" y="5" width="30" height="24" rx="4" fill="#f59e0b" opacity="0.3"/>
+    <rect x="-15" y="5" width="30" height="24" rx="4" fill="#f59e0b" opacity="0.5"/>
+    <rect x="20" y="5" width="30" height="24" rx="4" fill="#f59e0b" opacity="0.3"/>
+    <rect x="55" y="5" width="30" height="24" rx="4" fill="#f59e0b" opacity="0.2"/>
+    <rect x="90" y="5" width="30" height="24" rx="4" fill="#f59e0b" opacity="0.4"/>
+  </g>
+  <text x="600" y="580" text-anchor="middle" fill="#f59e0b" font-family="Arial, sans-serif" font-size="38" font-weight="bold" letter-spacing="3">Elasticsearch</text>
+  <g transform="translate(600, 160)">
+    <text x="0" y="0" text-anchor="middle" fill="#64748b" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">DISTRIBUTED SEARCH ENGINE</text>
+  </g>
+  <circle cx="100" cy="500" r="80" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.1"/>
+  <circle cx="1100" cy="130" r="60" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.1"/>
+</svg>

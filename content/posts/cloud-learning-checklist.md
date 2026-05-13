@@ -9,6 +9,8 @@ description: "一份面向云计算的学习清单"
 
 # 一、云计算及基础平台入门
 
+![云计算学习路线图](/images/cloud-learning-checklist.svg)
+
 1. 操作系统： 
    - 描述：会操作常用的操作系统，管理维护实验室设备
    - linux： 

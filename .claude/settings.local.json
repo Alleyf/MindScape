@@ -30,7 +30,22 @@
       "Skill(gsd-execute-phase)",
       "Bash(node -e ' *)",
       "Bash(curl -s http://localhost:5173)",
-      "Bash(pkill -f \"vite\")"
+      "Bash(pkill -f \"vite\")",
+      "Bash(curl -s https://api.github.com/repos/OpenSenseNova/SenseNova-Skills/contents/)",
+      "Bash(curl *)",
+      "Bash(python3 *)",
+      "Bash(sed -i 's/date: 2024-05-11 23:00:58/date: \"2024-05-11\"/' content/posts/科研学习/学习方法/latex手册.md)",
+      "Bash(sed -i 's/date: 2024-03-14 20:51:41/date: \"2024-03-14\"/' content/posts/科研学习/学习方法/科研思路.md)",
+      "Bash(sed -i 's/date: 2026-03-08 23:02:40/date: \"2026-03-08\"/' content/posts/科研学习/机器学习/ML_DL.md)",
+      "Bash(sed -i 's/date: 2024-01-16 12:49:25/date: \"2024-01-16\"/' content/posts/科研学习/机器学习/入门机器学习.md)",
+      "Bash(sed -i 's/date: 2023-05-31 14:27:39/date: \"2023-05-31\"/' content/posts/科研学习/机器学习/深度学习入门篇.md)",
+      "Bash(sed -i 's/date: 2023-03-17 19:09:35/date: \"2023-03-17\"/' content/posts/科研学习/机器学习/CV/计算机视觉概述.md)",
+      "Bash(sed -i 's/date: 2022-9-10 10:00:00/date: \"2022-09-10\"/' content/posts/科研学习/机器学习/Tools/Python_Notes.md)",
+      "Bash(sed -i 's/date: 2024-03-28 17:16:36/date: \"2024-03-28\"/' content/posts/科研学习/调研报告/国家重点研究计划课题四-任务三-调研.md)",
+      "Bash(sed -i 's/date: 2023-12-03 16:39:38/date: \"2023-12-03\"/' content/posts/科研学习/调研报告/多源异构司法数据汇聚融合-解决方案调研.md)",
+      "Bash(sed -i 's/date: 2023-12-22 10:58:30/date: \"2023-12-22\"/' content/posts/科研学习/调研报告/数据集汇总与评测.md)",
+      "Bash(sed -i 's/date: 2023-03-17 19:06:15/date: \"2023-03-17\"/' content/posts/算法学习/Dateframe—Algorithm.md)",
+      "Bash(node *)"
     ]
   }
 }

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { ParticleField } from './components/ParticleField';
 import { MouseGlow } from './components/MouseGlow';
 import { NoteCard } from './components/NoteCard';
@@ -1482,6 +1482,41 @@ function ResourcesPage() {
 function AIEngineeringPage() {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [iframeError, setIframeError] = useState(false);
+  const [embedSize, setEmbedSize] = useState({ width: 90, height: 75 });
+  const [isResizing, setIsResizing] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsResizing(true);
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const newWidth = ((e.clientX - rect.left) / window.innerWidth) * 100;
+      const newHeight = ((e.clientY - rect.top) / window.innerHeight) * 100;
+      const clampedWidth = Math.max(50, Math.min(100, newWidth));
+      const clampedHeight = Math.max(30, Math.min(90, newHeight));
+      setEmbedSize({ width: clampedWidth, height: clampedHeight });
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
 
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
@@ -1532,10 +1567,12 @@ function AIEngineeringPage() {
 
         {/* Embedded iframe */}
         <motion.div
+          ref={containerRef}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
           className="engineer-embed-wrapper"
+          style={{ width: `${embedSize.width}%`, height: `${embedSize.height}vh` }}
         >
           <div className="engineer-embed-header">
             <div className="engineer-embed-dots">
@@ -1594,6 +1631,17 @@ function AIEngineeringPage() {
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
             />
           )}
+
+          {/* Resize handle */}
+          <div
+            className={`engineer-resize-handle ${isResizing ? 'engineer-resize-handle-active' : ''}`}
+            onMouseDown={handleMouseDown}
+            title="拖动调整大小"
+          >
+            <div className="engineer-resize-indicator">
+              <span>{Math.round(embedSize.width)}% × {Math.round(embedSize.height)}%</span>
+            </div>
+          </div>
         </motion.div>
 
         {/* Bottom info */}

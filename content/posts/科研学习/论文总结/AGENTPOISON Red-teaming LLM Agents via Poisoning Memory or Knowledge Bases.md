@@ -1,6 +1,6 @@
 ---
 title: "AGENTPOISON: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases"
-date: 2025-03-20 16:31:51
+date: "2025-03-20"
 tags:
   - LLM
 sticky: 80
@@ -11,7 +11,7 @@ lang: zh-CN
 header-left: "![](D:/开发图片/logo32.png)"
 number headings: auto, first-level 1, max 5, start-at 1, 1.1
 personality: "沉思者"
-description: "- LLM代理的广泛应用：LLM代理在金融、医疗、自动驾驶等多个安全关键领域得到了广泛应用，其强大的推理和交互能力主要得益于能够利用外部知识和工具，通过记忆模块或RAG机制检索过去的知识和实例来指导任务规划和执行。"
+description: "深入分析LLM代理记忆污染攻击技术，探讨AI安全边界"
 ---
 # 1 第一部分：大纲详细叙述
 

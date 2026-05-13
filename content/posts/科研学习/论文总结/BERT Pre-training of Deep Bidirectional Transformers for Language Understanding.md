@@ -1,6 +1,6 @@
 ---
 title: BERT Pre-training of Deep Bidirectional Transformers for Language Understanding
-date: 2024-02-28 10:23:11
+date: "2024-02-28"
 tags:
   - NLP
   - 科研

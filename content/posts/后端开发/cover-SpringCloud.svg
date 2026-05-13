@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#60a5fa"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g transform="translate(600, 120)">
+    <ellipse cx="-80" cy="0" rx="60" ry="40" fill="url(#cloudGrad)" opacity="0.3"/>
+    <ellipse cx="0" cy="-20" rx="80" ry="50" fill="url(#cloudGrad)" opacity="0.3"/>
+    <ellipse cx="80" cy="0" rx="60" ry="40" fill="url(#cloudGrad)" opacity="0.3"/>
+    <ellipse cx="0" cy="10" rx="120" ry="35" fill="url(#cloudGrad)" opacity="0.4"/>
+    <text x="0" y="8" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="24" font-weight="bold">Cloud</text>
+  </g>
+  <g transform="translate(600, 380)">
+    <circle cx="0" cy="0" r="50" fill="#1e293b" stroke="url(#cloudGrad)" stroke-width="3"/>
+    <text x="0" y="5" text-anchor="middle" fill="#60a5fa" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Gateway</text>
+    <g stroke="#334155" stroke-width="2">
+      <line x1="-50" y1="-20" x2="-180" y2="-120"/>
+      <line x1="50" y1="-20" x2="180" y2="-120"/>
+      <line x1="-50" y1="20" x2="-180" y2="120"/>
+      <line x1="50" y1="20" x2="180" y2="120"/>
+      <line x1="0" y1="50" x2="0" y2="150"/>
+    </g>
+    <circle cx="-200" cy="-140" r="35" fill="#1e293b" stroke="url(#greenGrad)" stroke-width="2"/>
+    <text x="-200" y="-135" text-anchor="middle" fill="#10b981" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Nacos</text>
+    <text x="-200" y="-122" text-anchor="middle" fill="#64748b" font-family="Arial, sans-serif" font-size="9">Registry</text>
+    <circle cx="200" cy="-140" r="35" fill="#1e293b" stroke="url(#cloudGrad)" stroke-width="2"/>
+    <text x="200" y="-135" text-anchor="middle" fill="#60a5fa" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Gateway</text>
+    <circle cx="-200" cy="140" r="35" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="-200" y="135" text-anchor="middle" fill="#f59e0b" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Sentinel</text>
+    <circle cx="200" cy="140" r="35" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="200" y="135" text-anchor="middle" fill="#8b5cf6" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Sentinel</text>
+    <circle cx="0" cy="180" r="35" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+    <text x="0" y="175" text-anchor="middle" fill="#ef4444" font-family="Arial, sans-serif" font-size="11" font-weight="bold">LoadBalancer</text>
+  </g>
+  <text x="600" y="580" text-anchor="middle" fill="#60a5fa" font-family="Arial, sans-serif" font-size="32" font-weight="bold" letter-spacing="6">SPRING CLOUD</text>
+  <text x="600" y="50" text-anchor="middle" fill="#94a3b8" font-family="Arial, sans-serif" font-size="16" letter-spacing="4">MICROSERVICES ARCHITECTURE</text>
+  <circle cx="80" cy="300" r="100" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.1"/>
+  <circle cx="1120" cy="330" r="120" fill="none" stroke="#10b981" stroke-width="1" opacity="0.1"/>
+</svg>

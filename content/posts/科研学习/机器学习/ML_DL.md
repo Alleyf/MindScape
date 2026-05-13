@@ -5,7 +5,7 @@ tags:
   - Pandas
   - PIL
   - Matplotlib
-date: 2026-03-08 23:02:40
+date: "2026-03-08"
 sticky: 80
 excerpt: Deep_learning
 author: fcs

@@ -10,6 +10,8 @@ description: "一份面向前端开发的学习清单"
 # **React + Ant Design 前端速成**
 为了短期上手 React + Ant Design (antd) 项目，可以参考以下以任务为导向的速成学习路线。该路线专注于快速实践和核心技能的掌握，避免过度深究细节，适合前端基础薄弱的学习者。
 
+![前端学习路线图](/images/frontend-learning-checklist.svg)
+
 ## **一、学习 React 基础知识**
 + **目标**：了解 React 的开发流程。
 + **内容**：

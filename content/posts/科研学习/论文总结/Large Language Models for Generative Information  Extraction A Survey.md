@@ -1,6 +1,6 @@
 ---
 title: Large Language Models for Generative Information Extraction A Survey
-date: 2024-06-10 20:17:19
+date: "2024-06-10"
 tags:
   - 科研
 sticky: 80

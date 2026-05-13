@@ -2,7 +2,7 @@
 title: Python_Notes
 tags: python
 categories: python,program_study
-date: 2022-9-10 10:00:00
+date: "2022-09-10"
 sticky: 40
 excerpt: introducing some package usage of machine_learning. 
 personality: "沉思者"

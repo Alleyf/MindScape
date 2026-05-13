@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="360" viewBox="0 0 1040 360" role="img" aria-labelledby="title desc">
+  <title id="title">后端学习路线图</title>
+  <desc id="desc">Java后端开发学习路线图，从Java基础到微服务架构。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff5f5"/>
+      <stop offset="1" stop-color="#fed7d7"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e53e3e"/>
+      <stop offset="1" stop-color="#c53030"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-40%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#742a2a" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="1040" height="360" rx="32" fill="url(#bg)"/>
+  <circle cx="918" cy="64" r="96" fill="#e53e3e" opacity="0.08"/>
+  <circle cx="112" cy="302" r="128" fill="#c53030" opacity="0.08"/>
+  <text x="52" y="64" font-family="Georgia, 'Noto Serif SC', serif" font-size="32" font-weight="800" fill="#742a2a">后端学习路线图</text>
+  <text x="52" y="98" font-family="'Microsoft YaHei UI', sans-serif" font-size="15" fill="#9b2c2c">Java基础 → Spring Boot → 数据库 → 微服务 = 全栈后端工程师</text>
+  <path d="M112 210H910" stroke="url(#accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12"/>
+  <g font-family="'Microsoft YaHei UI', sans-serif" filter="url(#shadow)">
+    <g transform="translate(52 146)">
+      <rect width="160" height="118" rx="18" fill="#ffffff" stroke="#feb2b2"/>
+      <circle cx="34" cy="34" r="18" fill="#e53e3e"/><text x="29" y="40" font-size="18" font-weight="800" fill="#fff">1</text>
+      <text x="20" y="76" font-size="18" font-weight="800" fill="#742a2a">Java基础</text>
+      <text x="20" y="100" font-size="12" fill="#c53030">面向对象 / Stream</text>
+    </g>
+    <g transform="translate(232 116)">
+      <rect width="160" height="118" rx="18" fill="#ffffff" stroke="#feb2b2"/>
+      <circle cx="34" cy="34" r="18" fill="#e53e3e"/><text x="29" y="40" font-size="18" font-weight="800" fill="#fff">2</text>
+      <text x="20" y="76" font-size="18" font-weight="800" fill="#742a2a">Spring Boot</text>
+      <text x="20" y="100" font-size="12" fill="#c53030">IoC / DI / MVC</text>
+    </g>
+    <g transform="translate(412 146)">
+      <rect width="160" height="118" rx="18" fill="#ffffff" stroke="#feb2b2"/>
+      <circle cx="34" cy="34" r="18" fill="#e53e3e"/><text x="29" y="40" font-size="18" font-weight="800" fill="#fff">3</text>
+      <text x="20" y="76" font-size="18" font-weight="800" fill="#742a2a">数据库</text>
+      <text x="20" y="100" font-size="12" fill="#c53030">MySQL / Redis</text>
+    </g>
+    <g transform="translate(592 116)">
+      <rect width="160" height="118" rx="18" fill="#ffffff" stroke="#feb2b2"/>
+      <circle cx="34" cy="34" r="18" fill="#e53e3e"/><text x="29" y="40" font-size="18" font-weight="800" fill="#fff">4</text>
+      <text x="20" y="76" font-size="18" font-weight="800" fill="#742a2a">中间件</text>
+      <text x="20" y="100" font-size="12" fill="#c53030">MQ / Nacos / Dubbo</text>
+    </g>
+    <g transform="translate(772 146)">
+      <rect width="160" height="118" rx="18" fill="#ffffff" stroke="#feb2b2"/>
+      <circle cx="34" cy="34" r="18" fill="#e53e3e"/><text x="29" y="40" font-size="18" font-weight="800" fill="#fff">5</text>
+      <text x="20" y="76" font-size="18" font-weight="800" fill="#742a2a">微服务</text>
+      <text x="20" y="100" font-size="12" fill="#c53030">Spring Cloud</text>
+    </g>
+  </g>
+</svg>

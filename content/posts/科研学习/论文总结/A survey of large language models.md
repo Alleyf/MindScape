@@ -1,6 +1,6 @@
 ---
 title: A survey of large language models
-date: 2024-06-09 22:27:29
+date: "2024-06-09"
 tags:
   - 科研
   - 大语言模型

@@ -4420,6 +4420,8 @@ html[data-font-size='xlarge'] .markdown-content li {
 
 /* AI Engineering Embed */
 .engineer-embed-wrapper {
+  position: relative;
+  margin: 0 auto;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--border-soft);
@@ -4482,10 +4484,67 @@ html[data-font-size='xlarge'] .markdown-content li {
   background: var(--surface-hover);
 }
 
+.engineer-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: nwse-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.engineer-embed-wrapper:hover .engineer-resize-handle {
+  opacity: 1;
+}
+
+.engineer-resize-handle::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--nebula-accent);
+  border-bottom: 2px solid var(--nebula-accent);
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.engineer-resize-handle:hover::before,
+.engineer-resize-handle-active::before {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.engineer-resize-indicator {
+  position: absolute;
+  bottom: 24px;
+  right: 4px;
+  background: var(--nebula-accent);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.engineer-resize-handle-active .engineer-resize-indicator {
+  opacity: 1;
+}
+
 .engineer-iframe {
   width: 100%;
-  height: 75vh;
-  min-height: 500px;
+  height: 100%;
   border: none;
   display: block;
   opacity: 0;
@@ -4501,8 +4560,7 @@ html[data-font-size='xlarge'] .markdown-content li {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 75vh;
-  min-height: 500px;
+  height: 100%;
   gap: 1rem;
   color: var(--text-muted);
   font-size: 0.9rem;
@@ -4526,8 +4584,7 @@ html[data-font-size='xlarge'] .markdown-content li {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 75vh;
-  min-height: 500px;
+  height: 100%;
   gap: 0.5rem;
   color: var(--text-muted);
 }
@@ -4544,12 +4601,10 @@ html[data-font-size='xlarge'] .markdown-content li {
 @media (max-width: 768px) {
   .engineer-iframe {
     height: 60vh;
-    min-height: 400px;
   }
 
   .engineer-embed-loading,
   .engineer-embed-fallback {
     height: 60vh;
-    min-height: 400px;
   }
 }

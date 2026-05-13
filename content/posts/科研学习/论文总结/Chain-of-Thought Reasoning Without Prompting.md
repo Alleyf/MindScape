@@ -1,6 +1,6 @@
 ---
 title: Chain-of-Thought Reasoning Without Prompting
-date: 2024-04-05 20:14:59
+date: "2024-04-05"
 tags: 科研，CoT
 sticky: 80
 excerpt: 无提示的思维链推理：模型内在CoT推理能力的激发

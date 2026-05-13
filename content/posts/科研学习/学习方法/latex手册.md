@@ -1,6 +1,6 @@
 ---
 title: latex手册
-date: 2024-05-11 23:00:58
+date: "2024-05-11"
 tags:
   - latex
 sticky: 80

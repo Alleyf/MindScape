@@ -1,6 +1,6 @@
 ---
 title: Dateframe—Algorithm  
-date: 2023-03-17 19:06:15  
+date: "2023-03-17"  
 tags: [Dataframe-Algorithm] 
 sticky: 65
 excerpt: some key points with respect to dataframe-algorithm

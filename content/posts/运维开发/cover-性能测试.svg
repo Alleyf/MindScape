@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e1b4b"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4c1d95" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+    <linearGradient id="chartGreen" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e" stop-opacity="0.2"/>
+      <stop offset="100%" style="stop-color:#22c55e" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="chartBlue" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#0ea5e9" stop-opacity="0.2"/>
+      <stop offset="100%" style="stop-color:#0ea5e9" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="100" cy="550" r="150" fill="#0ea5e9" opacity="0.06"/>
+  <circle cx="1100" cy="100" r="180" fill="#22c55e" opacity="0.05"/>
+  <g transform="translate(150, 150)">
+    <rect x="0" y="0" width="500" height="300" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <g stroke="#334155" stroke-width="0.5" opacity="0.5">
+      <line x1="50" y1="50" x2="480" y2="50"/>
+      <line x1="50" y1="100" x2="480" y2="100"/>
+      <line x1="50" y1="150" x2="480" y2="150"/>
+      <line x1="50" y1="200" x2="480" y2="200"/>
+      <line x1="50" y1="250" x2="480" y2="250"/>
+    </g>
+    <text x="40" y="55" text-anchor="end" font-family="monospace" font-size="10" fill="#64748b">10K</text>
+    <text x="40" y="105" text-anchor="end" font-family="monospace" font-size="10" fill="#64748b">7.5K</text>
+    <text x="40" y="155" text-anchor="end" font-family="monospace" font-size="10" fill="#64748b">5K</text>
+    <text x="40" y="205" text-anchor="end" font-family="monospace" font-size="10" fill="#64748b">2.5K</text>
+    <text x="40" y="255" text-anchor="end" font-family="monospace" font-size="10" fill="#64748b">0</text>
+    <polyline points="60,220 100,180 140,160 180,120 220,100 260,90 300,80 340,70 380,65 420,60 460,55" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#22c55e">
+      <circle cx="140" cy="160" r="5"/>
+      <circle cx="260" cy="90" r="5"/>
+      <circle cx="380" cy="65" r="5"/>
+    </g>
+    <polyline points="60,240 100,210 140,190 180,170 220,155 260,145 300,135 340,130 380,125 420,120 460,115" fill="none" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#0ea5e9">
+      <circle cx="140" cy="190" r="5"/>
+      <circle cx="260" cy="145" r="5"/>
+      <circle cx="380" cy="125" r="5"/>
+    </g>
+    <g transform="translate(80, 275)">
+      <line x1="0" y1="0" x2="30" y2="0" stroke="#22c55e" stroke-width="3"/>
+      <text x="40" y="4" font-family="system-ui" font-size="11" fill="#94a3b8">QPS</text>
+      <line x1="90" y1="0" x2="120" y2="0" stroke="#0ea5e9" stroke-width="3"/>
+      <text x="130" y="4" font-family="system-ui" font-size="11" fill="#94a3b8">TPS</text>
+    </g>
+    <text x="250" y="25" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="600" fill="#f8fafc">Performance Metrics</text>
+  </g>
+  <g transform="translate(720, 150)">
+    <rect x="0" y="0" width="200" height="90" rx="10" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+    <text x="20" y="30" font-family="system-ui" font-size="12" fill="#64748b">QPS</text>
+    <text x="20" y="60" font-family="system-ui" font-size="28" font-weight="700" fill="#22c55e">8,420</text>
+    <text x="120" y="60" font-family="system-ui" font-size="14" fill="#22c55e">/sec</text>
+    <rect x="0" y="105" width="200" height="90" rx="10" fill="#1e293b" stroke="#0ea5e9" stroke-width="2"/>
+    <text x="20" y="135" font-family="system-ui" font-size="12" fill="#64748b">TPS</text>
+    <text x="20" y="165" font-family="system-ui" font-size="28" font-weight="700" fill="#0ea5e9">6,280</text>
+    <text x="120" y="165" font-family="system-ui" font-size="14" fill="#0ea5e9">/sec</text>
+    <rect x="0" y="210" width="200" height="90" rx="10" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="20" y="240" font-family="system-ui" font-size="12" fill="#64748b">Response Time</text>
+    <text x="20" y="270" font-family="system-ui" font-size="28" font-weight="700" fill="#f59e0b">45</text>
+    <text x="70" y="270" font-family="system-ui" font-size="14" fill="#f59e0b">ms avg</text>
+    <rect x="0" y="315" width="200" height="90" rx="10" fill="#1e293b" stroke="#7c3aed" stroke-width="2"/>
+    <text x="20" y="345" font-family="system-ui" font-size="12" fill="#64748b">Concurrent Users</text>
+    <text x="20" y="375" font-family="system-ui" font-size="28" font-weight="700" fill="#7c3aed">1,247</text>
+    <text x="110" y="375" font-family="system-ui" font-size="14" fill="#7c3aed">users</text>
+  </g>
+  <text x="600" y="540" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#f8fafc">Performance Testing</text>
+  <text x="600" y="585" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#94a3b8">QPS / TPS / 吞吐量 / 并发数</text>
+  <g transform="translate(1000, 400)">
+    <circle cx="0" cy="0" r="80" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <path d="M0,0 L-60,-50 A85,85 0 0,1 60,-50 Z" fill="#22c55e" opacity="0.3"/>
+    <path d="M0,0 L-30,-70 A75,75 0 0,1 50,-55 Z" fill="#f59e0b" opacity="0.5"/>
+    <line x1="0" y1="10" x2="0" y2="-55" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="10" fill="#f8fafc"/>
+    <text x="0" y="110" text-anchor="middle" font-family="system-ui" font-size="12" fill="#64748b">Load</text>
+  </g>
+</svg>

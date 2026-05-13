@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c0a09"/>
+      <stop offset="50%" stop-color="#1c1917"/>
+      <stop offset="100%" stop-color="#0c0a09"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <text x="600" y="60" font-family="Arial, sans-serif" font-size="32" fill="#f5f5f5" text-anchor="middle" font-weight="bold" letter-spacing="2">LARGE LANGUAGE MODELS</text>
+  <text x="600" y="100" font-family="Arial, sans-serif" font-size="18" fill="#a78bfa" text-anchor="middle" letter-spacing="1">A Survey of Foundation Models</text>
+
+  <g transform="translate(100, 150)">
+    <circle cx="50" cy="200" r="8" fill="url(#cyan)" filter="url(#glow)"/>
+    <circle cx="50" cy="300" r="8" fill="url(#cyan)" filter="url(#glow)"/>
+    <circle cx="50" cy="400" r="8" fill="url(#cyan)" filter="url(#glow)"/>
+
+    <circle cx="180" cy="180" r="10" fill="url(#cyan)" filter="url(#glow)"/>
+    <circle cx="180" cy="280" r="10" fill="url(#cyan)" filter="url(#glow)"/>
+    <circle cx="180" cy="380" r="10" fill="url(#cyan)" filter="url(#glow)"/>
+    <circle cx="180" cy="480" r="10" fill="url(#cyan)" filter="url(#glow)"/>
+
+    <circle cx="320" cy="150" r="12" fill="url(#purple)" filter="url(#glow)"/>
+    <circle cx="320" cy="250" r="12" fill="url(#purple)" filter="url(#glow)"/>
+    <circle cx="320" cy="350" r="12" fill="url(#purple)" filter="url(#glow)"/>
+    <circle cx="320" cy="450" r="12" fill="url(#purple)" filter="url(#glow)"/>
+
+    <rect x="440" y="180" width="200" height="280" rx="12" fill="#1c1917" stroke="url(#purple)" stroke-width="2"/>
+    <text x="540" y="210" font-family="Arial, sans-serif" font-size="14" fill="#a78bfa" text-anchor="middle" font-weight="bold">SELF-ATTENTION</text>
+    <rect x="460" y="230" width="70" height="70" rx="4" fill="#8b5cf6" opacity="0.3"/>
+    <rect x="535" y="230" width="70" height="70" rx="4" fill="#8b5cf6" opacity="0.6"/>
+    <rect x="460" y="305" width="70" height="70" rx="4" fill="#8b5cf6" opacity="0.8"/>
+    <rect x="535" y="305" width="70" height="70" rx="4" fill="#8b5cf6" opacity="0.5"/>
+    <rect x="460" y="380" width="160" height="40" rx="6" fill="#f97316" opacity="0.4"/>
+    <text x="540" y="405" font-family="Arial, sans-serif" font-size="11" fill="#fb923c" text-anchor="middle">FFN + OUTPUT</text>
+
+    <rect x="700" y="160" width="160" height="320" rx="12" fill="none" stroke="url(#cyan)" stroke-width="2"/>
+    <line x1="700" y1="224" x2="860" y2="224" stroke="url(#cyan)" stroke-width="1" opacity="0.5"/>
+    <line x1="700" y1="288" x2="860" y2="288" stroke="url(#cyan)" stroke-width="1" opacity="0.5"/>
+    <line x1="700" y1="352" x2="860" y2="352" stroke="url(#cyan)" stroke-width="1" opacity="0.5"/>
+    <line x1="700" y1="416" x2="860" y2="416" stroke="url(#cyan)" stroke-width="1" opacity="0.5"/>
+    <text x="780" y="200" font-family="Arial, sans-serif" font-size="12" fill="#22d3ee" text-anchor="middle">Layer N</text>
+  </g>
+
+  <text x="100" y="520" font-family="Arial, sans-serif" font-size="14" fill="#06b6d4" text-anchor="middle" opacity="0.8">SLM</text>
+  <text x="180" y="540" font-family="Arial, sans-serif" font-size="14" fill="#06b6d4" text-anchor="middle" opacity="0.8">NLM</text>
+  <text x="320" y="520" font-family="Arial, sans-serif" font-size="14" fill="#8b5cf6" text-anchor="middle" opacity="0.8">PLM</text>
+  <text x="540" y="540" font-family="Arial, sans-serif" font-size="14" fill="#8b5cf6" text-anchor="middle" font-weight="bold">LLM</text>
+
+  <g transform="translate(900, 150)">
+    <circle cx="50" cy="50" r="60" fill="none" stroke="url(#purple)" stroke-width="1" opacity="0.3"/>
+    <circle cx="50" cy="50" r="80" fill="none" stroke="url(#cyan)" stroke-width="1" opacity="0.2"/>
+    <text x="50" y="120" font-family="Arial, sans-serif" font-size="11" fill="#a78bfa" opacity="0.7">GPT</text>
+    <text x="50" y="140" font-family="Arial, sans-serif" font-size="11" fill="#a78bfa" opacity="0.7">BERT</text>
+    <text x="50" y="160" font-family="Arial, sans-serif" font-size="11" fill="#a78bfa" opacity="0.7">PaLM</text>
+    <text x="50" y="180" font-family="Arial, sans-serif" font-size="11" fill="#22d3ee" opacity="0.7">ChatGPT</text>
+  </g>
+
+  <text x="600" y="590" font-family="Arial, sans-serif" font-size="11" fill="#6b7280" text-anchor="middle">Zhao et al., arXiv 2023</text>
+</svg>
