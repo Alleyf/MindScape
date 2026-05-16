@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useState, useEffect, useMemo, useRef } from 'react';
+import { Sprout, Compass } from 'lucide-react';
 import { ParticleField } from './components/ParticleField';
 import { MouseGlow } from './components/MouseGlow';
 import { NoteCard } from './components/NoteCard';
@@ -634,6 +635,7 @@ function NotesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const tags = useMemo(() => getAllTags(notes), [notes]);
   const [viewMode, setViewMode] = useState<'grid' | 'timeline'>('grid');
+  const [expandedDirs, setExpandedDirs] = useState<Set<string>>(new Set());
 
   const selectedTags = useMemo(() => {
     const raw = searchParams.get('tags');
@@ -641,6 +643,27 @@ function NotesPage() {
   }, [searchParams]);
 
   const hasFilter = selectedTags.length > 0;
+
+  // 按目录分组标签
+  const tagGroups = useMemo(() => {
+    const dirMap = new Map<string, string[]>();
+    notes.forEach(note => {
+      const dir = note.directory;
+      note.tags.forEach(tag => {
+        if (!dirMap.has(dir)) dirMap.set(dir, []);
+        if (!dirMap.get(dir)!.includes(tag)) {
+          dirMap.get(dir)!.push(tag);
+        }
+      });
+    });
+    return Array.from(dirMap.entries())
+      .map(([dir, dirTags]) => ({
+        id: dir,
+        label: dir,
+        tags: dirTags.sort((a, b) => a.localeCompare(b, 'zh-CN')),
+      }))
+      .sort((a, b) => a.id.localeCompare(b.id, 'zh-CN'));
+  }, [notes]);
 
   const filteredNotes = useMemo(() => {
     if (!hasFilter) return notes;
@@ -660,6 +683,15 @@ function NotesPage() {
 
   const clearFilter = () => setSearchParams({});
 
+  const toggleDir = (dir: string) => {
+    setExpandedDirs(prev => {
+      const next = new Set(prev);
+      if (next.has(dir)) next.delete(dir);
+      else next.add(dir);
+      return next;
+    });
+  };
+
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
@@ -677,27 +709,8 @@ function NotesPage() {
         </p>
 
         <div className="mb-10">
-          <div className="flex items-center justify-between gap-4 mb-5">
-            <div className="flex items-center gap-3 flex-wrap">
-              <h2 className="text-base font-semibold theme-text whitespace-nowrap">标签筛选</h2>
-              <div className="notes-filter-tags">
-                {tags.map((tag) => {
-                  const count = notes.filter((note) => note.tags.includes(tag)).length;
-                  const active = selectedTags.includes(tag);
-                  return (
-                    <button
-                      key={tag}
-                      type="button"
-                      onClick={() => toggleTag(tag)}
-                      className={active ? 'notes-filter-tag notes-filter-tag-active' : 'notes-filter-tag'}
-                    >
-                      #{tag}
-                      <span>{count}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <h2 className="text-base font-semibold theme-text whitespace-nowrap">标签筛选</h2>
             <div className="flex items-center gap-2 shrink-0">
               {hasFilter && (
                 <button
@@ -731,6 +744,63 @@ function NotesPage() {
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Grouped tags by directory */}
+          <div className="space-y-3">
+            {tagGroups.map((group) => {
+              const isExpanded = expandedDirs.has(group.id);
+              const count = (tag: string) => notes.filter(n => n.tags.includes(tag)).length;
+              const active = group.tags.filter(t => selectedTags.includes(t)).length;
+
+              return (
+                <div key={group.id} className="glass-card p-3">
+                  <button
+                    type="button"
+                    onClick={() => toggleDir(group.id)}
+                    className="flex items-center justify-between w-full mb-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium theme-text">{group.label}</span>
+                      {active > 0 && (
+                        <span className="px-1.5 py-0.5 text-xs rounded bg-nebula-accent/20 text-nebula-accent">
+                          {active}
+                        </span>
+                      )}
+                    </div>
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="14"
+                      height="14"
+                      className={`theme-subtle transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                    >
+                      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    </svg>
+                  </button>
+                  <div className="flex flex-wrap gap-1.5">
+                    {(isExpanded ? group.tags : group.tags.slice(0, 6)).map((tag) => {
+                      const isActive = selectedTags.includes(tag);
+                      return (
+                        <button
+                          key={tag}
+                          type="button"
+                          onClick={() => toggleTag(tag)}
+                          className={isActive ? 'notes-filter-tag notes-filter-tag-active' : 'notes-filter-tag'}
+                        >
+                          #{tag}
+                          <span>{count(tag)}</span>
+                        </button>
+                      );
+                    })}
+                    {!isExpanded && group.tags.length > 6 && (
+                      <span className="text-xs theme-subtle self-center">
+                        +{group.tags.length - 6} 更多
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -806,23 +876,29 @@ function NotesPage() {
 function TagsPage() {
   const notes = getNotes();
   const tags = useMemo(() => getAllTags(notes), [notes]);
-  const [activeTab, setActiveTab] = useState('all');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [expandedDirs, setExpandedDirs] = useState<Set<string>>(new Set());
 
-  const tagGroups = useMemo(() => [
-    { id: 'all', label: '全部', match: () => true },
-    { id: 'tech', label: '技术', match: (t: string) => ['React', 'CSS', 'JavaScript', 'TypeScript', 'AI', 'AI编程', '工具', 'Vite', '前端', '教程', 'workflow', '后端', 'Node'].includes(t) },
-    { id: 'thinking', label: '思维', match: (t: string) => ['思维模型', '哲学', '创造力', '方法论', '未来'].includes(t) },
-    { id: 'growth', label: '成长', match: (t: string) => ['生产力', '心理学', '自我管理', '个人成长', '知识管理', '阅读'].includes(t) },
-    { id: 'life', label: '生活', match: (t: string) => ['内向者', '自我接纳', '生活方式', '设计'].includes(t) },
-  ], []);
-
-  const filteredTags = useMemo(() => {
-    if (activeTab === 'all') return tags;
-    const group = tagGroups.find(g => g.id === activeTab);
-    if (!group) return [];
-    return tags.filter(group.match);
-  }, [tags, activeTab, tagGroups]);
+  // 按目录分组标签
+  const tagGroups = useMemo(() => {
+    const dirMap = new Map<string, string[]>();
+    notes.forEach(note => {
+      const dir = note.directory;
+      note.tags.forEach(tag => {
+        if (!dirMap.has(dir)) dirMap.set(dir, []);
+        if (!dirMap.get(dir)!.includes(tag)) {
+          dirMap.get(dir)!.push(tag);
+        }
+      });
+    });
+    return Array.from(dirMap.entries())
+      .map(([dir, dirTags]) => ({
+        id: dir,
+        label: dir,
+        tags: dirTags.sort((a, b) => a.localeCompare(b, 'zh-CN')),
+      }))
+      .sort((a, b) => a.id.localeCompare(b.id, 'zh-CN'));
+  }, [notes]);
 
   const tagCounts = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -841,6 +917,22 @@ function TagsPage() {
     setSelectedTag(prev => prev === tag ? null : tag);
   };
 
+  const toggleDir = (dir: string) => {
+    setExpandedDirs(prev => {
+      const next = new Set(prev);
+      if (next.has(dir)) next.delete(dir);
+      else next.add(dir);
+      return next;
+    });
+  };
+
+  // 默认展开第一个目录
+  useEffect(() => {
+    if (tagGroups.length > 0 && expandedDirs.size === 0) {
+      setExpandedDirs(new Set([tagGroups[0].id]));
+    }
+  }, [tagGroups, expandedDirs.size]);
+
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
       <div className="max-w-5xl mx-auto">
@@ -852,22 +944,8 @@ function TagsPage() {
           标签分类
         </motion.h1>
         <p className="theme-muted mb-8 text-lg">
-          按主题浏览 {notes.length} 篇笔记中的 {tags.length} 个标签。
+          按目录浏览 {notes.length} 篇笔记中的 {tags.length} 个标签。
         </p>
-
-        {/* Category tabs */}
-        <div className="tag-tabs">
-          {tagGroups.map((group) => (
-            <button
-              key={group.id}
-              type="button"
-              onClick={() => { setActiveTab(group.id); setSelectedTag(null); }}
-              className={activeTab === group.id ? 'tag-tab tag-tab-active' : 'tag-tab'}
-            >
-              {group.label}
-            </button>
-          ))}
-        </div>
 
         {/* Selected tag result */}
         {selectedTag ? (
@@ -899,34 +977,68 @@ function TagsPage() {
             </div>
           </motion.div>
         ) : (
-          /* Tag cloud */
+          /* Grouped tags by directory */
           <motion.div
-            key={activeTab}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
-            className="tag-cloud"
+            className="space-y-6"
           >
-            {filteredTags.length === 0 ? (
-              <p className="theme-muted text-center py-16">暂无此分类的标签</p>
-            ) : (
-              filteredTags.map((tag) => {
-                const freq = tagCounts[tag] / maxCount;
-                const size = 0.8 + freq * 0.5; // 0.8rem to 1.3rem
-                return (
+            {tagGroups.map((group) => {
+              const isExpanded = expandedDirs.has(group.id);
+              const visibleTags = isExpanded ? group.tags : group.tags.slice(0, 5);
+              const hasMore = group.tags.length > 5;
+
+              return (
+                <div key={group.id} className="glass-card p-5">
                   <button
-                    key={tag}
                     type="button"
-                    onClick={() => handleTagClick(tag)}
-                    className="tag-cloud-chip"
-                    style={{ fontSize: `${size}rem` }}
+                    onClick={() => toggleDir(group.id)}
+                    className="flex items-center justify-between w-full mb-3 group"
                   >
-                    #{tag}
-                    <span className="tag-cloud-count">{tagCounts[tag]}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-semibold theme-text">{group.label}</span>
+                      <span className="text-xs theme-subtle">({group.tags.length})</span>
+                    </div>
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="18"
+                      height="18"
+                      className={`theme-subtle transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                    >
+                      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    </svg>
                   </button>
-                );
-              })
-            )}
+                  <div className="flex flex-wrap gap-2">
+                    {visibleTags.map((tag) => {
+                      const freq = tagCounts[tag] / maxCount;
+                      const size = 0.85 + freq * 0.35;
+                      return (
+                        <button
+                          key={tag}
+                          type="button"
+                          onClick={() => handleTagClick(tag)}
+                          className="tag-cloud-chip"
+                          style={{ fontSize: `${size}rem` }}
+                        >
+                          #{tag}
+                          <span className="tag-cloud-count">{tagCounts[tag]}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {hasMore && (
+                    <button
+                      type="button"
+                      onClick={() => toggleDir(group.id)}
+                      className="mt-3 text-sm text-nebula-accent hover:underline"
+                    >
+                      {isExpanded ? '收起' : `展开更多 (${group.tags.length - 5})`}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </motion.div>
         )}
       </div>
@@ -1182,7 +1294,7 @@ function NotePage() {
         >
           <div className="flex flex-wrap gap-3 mb-6">
             {note.tags.map(tag => (
-              <span 
+              <span
                 key={tag}
                 className="tag-pill"
               >
@@ -1824,7 +1936,7 @@ function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
           <section className="glass-card p-8">
             <div className="flex items-center gap-3 mb-5">
-              <span className="text-xl">🌱</span>
+              <Sprout className="w-6 h-6 text-nebula-accent" />
               <h2 className="text-2xl font-bold theme-text">这里记录什么</h2>
             </div>
             <div className="space-y-4 theme-muted leading-relaxed">
@@ -1835,7 +1947,7 @@ function AboutPage() {
 
           <section className="glass-card p-8">
             <div className="flex items-center gap-3 mb-5">
-              <span className="text-xl">🧭</span>
+              <Compass className="w-6 h-6 text-nebula-accent" />
               <h2 className="text-2xl font-bold theme-text">如何浏览</h2>
             </div>
             <ul className="space-y-3 theme-muted leading-relaxed">

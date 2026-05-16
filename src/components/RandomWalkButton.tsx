@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
+import { Sparkles, Star } from 'lucide-react';
 
 interface RandomWalkButtonProps {
   onClick: () => void;
@@ -27,14 +28,14 @@ export function RandomWalkButton({ onClick, disabled }: RandomWalkButtonProps) {
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
         >
-          ✨
+          <Sparkles className="w-5 h-5" />
         </motion.span>
         随机漫步
         <motion.span
           animate={{ rotate: [0, -360] }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
         >
-          🌟
+          <Star className="w-5 h-5" />
         </motion.span>
       </span>
       

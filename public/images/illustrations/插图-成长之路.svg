@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="pathGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#a78bfa" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="350" fill="url(#bg2)"/>
+
+  <!-- Stars background -->
+  <g fill="#94a3b8" opacity="0.4">
+    <circle cx="100" cy="50" r="1.5"/>
+    <circle cx="200" cy="80" r="1"/>
+    <circle cx="350" cy="40" r="1.5"/>
+    <circle cx="500" cy="90" r="1"/>
+    <circle cx="650" cy="60" r="1.5"/>
+    <circle cx="750" cy="100" r="1"/>
+    <circle cx="50" cy="120" r="1"/>
+    <circle cx="700" cy="150" r="1.5"/>
+  </g>
+
+  <!-- Horizon glow -->
+  <ellipse cx="400" cy="320" rx="350" ry="80" fill="#6366f1" opacity="0.1"/>
+
+  <!-- Winding path -->
+  <path d="M50 300
+           Q150 280 200 250
+           Q280 200 350 220
+           Q450 250 500 200
+           Q580 130 650 150
+           Q720 170 750 100"
+        stroke="url(#pathGrad)"
+        stroke-width="40"
+        fill="none"
+        stroke-linecap="round"/>
+
+  <!-- Path center line -->
+  <path d="M50 300
+           Q150 280 200 250
+           Q280 200 350 220
+           Q450 250 500 200
+           Q580 130 650 150
+           Q720 170 750 100"
+        stroke="#475569"
+        stroke-width="2"
+        stroke-dasharray="8,8"
+        fill="none"
+        opacity="0.6"/>
+
+  <!-- Milestone markers -->
+  <g transform="translate(200, 250)">
+    <circle r="8" fill="#6366f1" filter="url(#glow2)"/>
+    <text y="25" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#94a3b8">起点</text>
+  </g>
+
+  <g transform="translate(350, 220)">
+    <circle r="6" fill="#7c3aed"/>
+    <circle r="3" fill="#a78bfa"/>
+  </g>
+
+  <g transform="translate(500, 200)">
+    <circle r="6" fill="#7c3aed"/>
+    <circle r="3" fill="#a78bfa"/>
+  </g>
+
+  <!-- Destination - person looking at stars -->
+  <g transform="translate(750, 100)">
+    <!-- Person -->
+    <circle r="6" fill="#a78bfa"/>
+    <path d="M-5 15 Q-8 0 0 -5 Q8 0 5 15" fill="#a78bfa"/>
+    <!-- Looking up -->
+    <path d="M0 -8 L0 -25 M-8 -18 L0 -25 L8 -18" stroke="#c4b5fd" stroke-width="1.5" fill="none"/>
+    <!-- Stars -->
+    <g fill="#fef08a" filter="url(#glow2)">
+      <circle cx="15" cy="-20" r="2"/>
+      <circle cx="25" cy="-30" r="1.5"/>
+      <circle cx="8" cy="-35" r="1"/>
+      <circle cx="35" cy="-18" r="1.5"/>
+    </g>
+  </g>
+
+  <!-- Labels -->
+  <text x="50" y="330" font-family="sans-serif" font-size="11" fill="#64748b">出发</text>
+  <text x="730" y="130" font-family="sans-serif" font-size="11" fill="#a78bfa">远方</text>
+
+  <!-- Quote -->
+  <text x="400" y="50" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#e2e8f0" font-style="italic">
+    "他们存在的意义，是让你成为那个能够驶向大海的人"
+  </text>
+</svg>

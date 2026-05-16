@@ -83,9 +83,12 @@ export function getNotes(): Note[] {
     const { data, content: body } = parseFrontMatter(content as string);
     const date = data.date || new Date().toISOString().split('T')[0];
     const excerpt = body.trim().slice(0, 150) + (body.length > 150 ? '...' : '');
-    
+
     // 优先使用 front matter 中指定的 cover，否则使用默认的 picsum.photos 随机图片
     const cover = data.cover?.trim() || defaultCoverUrlFromSlug(rawSlug);
+
+    // 从 slug 中提取目录名（如 "后端开发/Java常用新特性" -> "后端开发"）
+    const directory = rawSlug.includes('/') ? rawSlug.split('/')[0] : '根目录';
 
 
     notes.push({
@@ -95,17 +98,30 @@ export function getNotes(): Note[] {
       content: body.trim(),
       excerpt: data.description || excerpt,
       tags: Array.isArray(data.tags) ? data.tags : [],
+      directory,
       createdAt: date,
       updatedAt: date,
       mood: data.mood || '✨',
       personality: data.personality || '沉思者',
       aiSubtitle: data.aiSubtitle || '',
       cover,
+      priority: data.priority !== undefined ? Number(data.priority) : undefined,
     });
   });
 
-  // 按日期倒序排列
-  return notes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  // 按优先级升序（数值越小优先级越高），再按日期降序排列
+  return notes.sort((a, b) => {
+    const priorityA = a.priority ?? Infinity;
+    const priorityB = b.priority ?? Infinity;
+
+    // 先按优先级排序（priority 数值越小越靠前）
+    if (priorityA !== priorityB) {
+      return priorityA - priorityB;
+    }
+
+    // 优先级相同则按日期倒序
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 }
 
 export function getNoteBySlug(slug: string): Note | null {

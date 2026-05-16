@@ -5,6 +5,7 @@ tags: ["ai","coding","agent","workflow","tools","learning"]
 personality: "未来主义者"
 description: "一份面向 AI Coding 初学者和进阶实践者的工具、概念、工作模式与方法论网址合集"
 cover: "/images/covers/ms-4d38319c.svg"
+priority: 1
 ---
 
 # AI Coding 学习清单

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getNoteBySlug } from '../utils/noteLoader';
+import { WeChatCopyModal } from './wechat/WeChatCopyModal';
 
 function getScrollContainers(): Array<Window | HTMLElement> {
   return [
@@ -47,6 +48,7 @@ export function FloatingTools({ onOpenThemeDrawer }: FloatingToolsProps) {
   const [immersive, setImmersive] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [wechatModalOpen, setWechatModalOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
 
@@ -434,6 +436,12 @@ export function FloatingTools({ onOpenThemeDrawer }: FloatingToolsProps) {
                     <svg viewBox="0 0 24 24"><path d="M6 9V4h12v5M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v6H6v-6Z" /></svg>
                     <span>PDF</span>
                   </button>
+                  {currentNote && (
+                    <button type="button" onClick={() => { setWechatModalOpen(true); setMoreOpen(false); }} title="复制公众号格式">
+                      <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><rect x="8" y="2" width="8" height="4" rx="1" ry="1" /></svg>
+                      <span>公众号</span>
+                    </button>
+                  )}
                   <button type="button" onClick={() => { setImmersive(true); setMoreOpen(false); }} title="沉浸模式">
                     <svg viewBox="0 0 24 24"><path d="M21 16v-2a5 5 0 0 0-5-5H8a5 5 0 0 0-5 5v2M3 21h18M12 9V3m-3 3 3-3 3 3"/></svg>
                     <span>沉浸</span>
@@ -457,6 +465,15 @@ export function FloatingTools({ onOpenThemeDrawer }: FloatingToolsProps) {
         <button type="button" className="immersive-exit-btn" onClick={() => setImmersive(false)} title="退出沉浸模式 (Esc)" aria-label="退出沉浸模式">
           <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
         </button>
+      )}
+
+      {currentNote && (
+        <WeChatCopyModal
+          isOpen={wechatModalOpen}
+          onClose={() => setWechatModalOpen(false)}
+          markdown={currentNote.content}
+          title={currentNote.title}
+        />
       )}
     </>
   );

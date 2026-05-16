@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Sparkles, Link2, Tent, Bird, Compass, Sprout, Bot, Moon, Zap } from 'lucide-react';
 import { Note } from '../types';
 
 interface AIPanelProps {
@@ -48,21 +49,21 @@ export function AIPanel({ note, randomNote, relatedNotes = [], onRandomWalk }: A
                 onClick={() => setActiveTab('metaphor')}
                 className={`ai-tab ${activeTab === 'metaphor' ? 'ai-tab-active' : ''}`}
               >
-                🎭 隐喻
+                <Sparkles className="w-3.5 h-3.5" /> 隐喻
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('connections')}
                 className={`ai-tab ${activeTab === 'connections' ? 'ai-tab-active' : ''}`}
               >
-                🔗 联想
+                <Link2 className="w-3.5 h-3.5" /> 联想
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('personality')}
                 className={`ai-tab ${activeTab === 'personality' ? 'ai-tab-active' : ''}`}
               >
-                🎪 人格
+                <Tent className="w-3.5 h-3.5" /> 人格
               </button>
             </div>
 
@@ -84,10 +85,26 @@ export function AIPanel({ note, randomNote, relatedNotes = [], onRandomWalk }: A
                   <div className="pt-4 border-t border-white/10">
                     <p className="text-xs theme-subtle mb-2">情绪能量</p>
                     <div className="flex gap-2">
-                      <span className="ai-chip">
-                        {note.mood || '🌟'} 沉思
+                      <span className="ai-chip flex items-center gap-1">
+                        {note.mood ? (
+                          <>
+                            {note.mood === '✨' && <Sparkles className="w-3 h-3" />}
+                            {note.mood === '🌟' && <Sparkles className="w-3 h-3" />}
+                            {note.mood === '✦' && <Sparkles className="w-3 h-3" />}
+                            {note.mood === '🌙' && <Moon className="w-3 h-3" />}
+                            {note.mood === '🌱' && <Sprout className="w-3 h-3" />}
+                            {note.mood === '🌿' && <Sprout className="w-3 h-3" />}
+                            {note.mood === '🍂' && <Sprout className="w-3 h-3" />}
+                            {!['✨', '🌟', '✦', '🌙', '🌱', '🌿', '🍂'].includes(note.mood) && note.mood}
+                          </>
+                        ) : (
+                          <Sparkles className="w-3 h-3" />
+                        )}
+                        沉思
                       </span>
-                      <span className="ai-chip">⚡ 高能量</span>
+                      <span className="ai-chip flex items-center gap-1">
+                        <Zap className="w-3 h-3" /> 高能量
+                      </span>
                     </div>
                   </div>
                 </motion.div>
@@ -139,15 +156,15 @@ export function AIPanel({ note, randomNote, relatedNotes = [], onRandomWalk }: A
                   <h4 className="text-nebula-accent font-medium mb-3 text-sm">笔记人格</h4>
                   <div className="text-center py-4">
                     <motion.div
-                      className="text-5xl mb-3"
+                      className="mb-3 flex justify-center"
                       animate={{ rotate: [0, 10, -10, 0] }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
-                      {note.personality === '沉思者' && '🦉'}
-                      {note.personality === '引路人' && '🧭'}
-                      {note.personality === '园丁' && '🌱'}
-                      {note.personality === '未来主义者' && '🤖'}
-                      {note.personality === '陪伴者' && '🌙'}
+                      {note.personality === '沉思者' && <Bird className="w-12 h-12 text-nebula-accent" />}
+                      {note.personality === '引路人' && <Compass className="w-12 h-12 text-nebula-accent" />}
+                      {note.personality === '园丁' && <Sprout className="w-12 h-12 text-nebula-accent" />}
+                      {note.personality === '未来主义者' && <Bot className="w-12 h-12 text-nebula-accent" />}
+                      {note.personality === '陪伴者' && <Moon className="w-12 h-12 text-nebula-accent" />}
                     </motion.div>
                     <p className="text-lg font-bold gradient-text">{note.personality}</p>
                     <p className="text-xs theme-subtle mt-2">

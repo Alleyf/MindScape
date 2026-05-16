@@ -5,12 +5,14 @@ export interface Note {
   content: string;
   excerpt?: string;
   tags: string[];
+  directory: string;
   createdAt: string;
   updatedAt: string;
   mood?: string;
   personality?: string;
   aiSubtitle?: string;
   cover?: string;
+  priority?: number;
 }
 
 export interface NoteFrontmatter {
@@ -22,4 +24,5 @@ export interface NoteFrontmatter {
   personality?: string;
   description?: string;
   cover?: string;
+  priority?: number;
 }

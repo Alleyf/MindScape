@@ -35,8 +35,11 @@ date: "2026-01-25"
 tags: ["react", "hooks"]
 personality: "沉思者"   # optional, defaults to "沉思者"
 description: "Short desc" # optional
+priority: 1              # optional, controls sort order (lower = higher priority)
 ---
 ```
+
+**Priority field**: Controls sort order in lists. Lower numbers appear first. Notes without `priority` are sorted by date (Infinity = lowest priority). Notes with `priority < 10` show a "置顶" badge on cards.
 
 ### Theme system
 Dark mode is default. Light mode toggled via `light-theme` class on `<html>`. All colors are CSS custom properties (`--text-primary`, `--text-muted`, `--surface`, etc.). **Never use hardcoded hex colors in components** — always use `var(--*)` so light/dark themes work.

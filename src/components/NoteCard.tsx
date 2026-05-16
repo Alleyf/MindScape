@@ -1,7 +1,18 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Sparkles, Star, Moon, Sprout, Leaf, Pin } from 'lucide-react';
 import { Note } from '../types';
 import { NoteCoverImage } from './NoteCoverImage';
+
+const moodIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+  '✨': Sparkles,
+  '🌟': Star,
+  '✦': Sparkles,
+  '🌙': Moon,
+  '🌱': Sprout,
+  '🌿': Sprout,
+  '🍂': Leaf,
+};
 
 interface NoteCardProps {
   note: Note;
@@ -37,9 +48,24 @@ export function NoteCard({ note, index }: NoteCardProps) {
       {/* Animated gradient background on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-nebula-purple/0 via-nebula-blue/0 to-nebula-accent/0 group-hover:from-nebula-purple/20 group-hover:via-nebula-blue/20 group-hover:to-nebula-accent/20 transition-all duration-500" />
 
-      {note.mood && (
-        <div className="absolute top-4 right-4 text-2xl animate-float z-20 pointer-events-none">
-          {note.mood}
+      {note.mood && (() => {
+        const MoodIcon = moodIcons[note.mood];
+        return MoodIcon ? (
+          <div className="absolute top-4 right-4 animate-float z-20 pointer-events-none text-nebula-accent">
+            <MoodIcon className="w-6 h-6" />
+          </div>
+        ) : (
+          <div className="absolute top-4 right-4 text-2xl animate-float z-20 pointer-events-none">
+            {note.mood}
+          </div>
+        );
+      })()}
+
+      {note.priority !== undefined && note.priority < 10 && (
+        <div className="absolute top-4 left-4 z-20">
+          <span className="w-7 h-7 rounded-full bg-nebula-accent/90 flex items-center justify-center shadow-lg" title="置顶">
+            <Sparkles className="w-4 h-4 text-white" />
+          </span>
         </div>
       )}
 
@@ -53,8 +79,9 @@ export function NoteCard({ note, index }: NoteCardProps) {
 
         <div className="p-6">
           {note.aiSubtitle && (
-            <p className="text-sm text-nebula-accent mb-2 font-medium tracking-wide">
-              ✦ {note.aiSubtitle}
+            <p className="text-sm text-nebula-accent mb-2 font-medium tracking-wide flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              {note.aiSubtitle}
             </p>
           )}
 

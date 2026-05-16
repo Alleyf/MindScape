@@ -1,6 +1,7 @@
 // AI Summary Panel Component
 
 import { motion } from 'framer-motion';
+import { Bot, RefreshCw, Lightbulb } from 'lucide-react';
 import { Note } from '../types';
 import { useGenerateSummary } from '../hooks/useAI';
 
@@ -16,7 +17,7 @@ export function AISummaryPanel({ note }: AISummaryPanelProps) {
     return (
       <div className="ai-summary-panel ai-summary-unconfigured">
         <div className="ai-summary-header">
-          <span className="ai-summary-icon">🤖</span>
+          <span className="ai-summary-icon"><Bot className="w-5 h-5" /></span>
           <span className="ai-summary-title">AI 摘要</span>
         </div>
         <p className="ai-summary-message">
@@ -34,7 +35,7 @@ export function AISummaryPanel({ note }: AISummaryPanelProps) {
     return (
       <div className="ai-summary-panel ai-summary-loading">
         <div className="ai-summary-header">
-          <span className="ai-summary-icon">🤖</span>
+          <span className="ai-summary-icon"><Bot className="w-5 h-5" /></span>
           <span className="ai-summary-title">AI 摘要</span>
           <span className="ai-summary-badge">生成中...</span>
         </div>
@@ -57,7 +58,7 @@ export function AISummaryPanel({ note }: AISummaryPanelProps) {
     return (
       <div className="ai-summary-panel ai-summary-error">
         <div className="ai-summary-header">
-          <span className="ai-summary-icon">🤖</span>
+          <span className="ai-summary-icon"><Bot className="w-5 h-5" /></span>
           <span className="ai-summary-title">AI 摘要</span>
         </div>
         <p className="ai-summary-error-message">{error}</p>
@@ -78,10 +79,10 @@ export function AISummaryPanel({ note }: AISummaryPanelProps) {
         transition={{ duration: 0.3 }}
       >
         <div className="ai-summary-header">
-          <span className="ai-summary-icon">🤖</span>
+          <span className="ai-summary-icon"><Bot className="w-5 h-5" /></span>
           <span className="ai-summary-title">AI 摘要</span>
           <button onClick={refresh} className="ai-summary-refresh" title="刷新摘要">
-            🔄
+            <RefreshCw className="w-4 h-4" />
           </button>
         </div>
 
@@ -104,7 +105,7 @@ export function AISummaryPanel({ note }: AISummaryPanelProps) {
 
         {summary.improvedTitle && summary.improvedTitle !== note.title && (
           <div className="ai-title-suggestion">
-            <span className="ai-title-label">💡 建议标题</span>
+            <span className="ai-title-label flex items-center gap-1"><Lightbulb className="w-3.5 h-3.5" /> 建议标题</span>
             <p className="ai-title-text">{summary.improvedTitle}</p>
           </div>
         )}
