@@ -106,6 +106,8 @@ export function getNotes(): Note[] {
       aiSubtitle: data.aiSubtitle || '',
       cover,
       priority: data.priority !== undefined ? Number(data.priority) : undefined,
+      locked: data.locked === true || data.locked === 'true',
+      unlockKey: data.unlockKey || 'Cephalosporan',
     });
   });
 

@@ -49,7 +49,9 @@ export function FloatingTools({ onOpenThemeDrawer }: FloatingToolsProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [wechatModalOpen, setWechatModalOpen] = useState(false);
+  const [autoImmersive, setAutoImmersive] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
+  const idleTimerRef = useRef<number | null>(null);
   const { pathname } = useLocation();
 
   const currentNote = useMemo(() => {
@@ -107,6 +109,92 @@ export function FloatingTools({ onOpenThemeDrawer }: FloatingToolsProps) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [immersive]);
+
+  // Auto immersive mode: enter when mouse idle in content area, exit when mouse leaves or clicks
+  useEffect(() => {
+    let idleTimer: ReturnType<typeof setTimeout> | null = null;
+    let isMouseInContent = false;
+
+    const clearIdleTimer = () => {
+      if (idleTimer !== null) {
+        window.clearTimeout(idleTimer);
+        idleTimer = null;
+      }
+    };
+
+    const startIdleTimer = () => {
+      if (!autoImmersive) return;
+      clearIdleTimer();
+      // Start 5 second timer to enter immersive mode
+      idleTimer = window.setTimeout(() => {
+        if (isMouseInContent) {
+          setImmersive(true);
+        }
+      }, 5000);
+    };
+
+    const handleMouseEnter = (e: MouseEvent) => {
+      // Check if entering the markdown content area
+      const target = e.target as HTMLElement;
+      if (target.closest?.('.markdown-content') || target.closest?.('.note-content')) {
+        isMouseInContent = true;
+        startIdleTimer();
+      }
+    };
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest?.('.markdown-content') || target.closest?.('.note-content')) {
+        isMouseInContent = false;
+        clearIdleTimer();
+        // Exit immersive mode when mouse leaves content area
+        if (immersive) {
+          setImmersive(false);
+        }
+      }
+    };
+
+    const handleMouseDown = () => {
+      // Exit immersive mode on any mouse click
+      if (autoImmersive && immersive) {
+        setImmersive(false);
+        isMouseInContent = false;
+        clearIdleTimer();
+      }
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      // Track if mouse is over content area during movement
+      const target = e.target as HTMLElement;
+      const isOverContent = target.closest?.('.markdown-content') || target.closest?.('.note-content');
+      isMouseInContent = !!isOverContent;
+
+      if (!isMouseInContent && immersive) {
+        // Mouse moved outside content area while in immersive mode
+        setImmersive(false);
+        clearIdleTimer();
+      }
+    };
+
+    if (!autoImmersive) {
+      // If auto immersive is disabled, just clean up
+      clearIdleTimer();
+      return;
+    }
+
+    document.addEventListener('mouseenter', handleMouseEnter);
+    document.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      document.removeEventListener('mouseenter', handleMouseEnter);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mousemove', handleMouseMove);
+      clearIdleTimer();
+    };
+  }, [autoImmersive, immersive]);
 
   useEffect(() => {
     if (!moreOpen) return;
@@ -445,6 +533,17 @@ export function FloatingTools({ onOpenThemeDrawer }: FloatingToolsProps) {
                   <button type="button" onClick={() => { setImmersive(true); setMoreOpen(false); }} title="沉浸模式">
                     <svg viewBox="0 0 24 24"><path d="M21 16v-2a5 5 0 0 0-5-5H8a5 5 0 0 0-5 5v2M3 21h18M12 9V3m-3 3 3-3 3 3"/></svg>
                     <span>沉浸</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setAutoImmersive(v => !v); setMoreOpen(false); }}
+                    className={autoImmersive ? 'active' : ''}
+                    title="自动沉浸"
+                  >
+                    <svg viewBox="0 0 24 24" fill={autoImmersive ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                      <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{autoImmersive ? '自动沉浸 ✓' : '自动沉浸'}</span>
                   </button>
                 </>
               )}

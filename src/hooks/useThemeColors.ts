@@ -54,6 +54,20 @@ export function useThemeColors() {
   const [lightColors, setLightColors] = useState<ThemeColors>(() => loadColorsFromStorage(true));
   const [isLight, setIsLight] = useState(() => document.documentElement.classList.contains('light-theme'));
 
+  const toggleTheme = useCallback(() => {
+    setIsLight(prev => {
+      const newValue = !prev;
+      if (newValue) {
+        document.documentElement.classList.add('light-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark');
+      }
+      return newValue;
+    });
+  }, []);
+
   // Apply colors to CSS variables
   useEffect(() => {
     const colors = isLight ? lightColors : darkColors;
@@ -110,6 +124,7 @@ export function useThemeColors() {
     lightColors,
     currentColors,
     isLight,
+    toggleTheme,
     updateDarkColors,
     updateLightColors,
     updateColors,

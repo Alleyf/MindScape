@@ -13,6 +13,8 @@ export interface Note {
   aiSubtitle?: string;
   cover?: string;
   priority?: number;
+  locked?: boolean;
+  unlockKey?: string;
 }
 
 export interface NoteFrontmatter {
@@ -25,4 +27,6 @@ export interface NoteFrontmatter {
   description?: string;
   cover?: string;
   priority?: number;
+  locked?: boolean;
+  unlockKey?: string;
 }

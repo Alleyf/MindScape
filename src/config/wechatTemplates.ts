@@ -16,7 +16,7 @@ export const weChatTemplates: WeChatTemplate[] = [
     description: '博客默认样式',
     accentColor: '#6366f1',
     fontSize: '16px',
-    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+    fontFamily: '"PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif',
   },
   {
     id: 'zhihu',
@@ -24,7 +24,7 @@ export const weChatTemplates: WeChatTemplate[] = [
     description: '知乎风格',
     accentColor: '#1777f2',
     fontSize: '15px',
-    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+    fontFamily: '"PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif',
   },
   {
     id: 'github',
@@ -32,7 +32,7 @@ export const weChatTemplates: WeChatTemplate[] = [
     description: 'GitHub 风格',
     accentColor: '#24292e',
     fontSize: '14px',
-    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
   },
   {
     id: 'wechat',
@@ -40,7 +40,7 @@ export const weChatTemplates: WeChatTemplate[] = [
     description: '微信公众号纯色',
     accentColor: '#07c160',
     fontSize: '15px',
-    fontFamily: 'sans-serif',
+    fontFamily: '"Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif',
   },
   {
     id: 'minimal',
@@ -48,7 +48,7 @@ export const weChatTemplates: WeChatTemplate[] = [
     description: '极简风格',
     accentColor: '#333333',
     fontSize: '14px',
-    fontFamily: 'sans-serif',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif',
   },
 ];
 

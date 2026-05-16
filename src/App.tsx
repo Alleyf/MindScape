@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { Sprout, Compass } from 'lucide-react';
 import { ParticleField } from './components/ParticleField';
 import { MouseGlow } from './components/MouseGlow';
@@ -15,6 +15,8 @@ import { NoteGraph } from './components/NoteGraph';
 import { NoteGraphSidebar } from './components/NoteGraphSidebar';
 import { FloatingTools } from './components/FloatingTools';
 import { ThemeDrawer } from './components/ThemeDrawer';
+import { ContentUnlockOverlay } from './components/ContentUnlockOverlay';
+import { useUnlock } from './hooks/useUnlock';
 import { getNotes, getNoteBySlug, getRandomNote, defaultCoverUrlFromSlug } from './utils/noteLoader';
 import type { Note } from './types';
 import { RESOURCE_CATEGORIES, LEARNING_ROUTES, MICROLINK_API_URL, FAVICON_YANDEX_URL } from './config/resources';
@@ -520,26 +522,27 @@ function HomePage() {
 
           <div className="home-feature-grid">
             {featuredNote && (
-              <motion.article
-                className="home-feature-note"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <div className="home-feature-top">
-                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-                  <span>{formatDateTime(featuredNote.createdAt)}</span>
-                  <span>{featuredNote.personality}</span>
-                </div>
-                <h3>{featuredNote.title}</h3>
-                <p>{featuredNote.excerpt}</p>
-                <div className="home-feature-tags">
-                  {featuredNote.tags.slice(0, 6).map((tag) => (
-                    <span key={tag}>#{tag}</span>
-                  ))}
-                </div>
-                <Link to={`/note/${featuredNote.slug}`} className="home-feature-link">打开这篇笔记</Link>
-              </motion.article>
+              <Link to={`/note/${featuredNote.slug}`} className="block">
+                <motion.article
+                  className="home-feature-note"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="home-feature-top">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                    <span>{formatDateTime(featuredNote.createdAt)}</span>
+                    <span>{featuredNote.personality}</span>
+                  </div>
+                  <h3>{featuredNote.title}</h3>
+                  <p>{featuredNote.excerpt}</p>
+                  <div className="home-feature-tags">
+                    {featuredNote.tags.slice(0, 6).map((tag) => (
+                      <span key={tag}>#{tag}</span>
+                    ))}
+                  </div>
+                </motion.article>
+              </Link>
             )}
 
             <div className="home-note-stack">
@@ -1170,6 +1173,97 @@ function NotePage() {
   const relatedNotes = useMemo(() => (note ? getRelatedNotes(note, allNotes, 4) : []), [note, allNotes]);
   const [activeHeadingId, setActiveHeadingId] = useState<string>('');
 
+  // Unlock state management - global unlock
+  // 默认都需要解锁，只有 locked: false 才不需要
+  const { isUnlocked, unlock } = useUnlock();
+  const noteIsUnlocked = isUnlocked();
+  const noteNeedsUnlock = note?.locked !== false;
+
+  // Progressive lock: show overlay when user tries to access locked content
+  const [showUnlockOverlay, setShowUnlockOverlay] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  // Calculate 5% preview content for locked notes
+  const { previewContent, lockedContentStart } = useMemo(() => {
+    if (!note || !noteNeedsUnlock) return { previewContent: '', lockedContentStart: 0 };
+    const totalLength = note.content.length;
+    const previewLength = Math.floor(totalLength * 0.05);
+    // Find a good break point (paragraph or heading)
+    const preview = note.content.slice(0, previewLength);
+    const lastNewline = preview.lastIndexOf('\n');
+    const lastHeading = preview.lastIndexOf('\n\n');
+    const breakPoint = Math.max(lastNewline, lastHeading, previewLength - 200);
+    return {
+      previewContent: note.content.slice(0, breakPoint),
+      lockedContentStart: breakPoint
+    };
+  }, [note, noteNeedsUnlock]);
+
+  // Check if TOC heading is in locked content
+  const isHeadingInLockedContent = useCallback((headingText: string): boolean => {
+    if (!noteNeedsUnlock) return false;
+    const headingIndex = note.content.indexOf(headingText);
+    return headingIndex >= lockedContentStart;
+  }, [note, noteNeedsUnlock, lockedContentStart]);
+
+  // Monitor sentinel element to trigger unlock overlay
+  useEffect(() => {
+    if (!noteNeedsUnlock || noteIsUnlocked || !sentinelRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // User scrolled to or past the sentinel - show unlock overlay
+            setShowUnlockOverlay(true);
+          }
+        });
+      },
+      { threshold: 0, rootMargin: '0px' }
+    );
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [noteNeedsUnlock, noteIsUnlocked]);
+
+  // Handle TOC click - check if heading is in locked content
+  useEffect(() => {
+    if (!noteNeedsUnlock || noteIsUnlocked) return;
+
+    const handleTOCClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const tocLink = target.closest('a');
+      if (!tocLink) return;
+
+      const href = tocLink.getAttribute('href');
+      if (!href) return;
+
+      const headingId = href.replace('#', '');
+      const headingEl = document.getElementById(headingId);
+      if (!headingEl) return;
+
+      const headingText = headingEl.textContent || '';
+      if (isHeadingInLockedContent(headingText)) {
+        e.preventDefault();
+        e.stopPropagation();
+        setShowUnlockOverlay(true);
+      }
+    };
+
+    document.addEventListener('click', handleTOCClick, true);
+    return () => document.removeEventListener('click', handleTOCClick, true);
+  }, [noteNeedsUnlock, noteIsUnlocked, isHeadingInLockedContent]);
+
+  // Unlock handler
+  const handleUnlock = useCallback((key: string): boolean => {
+    if (!note) return false;
+    const success = unlock(key, note.unlockKey || 'Cephalosporan');
+    if (success) {
+      setShowUnlockOverlay(false);
+    }
+    return success;
+  }, [note, unlock]);
+
   // Scroll-spy: track which heading is visible via IntersectionObserver
   useEffect(() => {
     if (toc.length === 0) return;
@@ -1369,7 +1463,19 @@ function NotePage() {
           className="max-w-none"
         >
           <div className="glass-card p-6 md:p-8 rounded-2xl">
-            <MarkdownContent content={note.content} />
+            {noteNeedsUnlock && !noteIsUnlocked ? (
+              <>
+                {/* Show only preview for locked notes */}
+                <MarkdownContent content={previewContent} />
+                {/* Sentinel element to detect scroll past 5% */}
+                <div ref={sentinelRef} className="unlock-sentinel" />
+                {/* Fade overlay for locked content */}
+                <div className="unlock-content-fade" />
+              </>
+            ) : (
+              /* Full content for unlocked or non-locked notes */
+              <MarkdownContent content={note.content} />
+            )}
             <div className="note-content-footer">
               <div className="note-content-meta">
                 {note.updatedAt && (
@@ -1390,7 +1496,17 @@ function NotePage() {
             </div>
           </div>
         </motion.article>
-        
+
+        {/* Unlock overlay for locked notes */}
+        <ContentUnlockOverlay
+          isVisible={showUnlockOverlay}
+          isUnlocked={noteIsUnlocked}
+          onUnlock={handleUnlock}
+          onClose={() => setShowUnlockOverlay(false)}
+          articleTitle={note.title}
+          wechatQrCode="/images/wechat-qr.png"
+        />
+
         {references.length > 0 && (
           <section className="reference-section">
             <div className="reference-section-header">
@@ -2185,7 +2301,6 @@ function App() {
         <ThemeDrawer
           isOpen={themeDrawerOpen}
           onClose={() => setThemeDrawerOpen(false)}
-          onToggleTheme={() => {}}
         />
         <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
       </div>
