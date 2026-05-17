@@ -1,16 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">MindScape</title>
-  <defs>
-    <linearGradient id="g" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#D97757"/>
-      <stop offset="0.54" stop-color="#8F4F32"/>
-      <stop offset="1" stop-color="#6F7669"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="18" fill="#FAF9F5"/>
-  <circle cx="32" cy="32" r="23" fill="url(#g)"/>
-  <path d="M19 38c5-1.4 7.4-5.1 7.4-10.9 0-3.1 2.2-5.6 5.1-5.6 2.8 0 5 2.4 5 5.4 0 6.5 2.8 10.1 7.9 11.1" fill="none" stroke="#fffaf2" stroke-width="4.2" stroke-linecap="round"/>
-  <path d="M20 27c3.6-9 20.1-11.2 25.6-.7" fill="none" stroke="#fffaf2" stroke-opacity=".72" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="22" cy="39" r="3" fill="#fffaf2"/>
-  <circle cx="45" cy="39" r="3" fill="#fffaf2"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" aria-labelledby="title" role="img" viewBox="0 0 64 64"><title id="title">MindScape</title><defs><linearGradient id="g" x1="10" x2="54" y1="8" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#D97757"/><stop offset=".54" stop-color="#8F4F32"/><stop offset="1" stop-color="#6F7669"/></linearGradient></defs><rect width="64" height="64" fill="#FAF9F5" rx="18"/><circle cx="32" cy="32" r="23" fill="url(#g)"/><path fill="none" stroke="#fffaf2" stroke-linecap="round" stroke-width="4.2" d="M19 38c5-1.4 7.4-5.1 7.4-10.9 0-3.1 2.2-5.6 5.1-5.6 2.8 0 5 2.4 5 5.4 0 6.5 2.8 10.1 7.9 11.1"/><path fill="none" stroke="#fffaf2" stroke-linecap="round" stroke-opacity=".72" stroke-width="3" d="M20 27c3.6-9 20.1-11.2 25.6-.7"/><circle cx="22" cy="39" r="3" fill="#fffaf2"/><circle cx="45" cy="39" r="3" fill="#fffaf2"/></svg>
