@@ -211,9 +211,22 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
             li: ({node, ...props}) => (
               <li className="pl-2" {...props} />
             ),
-            blockquote: ({node, ...props}) => (
-              <blockquote className="border-l-4 border-pink-500 pl-4 italic my-4 bg-white/5 py-2 pr-4 rounded-r-lg" {...props} />
-            ),
+            blockquote: ({node, children, ...props}) => {
+              const text = toText(children);
+              const isSingleLine = !text.includes('\n');
+              return (
+                <blockquote
+                  className={`blockquote-styled${isSingleLine ? ' blockquote-single' : ''}`}
+                  {...props}
+                >
+                  {isSingleLine ? (
+                    <span className="blockquote-inline">{text}</span>
+                  ) : (
+                    children
+                  )}
+                </blockquote>
+              );
+            },
             code: ({node, ...props}) => (
               <code className="markdown-code" {...props} />
             ),

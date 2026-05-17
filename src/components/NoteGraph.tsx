@@ -92,14 +92,15 @@ export function NoteGraph({ notes }: NoteGraphProps) {
       .attr('d', 'M0,-5L10,0L0,5')
       .attr('fill', 'var(--border-soft)');
 
-    // Links
+    // Links with glow effect
     const link = g.append('g')
       .selectAll<SVGLineElement, GraphLink>('line')
       .data(links)
       .enter().append('line')
-      .attr('stroke', 'var(--border-soft)')
-      .attr('stroke-width', (d) => Math.min(d.strength * 1.5, 4))
-      .attr('opacity', (d) => Math.min(0.2 + d.strength * 0.15, 0.6));
+      .attr('stroke', 'var(--nebula-accent)')
+      .attr('stroke-width', (d) => Math.min(d.strength * 1.2, 3))
+      .attr('opacity', (d) => Math.min(0.15 + d.strength * 0.1, 0.5))
+      .attr('filter', 'blur(0.5px)');
 
     // Nodes
     const nodeGroup = g.append('g')
@@ -107,22 +108,52 @@ export function NoteGraph({ notes }: NoteGraphProps) {
       .data(nodes)
       .enter().append('g')
       .attr('cursor', 'pointer')
-      .on('click', (_event, d) => navigate(`/note/${d.id}`));
+      .on('click', (_event, d) => navigate(`/note/${d.id}`))
+      .on('mouseenter', function() {
+        d3Select(this).select('circle')
+          .transition().duration(200)
+          .attr('r', 12)
+          .attr('filter', 'drop-shadow(0 0 6px var(--nebula-accent))');
+        d3Select(this).select('text')
+          .transition().duration(200)
+          .attr('fill', 'var(--nebula-accent)')
+          .attr('font-weight', '600');
+      })
+      .on('mouseleave', function() {
+        d3Select(this).select('circle')
+          .transition().duration(200)
+          .attr('r', 8)
+          .attr('filter', null);
+        d3Select(this).select('text')
+          .transition().duration(200)
+          .attr('fill', 'var(--text-muted)')
+          .attr('font-weight', '400');
+      });
 
+    // Outer glow ring
+    nodeGroup.append('circle')
+      .attr('r', 14)
+      .attr('fill', 'none')
+      .attr('stroke', 'var(--nebula-accent)')
+      .attr('stroke-width', 1)
+      .attr('opacity', 0.15);
+
+    // Core node circle
     nodeGroup.append('circle')
       .attr('r', 8)
       .attr('fill', 'var(--nebula-accent)')
-      .attr('stroke', 'var(--surface-strong)')
-      .attr('stroke-width', 2)
-      .attr('opacity', 0.85);
+      .attr('stroke', 'var(--surface)')
+      .attr('stroke-width', 2.5);
 
+    // Label
     nodeGroup.append('text')
-      .text((d) => d.label)
-      .attr('dx', 14)
+      .text((d) => d.label.length > 12 ? d.label.slice(0, 11) + '…' : d.label)
+      .attr('dx', 16)
       .attr('dy', 4)
       .attr('fill', 'var(--text-muted)')
-      .attr('font-size', '12px')
-      .attr('font-family', 'var(--ui-font)');
+      .attr('font-size', '11px')
+      .attr('font-family', 'var(--ui-font)')
+      .attr('font-weight', '400');
 
     // Simulation
     const sim = forceSimulation(nodes)
