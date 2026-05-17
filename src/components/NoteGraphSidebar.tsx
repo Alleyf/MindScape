@@ -23,9 +23,11 @@ interface NoteGraphSidebarProps {
   allNotes: Note[];
   relatedNotes?: Note[];
   className?: string;
+  collapsed?: boolean;
+  onClose?: () => void;
 }
 
-export function NoteGraphSidebar({ currentNote, allNotes, relatedNotes = [], className = '' }: NoteGraphSidebarProps) {
+export function NoteGraphSidebar({ currentNote, allNotes, relatedNotes = [], className = '', collapsed = false, onClose }: NoteGraphSidebarProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const navigate = useNavigate();
 
@@ -154,7 +156,7 @@ export function NoteGraphSidebar({ currentNote, allNotes, relatedNotes = [], cla
       });
 
     return () => { sim.stop(); };
-  }, [currentNote, allNotes, navigate]);
+  }, [currentNote, allNotes, collapsed]);
 
   const connectedCount = allNotes.filter((n) =>
     n.slug !== currentNote.slug &&
@@ -163,6 +165,8 @@ export function NoteGraphSidebar({ currentNote, allNotes, relatedNotes = [], cla
 
   const hasGraph = connectedCount > 0;
   if (!hasGraph && relatedNotes.length === 0) return null;
+
+  if (collapsed) return null;
 
   return (
     <div className={`note-graph-sidebar ${className}`}>

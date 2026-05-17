@@ -728,6 +728,8 @@ button.nav-link {
   width: min(100%, 50rem);
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  z-index: 40;
 }
 
 .reading-toc {
@@ -742,7 +744,7 @@ button.nav-link {
 
 @media (min-width: 1280px) {
   .reading-main {
-    margin-left: calc(max(2rem, calc((100vw - 86rem) / 2)) + 20.5rem);
+    margin-left: calc(max(2rem, calc((100vw - 86rem) / 2)) + 19.5rem);
     margin-right: calc(max(2rem, calc((100vw - 86rem) / 2)) + 18rem);
   }
 }
@@ -815,10 +817,59 @@ button.nav-link {
 }
 
 /* ──右侧关联图谱侧边栏── */
+.note-graph-sidebar-collapsed {
+  position: fixed;
+  right: max(2rem, calc((100vw - 86rem) / 2));
+  top: 7.25rem;
+  z-index: 30;
+}
+
+.note-graph-sidebar-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.6rem 0.5rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.note-graph-sidebar-toggle:hover {
+  color: var(--nebula-accent);
+  border-color: var(--nebula-accent);
+}
+
+.note-graph-sidebar-collapse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--text-subtle);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+.note-graph-sidebar-collapse:hover {
+  color: var(--nebula-accent);
+}
+
 .note-graph-sidebar {
   position: fixed;
   right: max(2rem, calc((100vw - 86rem) / 2));
   top: 7.25rem;
+  bottom: 2rem;
   width: 16rem;
   z-index: 30;
 }
@@ -831,7 +882,8 @@ button.nav-link {
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  overflow: hidden;
+  overflow-y: auto;
+  height: 100%;
 }
 
 .note-graph-sidebar-header {
@@ -867,33 +919,93 @@ button.nav-link {
   display: block;
 }
 
+/* ──目录（TOC）── */
+.toc-panel {
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--nebula-accent) transparent;
+}
+
+.toc-panel::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.toc-panel::-webkit-scrollbar-thumb {
+  background: var(--nebula-accent);
+  border-radius: 2px;
+}
+
+.toc-root {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
 .toc-link {
-  display: block;
-  border-radius: 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  border-radius: 8px;
   color: var(--text-subtle);
-  font-size: 0.875rem;
-  line-height: 1.35;
-  padding: 0.45rem 0.6rem;
-  transition: color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  padding: 0.35rem 0.5rem;
+  transition: color 0.2s ease, background 0.2s ease;
+  text-decoration: none;
 }
 
 .toc-link:hover {
-  background: rgba(79, 70, 229, 0.1);
-  color: var(--nebula-accent);
-  transform: translateX(2px);
+  background: rgba(168, 85, 247, 0.08);
+  color: var(--text-primary);
 }
 
 .toc-link-active {
-  background: rgba(217, 119, 87, 0.12);
-  color: var(--nebula-accent);
+  background: rgba(168, 85, 247, 0.12);
+  color: var(--text-primary);
   font-weight: 600;
-  transform: translateX(3px);
+  border-left: 2px solid var(--nebula-accent);
+}
+
+.toc-link-active .toc-num {
+  opacity: 0.9;
+  color: var(--nebula-accent);
+}
+
+.toc-num {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  min-width: 1.8rem;
+}
+
+.toc-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .toc-tree {
   list-style: none;
   margin: 0;
   padding: 0;
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  border-left: 1px solid var(--border-soft);
+  margin-left: 0.35rem;
 }
 
 .toc-tree-item {
@@ -902,40 +1014,9 @@ button.nav-link {
   padding: 0;
 }
 
-.toc-tree .toc-tree .toc-link {
-  padding-left: 1.2rem;
-  position: relative;
-}
-
-.toc-tree .toc-tree .toc-link::before {
-  content: '';
-  position: absolute;
-  left: 0.35rem;
-  top: 50%;
-  width: 0.6rem;
-  height: 0;
-  border-top: 1.5px solid var(--border-soft);
-}
-
-.toc-tree .toc-tree .toc-tree-item::before {
-  content: '';
-  position: absolute;
-  left: 0.35rem;
-  top: 0;
-  bottom: 0;
-  width: 0;
-  border-left: 1.5px solid var(--border-soft);
-}
-
-.toc-tree .toc-tree .toc-tree-item:last-child::before {
-  height: 50%;
-  bottom: auto;
-}
-
 .toc-link-h3 {
-  font-size: 0.8rem;
-  padding-top: 0.2rem;
-  padding-bottom: 0.2rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 
 .mobile-toc {
@@ -2905,6 +2986,7 @@ button.nav-link {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .image-viewer-dialog::backdrop {
@@ -3640,7 +3722,6 @@ button.nav-link {
 [data-immersive] .ai-aura,
 [data-immersive] .related-notes,
 [data-immersive] .note-back-btn,
-[data-immersive] .floating-tools,
 [data-immersive] footer,
 [data-immersive] .particle-field,
 [data-immersive] .mouse-glow,
@@ -3650,7 +3731,7 @@ button.nav-link {
 }
 
 [data-immersive] .reading-main {
-  max-width: 45rem;
+  max-width: 52rem;
   margin: 0 auto !important;
   padding-top: 2rem;
 }
@@ -3665,6 +3746,27 @@ button.nav-link {
   background: none !important;
   -webkit-text-fill-color: initial !important;
   color: var(--text);
+}
+
+[data-immersive] .reading-main .markdown-content {
+  font-size: 1.125rem;
+  line-height: 1.85;
+}
+
+[data-immersive] .reading-main .markdown-content h1 {
+  font-size: 2.25rem;
+}
+
+[data-immersive] .reading-main .markdown-content h2 {
+  font-size: 1.75rem;
+}
+
+[data-immersive] .reading-main .markdown-content h3 {
+  font-size: 1.375rem;
+}
+
+[data-immersive] .reading-main .markdown-content p {
+  margin-bottom: 1.5rem;
 }
 
 .nav-link {
@@ -3700,6 +3802,30 @@ button.nav-link {
   word-break: normal;
   overflow-wrap: normal;
   line-break: auto;
+}
+
+.markdown-content h1 .heading-num {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  opacity: 0.7;
+  margin-right: 0.1em;
+}
+
+.markdown-content h2 .heading-num {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  opacity: 0.65;
+  margin-right: 0.1em;
+}
+
+.markdown-content h3 .heading-num {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  opacity: 0.6;
+  margin-right: 0.1em;
 }
 
 .markdown-content p,

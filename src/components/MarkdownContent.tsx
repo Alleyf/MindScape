@@ -165,16 +165,18 @@ function MarkdownImage({ src, alt, onImageClick, imageIndex }: { src?: string; a
 export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
-  const [images, setImages] = useState<ImageEntry[]>([]);
-
-  useEffect(() => {
+  const images = useMemo<ImageEntry[]>(() => {
     const imgMatches = content.matchAll(/!\[([^\]]*)\]\(([^)\s]+)\)/g);
-    const imgs: ImageEntry[] = [];
-    for (const match of imgMatches) {
-      imgs.push({ alt: match[1], src: match[2] });
-    }
-    setImages(imgs.map(img => ({ ...img, src: normalizeImageSrc(img.src) })));
+    return Array.from(imgMatches).map(match => ({
+      alt: match[1],
+      src: normalizeImageSrc(match[2]),
+    }));
   }, [content]);
+
+  // Heading number counters - reset each render
+  const h1Count = { current: 0 };
+  const h2Count = { current: 0 };
+  const h3Count = { current: 0 };
 
   const handleImageClick = (index: number) => {
     setViewerIndex(index);
@@ -187,15 +189,33 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            h1: ({node, children, ...props}) => (
-              <h1 id={slugifyHeading(children)} className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent scroll-mt-28" {...props}>{children}</h1>
-            ),
-            h2: ({node, children, ...props}) => (
-              <h2 id={slugifyHeading(children)} className="text-3xl font-semibold mt-8 mb-4 border-l-4 border-purple-500 pl-4 scroll-mt-28" {...props}>{children}</h2>
-            ),
-            h3: ({node, children, ...props}) => (
-              <h3 id={slugifyHeading(children)} className="text-2xl font-medium mt-6 mb-3 scroll-mt-28" {...props}>{children}</h3>
-            ),
+            h1: ({node, children, ...props}) => {
+              h1Count.current++;
+              h2Count.current = 0;
+              h3Count.current = 0;
+              return (
+                <h1 id={slugifyHeading(children)} className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent scroll-mt-28" {...props}>
+                  <span className="heading-num">{h1Count.current}. </span>{children}
+                </h1>
+              );
+            },
+            h2: ({node, children, ...props}) => {
+              h2Count.current++;
+              h3Count.current = 0;
+              return (
+                <h2 id={slugifyHeading(children)} className="text-3xl font-semibold mt-8 mb-4 border-l-4 border-purple-500 pl-4 scroll-mt-28" {...props}>
+                  <span className="heading-num">{h1Count.current}.{h2Count.current}. </span>{children}
+                </h2>
+              );
+            },
+            h3: ({node, children, ...props}) => {
+              h3Count.current++;
+              return (
+                <h3 id={slugifyHeading(children)} className="text-2xl font-medium mt-6 mb-3 scroll-mt-28" {...props}>
+                  <span className="heading-num">{h1Count.current}.{h2Count.current}.{h3Count.current}. </span>{children}
+                </h3>
+              );
+            },
             p: ({node, ...props}) => (
               <p className="leading-relaxed mb-4" {...props} />
             ),

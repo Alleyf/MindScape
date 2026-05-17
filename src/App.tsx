@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { Sprout, Compass } from 'lucide-react';
-import { ParticleField } from './components/ParticleField';
+import { createContext, useContext, useState, useEffect, useMemo, useRef, useCallback } from 'react';
+
+const GraphSidebarContext = createContext<{ open: boolean; setOpen: (v: boolean) => void }>({ open: false, setOpen: () => {} });
 import { MouseGlow } from './components/MouseGlow';
 import { NoteCard } from './components/NoteCard';
 import { NoteCoverImage } from './components/NoteCoverImage';
@@ -241,55 +241,100 @@ function slugifyHeading(text: string): string {
 }
 
 function extractTableOfContents(content: string): TocItem[] {
-  return content
-    .split(/\r?\n/)
-    .map((line) => {
-      const match = line.match(/^(#{1,3})\s+(.+)$/);
-      if (!match) return null;
+  const lines = content.split(/\r?\n/);
+  const items: TocItem[] = [];
+  let inCodeBlock = false;
 
-      const text = match[2].trim();
-      return {
-        id: slugifyHeading(text),
-        text,
-        level: match[1].length,
-      };
-    })
-    .filter((item): item is TocItem => Boolean(item));
+  for (const line of lines) {
+    // Track fenced code block boundaries
+    const fenceMatch = line.match(/^(`{3,}|~{3,})/);
+    if (fenceMatch) {
+      inCodeBlock = !inCodeBlock;
+      continue;
+    }
+    if (inCodeBlock) continue;
+
+    const match = line.match(/^(#{1,3})\s+(.+)$/);
+    if (!match) continue;
+
+    const text = match[2].trim();
+    items.push({
+      id: slugifyHeading(text),
+      text,
+      level: match[1].length,
+    });
+  }
+
+  return items;
 }
 
 function buildTocTree(items: TocItem[]): TocNode[] {
   const tree: TocNode[] = [];
-  let currentParent: TocNode | null = null;
+  // h1/h2/h3 all can be TOC entries
+  const ancestors: { item: TocItem; children: TocNode[] }[] = [];
 
   for (const item of items) {
-    if (item.level <= 2) {
-      currentParent = { item, children: [] };
-      tree.push(currentParent);
-    } else if (item.level >= 3 && currentParent) {
-      currentParent.children.push({ item, children: [] });
-    } else {
-      // orphan h3+ without a parent h2
-      tree.push({ item, children: [] });
+    // Pop ancestors that are same level or higher
+    while (ancestors.length > 0 && ancestors[ancestors.length - 1].item.level >= item.level) {
+      ancestors.pop();
     }
+
+    const node: TocNode = { item, children: [] };
+
+    if (ancestors.length === 0) {
+      tree.push(node);
+    } else {
+      ancestors[ancestors.length - 1].children.push(node);
+    }
+
+    ancestors.push(node);
   }
+
   return tree;
 }
 
-function TocTree({ nodes, depth = 0, activeId }: { nodes: TocNode[]; depth?: number; activeId?: string }) {
+function TocTree({ nodes, depth = 0, activeId, counters }: { nodes: TocNode[]; depth?: number; activeId?: string; counters?: { h1: number; h2: number; h3: number } }) {
   if (nodes.length === 0) return null;
+
+  // Local counters — reset at each subtree root
+  const localCounters = { h1: 0, h2: 0, h3: 0 };
+  const effectiveCounters = counters ?? localCounters;
+
   return (
-    <ul className={`toc-tree${depth === 0 ? ' space-y-1' : ''}`}>
-      {nodes.map((node) => (
-        <li key={node.item.id + node.item.text} className="toc-tree-item">
-          <a
-            href={`#${node.item.id}`}
-            className={`toc-link${node.item.level === 3 ? ' toc-link-h3' : ''}${activeId === node.item.id ? ' toc-link-active' : ''}`}
-          >
-            {node.item.text}
-          </a>
-          {node.children.length > 0 && <TocTree nodes={node.children} depth={depth + 1} activeId={activeId} />}
-        </li>
-      ))}
+    <ul className={`toc-tree${depth === 0 ? ' toc-root' : ''}`}>
+      {nodes.map((node) => {
+        let numStr = '';
+        if (node.item.level === 1) {
+          effectiveCounters.h1++;
+          effectiveCounters.h2 = 0;
+          effectiveCounters.h3 = 0;
+          numStr = `${effectiveCounters.h1}`;
+        } else if (node.item.level === 2) {
+          effectiveCounters.h2++;
+          effectiveCounters.h3 = 0;
+          numStr = `${effectiveCounters.h1}.${effectiveCounters.h2}`;
+        } else if (node.item.level === 3) {
+          effectiveCounters.h3++;
+          numStr = `${effectiveCounters.h1}.${effectiveCounters.h2}.${effectiveCounters.h3}`;
+        }
+
+        const isActive = activeId === node.item.id;
+
+        return (
+          <li key={node.item.id + node.item.text} className={`toc-tree-item${isActive ? ' toc-tree-item-active' : ''}`}>
+            <a
+              href={`#${node.item.id}`}
+              className={`toc-link${node.item.level === 3 ? ' toc-link-h3' : ''}${isActive ? ' toc-link-active' : ''}`}
+            >
+              <span className="toc-num">{numStr}</span>
+              <span className="toc-text">{node.item.text}</span>
+            </a>
+            {node.children.length > 0 && (
+              <TocTree nodes={node.children} depth={depth + 1} activeId={activeId} counters={effectiveCounters} />
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -1172,6 +1217,7 @@ function NotePage() {
   const references = useMemo(() => (note ? extractReferenceLinks(note.content) : []), [note]);
   const relatedNotes = useMemo(() => (note ? getRelatedNotes(note, allNotes, 4) : []), [note, allNotes]);
   const [activeHeadingId, setActiveHeadingId] = useState<string>('');
+  const { open: graphCollapsed, setOpen: setGraphCollapsed } = useContext(GraphSidebarContext);
 
   // Unlock state management - global unlock
   // 默认都需要解锁，只有 locked: false 才不需要
@@ -1353,7 +1399,14 @@ function NotePage() {
         </div>
       </aside>
 
-      <NoteGraphSidebar currentNote={note} allNotes={allNotes} relatedNotes={relatedNotes} className="hidden lg:block" />
+      <NoteGraphSidebar
+        currentNote={note}
+        allNotes={allNotes}
+        relatedNotes={relatedNotes}
+        collapsed={graphCollapsed}
+        onToggle={() => setGraphCollapsed(!graphCollapsed)}
+        className="hidden lg:block"
+      />
 
       <main className="reading-main max-w-3xl">
         {/* Back button */}
@@ -2172,10 +2225,12 @@ function AboutPage() {
 function App() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [themeDrawerOpen, setThemeDrawerOpen] = useState(false);
+  const [graphSidebarOpen, setGraphSidebarOpen] = useState(false);
 
   return (
-    <Router>
-      <div className="app-shell min-h-screen overflow-x-hidden">
+    <GraphSidebarContext.Provider value={{ open: graphSidebarOpen, setOpen: setGraphSidebarOpen }}>
+      <Router>
+        <div className="app-shell min-h-screen overflow-x-hidden">
         {/* Navigation */}
         <nav className="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -2297,7 +2352,11 @@ function App() {
             </div>
           </div>
         </footer>
-        <FloatingTools onOpenThemeDrawer={() => setThemeDrawerOpen(true)} />
+        <FloatingTools
+          onOpenThemeDrawer={() => setThemeDrawerOpen(true)}
+          onToggleGraph={() => setGraphSidebarOpen(v => !v)}
+          graphOpen={graphSidebarOpen}
+        />
         <ThemeDrawer
           isOpen={themeDrawerOpen}
           onClose={() => setThemeDrawerOpen(false)}
@@ -2305,6 +2364,7 @@ function App() {
         <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
       </div>
     </Router>
+    </GraphSidebarContext.Provider>
   );
 }
 

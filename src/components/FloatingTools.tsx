@@ -41,9 +41,11 @@ function getScrollMetrics() {
 
 interface FloatingToolsProps {
   onOpenThemeDrawer?: () => void;
+  onToggleGraph?: () => void;
+  graphOpen?: boolean;
 }
 
-export function FloatingTools({ onOpenThemeDrawer }: FloatingToolsProps) {
+export function FloatingTools({ onOpenThemeDrawer, onToggleGraph, graphOpen }: FloatingToolsProps) {
   const [notice, setNotice] = useState('');
   const [immersive, setImmersive] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -495,6 +497,15 @@ export function FloatingTools({ onOpenThemeDrawer }: FloatingToolsProps) {
         </button>
         <button type="button" onClick={scrollToBottom} title="回到底部" aria-label="回到底部">
           <svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
+        </button>
+        <button type="button" onClick={onToggleGraph} title="关联图谱" aria-label="关联图谱" className={graphOpen ? 'active' : ''}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="6" cy="6" r="3" />
+            <circle cx="18" cy="12" r="3" />
+            <circle cx="6" cy="18" r="3" />
+            <line x1="9" y1="6" x2="15" y2="12" />
+            <line x1="9" y1="18" x2="15" y2="12" />
+          </svg>
         </button>
 
         <div className="floating-tools-sep" />
