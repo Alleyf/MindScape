@@ -293,31 +293,12 @@ function buildTocTree(items: TocItem[]): TocNode[] {
   return tree;
 }
 
-function TocTree({ nodes, depth = 0, activeId, counters }: { nodes: TocNode[]; depth?: number; activeId?: string; counters?: { h1: number; h2: number; h3: number } }) {
+function TocTree({ nodes, depth = 0, activeId }: { nodes: TocNode[]; depth?: number; activeId?: string }) {
   if (nodes.length === 0) return null;
-
-  // Local counters — reset at each subtree root
-  const localCounters = { h1: 0, h2: 0, h3: 0 };
-  const effectiveCounters = counters ?? localCounters;
 
   return (
     <ul className={`toc-tree${depth === 0 ? ' toc-root' : ''}`}>
       {nodes.map((node) => {
-        let numStr = '';
-        if (node.item.level === 1) {
-          effectiveCounters.h1++;
-          effectiveCounters.h2 = 0;
-          effectiveCounters.h3 = 0;
-          numStr = `${effectiveCounters.h1}`;
-        } else if (node.item.level === 2) {
-          effectiveCounters.h2++;
-          effectiveCounters.h3 = 0;
-          numStr = `${effectiveCounters.h1}.${effectiveCounters.h2}`;
-        } else if (node.item.level === 3) {
-          effectiveCounters.h3++;
-          numStr = `${effectiveCounters.h1}.${effectiveCounters.h2}.${effectiveCounters.h3}`;
-        }
-
         const isActive = activeId === node.item.id;
 
         return (
@@ -326,11 +307,10 @@ function TocTree({ nodes, depth = 0, activeId, counters }: { nodes: TocNode[]; d
               href={`#${node.item.id}`}
               className={`toc-link${node.item.level === 3 ? ' toc-link-h3' : ''}${isActive ? ' toc-link-active' : ''}`}
             >
-              <span className="toc-num">{numStr}</span>
               <span className="toc-text">{node.item.text}</span>
             </a>
             {node.children.length > 0 && (
-              <TocTree nodes={node.children} depth={depth + 1} activeId={activeId} counters={effectiveCounters} />
+              <TocTree nodes={node.children} depth={depth + 1} activeId={activeId} />
             )}
           </li>
         );
