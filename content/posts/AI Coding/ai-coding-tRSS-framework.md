@@ -8,8 +8,6 @@ description: "从 CC Switch 模型管理中心到 Claude Code Agent 引擎，从
 cover: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80"
 ---
 
-![](https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80)
-
 > 当 AI 开始接管越来越多的编码任务，我们突然面临一个前所未有的挑战：如何让 AI 的输出保持一致、稳定、可维护？答案是——建立规范。
 >
 > TRSS 四位一体方案，正是为解决这一问题而生的完整协作框架。它涵盖了从模型选择、规则约束、流程标准化到技能扩展的完整链路，让团队 AI Coding 从「能用」升级到「好用」。
