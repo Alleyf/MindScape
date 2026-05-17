@@ -1,4 +1,5 @@
 ---
+id: "AIC-003"
 title: "AI 编程导师"
 date: "2026-05-11"
 tags: ["ai","coding","tutor"]
