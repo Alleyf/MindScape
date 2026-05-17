@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { createContext, useContext, useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { Sprout, Compass, Sparkles, BookOpen, FileText, Tag, Clock, Star, ArrowRight, Zap, Shield, Layers } from 'lucide-react';
 
 const GraphSidebarContext = createContext<{ open: boolean; setOpen: (v: boolean) => void }>({ open: false, setOpen: () => {} });
 import { MouseGlow } from './components/MouseGlow';
@@ -1986,138 +1987,200 @@ function AboutPage() {
     { icon: 'M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z', title: '沉浸阅读', desc: '无干扰的沉浸模式、可调字号、PDF 导出，让深度阅读随时开始。' },
   ];
 
+  const maxCount = useMemo(() => Math.max(...Object.values(monthlyCounts), 1), [monthlyCounts]);
+
   return (
-    <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
-      <div className="max-w-5xl mx-auto">
-        {/* Hero */}
+    <div className="min-h-screen pt-28 pb-20 px-4 relative z-10 overflow-hidden">
+      {/* Decorative background orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-gradient-to-br from-purple-500/10 via-transparent to-transparent blur-3xl" />
+        <div className="absolute top-1/3 -left-32 w-80 h-80 rounded-full bg-gradient-to-tr from-cyan-500/8 via-transparent to-transparent blur-3xl" />
+        <div className="absolute -bottom-20 right-1/4 w-72 h-72 rounded-full bg-gradient-to-tl from-pink-500/8 via-transparent to-transparent blur-3xl" />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative">
+        {/* Hero with asymmetric layout */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-16 text-center"
+          transition={{ duration: 0.7 }}
+          className="mb-20 text-center"
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 gradient-text">关于 MindScape</h1>
-          <p className="text-xl theme-muted leading-relaxed max-w-3xl mx-auto">
-            MindScape 是一个 AI-Native 的创意知识空间，用来收纳技术学习、思维模型、工作流实践和长期生长的个人笔记。
+          <div className="inline-flex items-baseline justify-center gap-3 mb-6">
+            <span className="text-6xl md:text-7xl font-black tracking-tight bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">Mind</span>
+            <span className="text-6xl md:text-7xl font-black tracking-tight text-white/90">Scape</span>
+          </div>
+          <p className="text-xl theme-muted leading-relaxed max-w-2xl mx-auto">
+            AI-Native 的创意知识空间，收纳技术学习、思维模型、工作流实践和长期生长的个人笔记。
           </p>
         </motion.div>
 
-        {/* Stats */}
+        {/* Stats cluster - 2x2 grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20"
         >
-          <div className="glass-card p-5 text-center">
-            <p className="text-3xl font-bold text-nebula-accent mb-1">{notes.length}</p>
-            <p className="text-sm theme-subtle">篇笔记</p>
-          </div>
-          <div className="glass-card p-5 text-center">
-            <p className="text-3xl font-bold text-nebula-accent mb-1">{tags.length}</p>
-            <p className="text-sm theme-subtle">个标签</p>
-          </div>
-          <div className="glass-card p-5 text-center">
-            <p className="text-3xl font-bold text-nebula-accent mb-1">{Object.keys(monthlyCounts).length}</p>
-            <p className="text-sm theme-subtle">覆盖月份</p>
-          </div>
-          <div className="glass-card p-5 text-center">
-            <p className="text-3xl font-bold text-nebula-accent mb-1">
-              {notes.reduce((sum, n) => sum + n.content.replace(/[#>*_`\[\]()\-]/g, '').replace(/\s+/g, '').length, 0)}
-            </p>
-            <p className="text-sm theme-subtle">总字数</p>
-          </div>
+          {[
+            { value: notes.length, label: '篇笔记', icon: '✦' },
+            { value: tags.length, label: '个标签', icon: '✦' },
+            { value: Object.keys(monthlyCounts).length, label: '覆盖月份', icon: '✦' },
+            { value: notes.reduce((sum, n) => sum + n.content.replace(/[#>*_`\[\]()\-]/g, '').replace(/\s+/g, '').length, 0), label: '总字数', icon: '✦' },
+          ].map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1 + i * 0.05 }}
+              className="glass-card p-6 text-center relative overflow-hidden"
+            >
+              <span className="absolute top-3 right-3 text-xs text-purple-400/40">{stat.icon}</span>
+              <p className="text-4xl font-black bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-1">{stat.value}</p>
+              <p className="text-sm theme-subtle">{stat.label}</p>
+            </motion.div>
+          ))}
         </motion.div>
 
-        {/* Features */}
+        {/* Features - magazine style with large index numbers */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-20"
         >
-          <h2 className="text-3xl font-bold mb-8 gradient-text">设计理念</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-xs font-semibold tracking-widest text-purple-400 uppercase">Design Philosophy</span>
+            <div className="flex-1 h-px bg-gradient-to-r from-purple-500/30 to-transparent" />
+          </div>
+          <h2 className="text-4xl font-black mb-8 theme-text">设计理念</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {features.map((f, i) => (
-              <div key={f.title} className="glass-card p-6 flex gap-4 items-start">
-                <div className="shrink-0 w-10 h-10 rounded-xl bg-nebula-accent/10 flex items-center justify-center mt-0.5">
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-nebula-accent" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={f.icon} />
-                  </svg>
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="glass-card p-8 relative overflow-hidden group hover:border-purple-500/30 transition-colors"
+              >
+                {/* Decorative index */}
+                <span className="absolute -top-4 -right-4 text-[120px] font-black text-purple-500/5 select-none leading-none">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div className="relative flex gap-5 items-start">
+                  <div className="shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-cyan-500/10 border border-purple-500/20 flex items-center justify-center mt-1 group-hover:scale-110 transition-transform">
+                    <svg viewBox="0 0 24 24" className="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d={f.icon} />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg theme-text mb-2">{f.title}</h3>
+                    <p className="text-sm theme-muted leading-relaxed">{f.desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold theme-text mb-1">{f.title}</h3>
-                  <p className="text-sm theme-muted leading-relaxed">{f.desc}</p>
-                </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* Top Tags */}
+        {/* Top Tags with opacity gradient */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-20"
         >
-          <h2 className="text-3xl font-bold mb-6 gradient-text">热门标签</h2>
-          <div className="glass-card p-6">
-            <div className="flex flex-wrap gap-3">
-              {tagCounts.slice(0, 15).map(([tag, count]) => {
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-xs font-semibold tracking-widest text-cyan-400 uppercase">Hot Tags</span>
+            <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/30 to-transparent" />
+          </div>
+          <h2 className="text-4xl font-black mb-8 theme-text">热门标签</h2>
+          <div className="glass-card p-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-cyan-500/5 to-transparent rounded-bl-full" />
+            <div className="relative flex flex-wrap gap-3">
+              {tagCounts.slice(0, 15).map(([tag, count], index) => {
+                const opacity = 0.4 + (count / Math.max(...tagCounts.slice(0, 15).map(([, c]) => c), 1)) * 0.6;
                 const size = count >= 4 ? 'text-lg' : count >= 2 ? 'text-base' : 'text-sm';
-                const weight = count >= 4 ? 'font-bold' : count >= 2 ? 'font-semibold' : 'font-normal';
+                const weight = count >= 4 ? 'font-bold' : count >= 2 ? 'font-semibold' : 'font-medium';
                 return (
-                  <Link
+                  <motion.div
                     key={tag}
-                    to={`/notes?tags=${encodeURIComponent(tag)}`}
-                    className={`${size} ${weight} px-3 py-1.5 rounded-full border border-white/10 hover:border-nebula-accent hover:text-nebula-accent transition-colors theme-muted`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.03 }}
                   >
-                    #{tag}
-                    <span className="ml-1.5 text-xs opacity-50">({count})</span>
-                  </Link>
+                    <Link
+                      to={`/notes?tags=${encodeURIComponent(tag)}`}
+                      className={`${size} ${weight} px-4 py-2 rounded-full border border-white/10 hover:border-cyan-500/50 hover:text-cyan-400 transition-all theme-muted inline-block`}
+                      style={{ opacity }}
+                    >
+                      #{tag}
+                      <span className="ml-2 text-xs opacity-60">({count})</span>
+                    </Link>
+                  </motion.div>
                 );
               })}
             </div>
           </div>
         </motion.div>
 
-        {/* Content Areas */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-          <section className="glass-card p-8">
-            <div className="flex items-center gap-3 mb-5">
-              <Sprout className="w-6 h-6 text-nebula-accent" />
+        {/* Content Areas with gradient borders */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-20">
+          <motion.section
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="glass-card p-8 relative overflow-hidden"
+          >
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 via-pink-500 to-transparent rounded-l" />
+            <div className="absolute -top-8 -right-8 text-[100px] font-black text-purple-500/5 select-none leading-none">01</div>
+            <div className="relative flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-transparent border border-purple-500/20 flex items-center justify-center">
+                <Sprout className="w-6 h-6 text-purple-400" />
+              </div>
               <h2 className="text-2xl font-bold theme-text">这里记录什么</h2>
             </div>
             <div className="space-y-4 theme-muted leading-relaxed">
               <p>这里更像一座数字花园，而不是一次性写完的文章仓库。笔记会随着学习、实践和复盘持续更新。</p>
               <p>内容覆盖 AI 编程、前端工程、知识管理、生产力方法、个人成长，以及一些正在形成中的想法。</p>
             </div>
-          </section>
+          </motion.section>
 
-          <section className="glass-card p-8">
-            <div className="flex items-center gap-3 mb-5">
-              <Compass className="w-6 h-6 text-nebula-accent" />
+          <motion.section
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="glass-card p-8 relative overflow-hidden"
+          >
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-blue-500 to-transparent rounded-l" />
+            <div className="absolute -top-8 -right-8 text-[100px] font-black text-cyan-500/5 select-none leading-none">02</div>
+            <div className="relative flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-transparent border border-cyan-500/20 flex items-center justify-center">
+                <Compass className="w-6 h-6 text-cyan-400" />
+              </div>
               <h2 className="text-2xl font-bold theme-text">如何浏览</h2>
             </div>
             <ul className="space-y-3 theme-muted leading-relaxed">
-              <li className="flex gap-3">
-                <span className="text-nebula-accent shrink-0">→</span>
-                <span>从<a href="/notes" className="text-nebula-accent hover:underline">最新笔记</a>开始，或按标签筛选主题。</span>
+              <li className="flex gap-3 items-start">
+                <span className="text-cyan-400 shrink-0 mt-0.5">→</span>
+                <span>从<a href="/notes" className="text-cyan-400 hover:underline">最新笔记</a>开始，或按标签筛选主题。</span>
               </li>
-              <li className="flex gap-3">
-                <span className="text-nebula-accent shrink-0">→</span>
+              <li className="flex gap-3 items-start">
+                <span className="text-cyan-400 shrink-0 mt-0.5">→</span>
                 <span>长文页面左侧目录支持快速跳转，右侧图谱展示知识关联。</span>
               </li>
-              <li className="flex gap-3">
-                <span className="text-nebula-accent shrink-0">→</span>
-                <span>使用<a href="/graph" className="text-nebula-accent hover:underline">笔记图谱</a>可视化探索笔记网络。</span>
+              <li className="flex gap-3 items-start">
+                <span className="text-cyan-400 shrink-0 mt-0.5">→</span>
+                <span>使用<a href="/graph" className="text-cyan-400 hover:underline">笔记图谱</a>可视化探索笔记网络。</span>
               </li>
-              <li className="flex gap-3">
-                <span className="text-nebula-accent shrink-0">→</span>
+              <li className="flex gap-3 items-start">
+                <span className="text-cyan-400 shrink-0 mt-0.5">→</span>
                 <span>开启沉浸模式或调整字号，获得更舒适的阅读体验。</span>
               </li>
             </ul>
-          </section>
+          </motion.section>
         </div>
 
         {/* Tech stack */}
@@ -2125,24 +2188,36 @@ function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-10"
+          className="mb-20"
         >
-          <h2 className="text-3xl font-bold mb-6 gradient-text">技术栈</h2>
-          <div className="glass-card p-6">
-            <div className="flex flex-wrap gap-3">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-xs font-semibold tracking-widest text-pink-400 uppercase">Tech Stack</span>
+            <div className="flex-1 h-px bg-gradient-to-r from-pink-500/30 to-transparent" />
+          </div>
+          <h2 className="text-4xl font-black mb-8 theme-text">技术栈</h2>
+          <div className="glass-card p-8 relative overflow-hidden">
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-pink-500/5 to-transparent rounded-tl-full" />
+            <div className="relative flex flex-wrap gap-3">
               {[
                 'React 19', 'TypeScript', 'Vite 8', 'Tailwind CSS', 'Framer Motion',
                 'React Router', 'react-markdown', 'D3.js', 'highlight.js', 'Vercel',
-              ].map(item => (
-                <span key={item} className="px-3 py-1.5 rounded-full border border-white/10 text-sm theme-subtle">
+              ].map((item, i) => (
+                <motion.span
+                  key={item}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.04 }}
+                  className="px-4 py-2 rounded-full border border-white/10 text-sm theme-subtle hover:border-pink-500/30 hover:text-pink-400 transition-colors"
+                >
                   {item}
-                </span>
+                </motion.span>
               ))}
             </div>
           </div>
         </motion.div>
 
-        {/* Timeline */}
+        {/* Timeline with year badges */}
         {Object.keys(timelineYears).length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -2150,47 +2225,62 @@ function AboutPage() {
             viewport={{ once: true }}
             className="mb-10"
           >
-            <h2 className="text-3xl font-bold mb-6 gradient-text">写作时间线</h2>
-            <div className="glass-card p-6">
+            <div className="flex items-center gap-4 mb-8">
+              <span className="text-xs font-semibold tracking-widest text-purple-400 uppercase">Timeline</span>
+              <div className="flex-1 h-px bg-gradient-to-r from-purple-500/30 to-transparent" />
+            </div>
+            <h2 className="text-4xl font-black mb-8 theme-text">写作时间线</h2>
+            <div className="glass-card p-8 relative overflow-hidden">
+              <div className="absolute top-0 left-8 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent" />
               <div className="relative">
-                {/* Vertical timeline line */}
-                <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-nebula-accent/60 via-nebula-accent/20 to-transparent" />
                 {Object.entries(timelineYears)
                   .sort(([a], [b]) => b.localeCompare(a))
-                  .map(([year, yearData]) => {
+                  .map(([year, yearData], yearIdx) => {
                     const yearTotal = yearData.reduce((s, m) => s + m.count, 0);
                     return (
-                      <div key={year} className="relative pl-12 mb-8 last:mb-0">
-                        {/* Year marker */}
-                        <div className="absolute left-0 top-0 w-8 h-8 rounded-full bg-nebula-accent/15 border border-nebula-accent/30 flex items-center justify-center">
-                          <span className="text-xs font-black text-nebula-accent">{year.slice(2)}</span>
+                      <motion.div
+                        key={year}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: yearIdx * 0.08 }}
+                        className="relative pl-16 mb-10 last:mb-0"
+                      >
+                        {/* Year badge */}
+                        <div className="absolute left-0 top-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-cyan-500/10 border border-purple-500/30 flex flex-col items-center justify-center shadow-lg shadow-purple-500/10">
+                          <span className="text-xs font-black text-purple-400 leading-none">{year.slice(2)}</span>
+                          <span className="text-[10px] font-semibold text-cyan-400/60 mt-0.5">年</span>
                         </div>
-                        <div className="flex items-baseline gap-3 mb-3">
-                          <span className="text-xl font-black theme-text">{year}</span>
-                          <span className="text-xs theme-subtle font-semibold tracking-widest uppercase">Year</span>
-                          <span className="ml-auto text-xs font-bold text-nebula-accent">{yearTotal} 篇</span>
+                        <div className="flex items-baseline gap-3 mb-4">
+                          <span className="text-2xl font-black theme-text">{year}</span>
+                          <span className="text-xs font-semibold tracking-widest text-purple-400/60 uppercase">Year</span>
+                          <span className="ml-auto text-sm font-bold text-purple-400">{yearTotal} 篇</span>
                         </div>
-                        {/* Month bars */}
-                        <div className="flex flex-wrap gap-2">
+                        {/* Month bars with hover effect */}
+                        <div className="flex flex-wrap gap-3">
                           {yearData.map(({ month, count }) => {
-                            const barWidth = Math.round(36 + (count / Math.max(...Object.values(monthlyCounts)) * 80));
+                            const barWidth = Math.round(40 + (count / maxCount * 60));
                             return (
-                              <div key={month} className="flex items-center gap-2 group cursor-default">
-                                <div className="relative h-5 rounded-sm overflow-hidden bg-white/5 border border-white/8">
+                              <motion.div
+                                key={month}
+                                className="flex items-center gap-2 group cursor-default"
+                                whileHover={{ scale: 1.05 }}
+                              >
+                                <div className="relative h-7 rounded-md overflow-hidden bg-white/5 border border-white/10 shadow-sm">
                                   <div
-                                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-nebula-accent/70 to-nebula-accent/40 rounded-sm transition-all duration-500"
+                                    className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-500/80 to-cyan-500/60 rounded-md transition-all duration-300 group-hover:brightness-125"
                                     style={{ width: `${barWidth}%` }}
                                   />
-                                  <span className="absolute inset-0 flex items-center px-2 text-xs font-mono font-bold theme-subtle group-hover:text-white transition-colors">
+                                  <span className="absolute inset-0 flex items-center justify-center px-3 text-xs font-bold theme-text group-hover:text-white transition-colors">
                                     {count}
                                   </span>
                                 </div>
-                                <span className="text-xs theme-subtle timeline-bar-label w-10">{month}月</span>
-                              </div>
+                                <span className="text-xs theme-subtle w-8">{month}月</span>
+                              </motion.div>
                             );
                           })}
                         </div>
-                      </div>
+                      </motion.div>
                     );
                   })}
               </div>
