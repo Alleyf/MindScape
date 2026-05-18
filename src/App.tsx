@@ -5,6 +5,7 @@ import { Sprout, Compass, Sparkles, BookOpen, FileText, Tag, Clock, Star, ArrowR
 
 const GraphSidebarContext = createContext<{ open: boolean; setOpen: (v: boolean) => void }>({ open: false, setOpen: () => {} });
 import { MouseGlow } from './components/MouseGlow';
+import { ParticleField } from './components/ParticleField';
 import { NoteCard } from './components/NoteCard';
 import { NoteCoverImage } from './components/NoteCoverImage';
 import { AIPanel } from './components/AIPanel';

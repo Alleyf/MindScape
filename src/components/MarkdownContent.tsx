@@ -147,7 +147,7 @@ function MarkdownImage({ src, alt, onImageClick, imageIndex }: { src?: string; a
   }
 
   return (
-    <span className="markdown-image-frame">
+    <figure className="markdown-image-frame">
       <img
         src={normalizedSrc}
         alt={alt || ''}
@@ -157,8 +157,8 @@ function MarkdownImage({ src, alt, onImageClick, imageIndex }: { src?: string; a
         onClick={() => onImageClick?.(imageIndex ?? 0)}
         style={{ cursor: 'zoom-in' }}
       />
-      {alt && <span className="markdown-image-caption">{alt}</span>}
-    </span>
+      {alt && <figcaption className="markdown-image-caption">{alt}</figcaption>}
+    </figure>
   );
 }
 
@@ -199,9 +199,13 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
                   {children}
                 </h3>
               ),
-            p: ({node, ...props}) => (
-              <p className="leading-relaxed mb-4" {...props} />
-            ),
+            p: ({node, children, ...props}) => {
+              const hasImage = node?.children?.some((child: any) => child.tagName === 'img');
+              if (hasImage) {
+                return <div style={{ pageBreakInside: 'avoid', breakInside: 'avoid' }}>{children}</div>;
+              }
+              return <p className="leading-relaxed mb-4" {...props}>{children}</p>;
+            },
             ul: ({node, ...props}) => (
               <ul className="list-disc list-outside space-y-2 my-4 pl-6" {...props} />
             ),
