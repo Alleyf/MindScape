@@ -2026,20 +2026,14 @@ function AICodingGuidePage() {
             </svg>
             视频教程
           </h2>
-          <div className="aspect-video bg-nebula-purple/30 rounded-2xl border border-white/10 flex items-center justify-center">
-            <div className="text-center">
-              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto mb-4 opacity-50">
-                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
-                <line x1="7" y1="2" x2="7" y2="22" />
-                <line x1="17" y1="2" x2="17" y2="22" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <line x1="2" y1="7" x2="22" y2="7" />
-                <line x1="2" y1="17" x2="22" y2="17" />
-              </svg>
-              <p className="theme-muted text-sm mb-2">视频占位区域</p>
-              <p className="theme-subtle text-xs">视频链接待补充...</p>
-            </div>
-          </div>
+          <video
+            className="w-full rounded-2xl aspect-video"
+            src="/videos/demo1-c.mp4"
+            controls
+            preload="metadata"
+          >
+            您的浏览器不支持视频播放
+          </video>
         </motion.div>
 
         {/* Related Articles */}

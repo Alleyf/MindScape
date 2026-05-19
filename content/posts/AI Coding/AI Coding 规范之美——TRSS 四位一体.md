@@ -7,6 +7,7 @@ personality: "引路人"
 description: "从 CC Switch 模型管理中心到 Claude Code Agent 引擎，从 Andrej Karpathy 四戒律到 GSD Spec 工作流，再到 Trae SOLO 技能市场——深度解析团队 AI Coding 的 TRSS 四位一体协作方案。"
 cover: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80"
 locked: true
+priority: 1
 ---
 
 > 当 AI 开始接管越来越多的编码任务，我们突然面临一个前所未有的挑战：如何让 AI 的输出保持一致、稳定、可维护？答案是——建立规范。
