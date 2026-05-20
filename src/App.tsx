@@ -19,6 +19,7 @@ import { FloatingTools } from './components/FloatingTools';
 import { ThemeDrawer } from './components/ThemeDrawer';
 import { ContentUnlockOverlay } from './components/ContentUnlockOverlay';
 import { NavDropdown, NavDropdownItem } from './components/NavDropdown';
+import { VideoPlayer } from './components/VideoPlayer';
 import { useUnlock } from './hooks/useUnlock';
 import { getNotes, getNoteBySlug, getRandomNote, defaultCoverUrlFromSlug } from './utils/noteLoader';
 import type { Note } from './types';
@@ -1592,6 +1593,7 @@ function NotePage() {
 function RoadmapPage() {
   const [activeRoute, setActiveRoute] = useState(learningRoutes[0].id);
   const currentRoute = learningRoutes.find((route) => route.id === activeRoute) || learningRoutes[0];
+  const isRoadmapSh = activeRoute === 'roadmap-sh';
 
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 relative z-10">
@@ -1618,8 +1620,36 @@ function RoadmapPage() {
               {route.title}
             </button>
           ))}
+          <button
+            type="button"
+            onClick={() => setActiveRoute('roadmap-sh')}
+            className={activeRoute === 'roadmap-sh' ? 'roadmap-tab-active' : 'roadmap-tab'}
+          >
+            其他推荐路线
+          </button>
         </div>
 
+        {isRoadmapSh ? (
+          <div className="glass-card rounded-2xl p-16 flex flex-col items-center justify-center text-center">
+            <div className="w-20 h-20 rounded-full bg-nebula-accent/10 flex items-center justify-center mb-6">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-nebula-accent">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold mb-4 gradient-text">其他推荐路线</h2>
+            <p className="theme-muted mb-8 max-w-md">
+              由于浏览器安全限制，无法直接在页面内嵌入 roadmap.sh，请点击下方按钮在新窗口打开。
+            </p>
+            <a
+              href="https://roadmap.sh/"
+              target="_blank"
+              rel="noreferrer"
+              className="px-6 py-3 bg-nebula-accent text-white rounded-xl font-bold hover:bg-nebula-accent/90 transition-colors"
+            >
+              在新窗口打开 roadmap.sh
+            </a>
+          </div>
+        ) : (
         <section className="roadmap-board">
           <div className="roadmap-header">
             <div>
@@ -1655,6 +1685,7 @@ function RoadmapPage() {
             })}
           </div>
         </section>
+        )}
       </div>
     </div>
   );
@@ -2026,14 +2057,7 @@ function AICodingGuidePage() {
             </svg>
             视频教程
           </h2>
-          <video
-            className="w-full rounded-2xl aspect-video"
-            src="/videos/demo1-c.mp4"
-            controls
-            preload="metadata"
-          >
-            您的浏览器不支持视频播放
-          </video>
+          <VideoPlayer src="/videos/demo1-c.mp4" className="w-full" />
         </motion.div>
 
         {/* Related Articles */}
