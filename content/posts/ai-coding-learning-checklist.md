@@ -154,7 +154,167 @@ Skills 是 AI Coding 里非常关键的一层。它不像传统插件那样只�
 
 AI Coding 的技能生态会很强，但供应链安全会成为长期问题。便利性越高，越需要建立自己的审查习惯。
 
-## 5. 三种常见工作模式：Vibe、Plan、Spec
+## 5. AI 代码开发常用 Agent Skills 与 MCP 工具梳理
+
+AI Coding 工作流的高效运转，离不开 Skills 和 MCP 工具的组合。本节梳理在代码开发场景中常用的 Skills 与 MCP 工具，帮助你快速构建自己的工具链。
+
+### 开发流程类 Skills
+
+#### 功能开发与工作流
+
+- **zcf:feat**：功能开发命令，支持完整的开发流程和工具集成，适合新功能开发的标准流程。
+- **zcf:init-project**：项目初始化 Skill，支持新项目的标准化搭建流程。
+- **gsd-execute-phase**：执行 GSD 阶段计划，带原子提交、偏差处理和检查点协议。
+- **gsd-plan-phase**：GSD 计划阶段，负责需求分析和计划生成。
+- **gsd-verify-work**：验证工作成果，检查任务完成度。
+
+#### Git 操作类
+
+- **zcf:git-commit**：规范化的 Git 提交，支持语义化提交信息。
+- **zcf:git-worktree**：Git 工作树管理，适合多分支并行开发。
+- **zcf:git-rollback**：Git 回滚操作，用于错误恢复。
+- **zcf:git-cleanBranches**：清理本地无用分支。
+
+#### 代码质量类
+
+- **code-review**：代码审查 Skill，对当前 diff 进行正确性检查。
+- **verify**：验证代码变更是否达到预期，通过运行应用观察行为。
+- **gsd-code-review**：代码审查与安全检查，输出结构化 REVIEW.md。
+
+### 知识与代码理解 MCP 工具
+
+#### 代码结构分析
+
+- **codegraph 系列**：代码图谱工具集
+  - `codegraph_context`：获取符号、调用者、被调用者的完整上下文
+  - `codegraph_search`：按名称搜索符号
+  - `codegraph_node`：查看符号定义、签名、文档
+  - `codegraph_explore`：批量查看相关符号源码
+  - `codegraph_files`：查看目录文件结构
+  - `codegraph_callees`/`codegraph_callers`：分析方法调用关系
+  - `codegraph_impact`：分析更改影响范围
+
+#### 文档查询
+
+- **context7**：获取库、框架、SDK 的官方文档，支持 React、Next.js、Prisma、Tailwind 等。
+- **mcp__open-websearch__search**：网页搜索，获取互联网上的技术资源。
+- **mcp__open-websearch__fetchCsdnArticle**/`fetchJuejinArticle**`/`fetchGithubReadme**：抓取特定站点内容。
+
+#### 代码搜索
+
+- **semble 系列**：代码搜索工具
+  - `semble__search`：在任何本地或远程 Git 仓库中搜索代码
+  - `semble__find_related`：发现相似代码片段
+
+### 浏览器与 UI 自动化 MCP 工具
+
+#### Playwright 浏览器自动化
+
+- **mcp__Playwright__browser_navigate**：页面导航
+- **mcp__Playwright__browser_click**/`browser_type**：交互操作
+- **mcp__Playwright__browser_snapshot**/`browser_take_screenshot**：页面快照与截图
+- **mcp__Playwright__browser_evaluate**：执行 JavaScript
+
+#### Chrome DevTools
+
+- **mcp__chrome-devtools__navigate_page**/`take_snapshot**：页面导航和快照
+- **mcp__chrome-devtools__lighthouse_audit**：性能审计
+- **mcp__chrome-devtools__performance_analyze_insight**：性能分析
+
+### 数据库 MCP 工具
+
+- **mcp__mysql-server__connect**/`query**`/`execute**：MySQL 数据库连接和操作
+- **mcp__mysql-server__create_table**/`describe_table**：表结构管理
+- **mcp__mysql-server__list_databases**/`list_tables**：数据库元数据查询
+
+### 工具组合建议
+
+#### 日常编码场景
+
+```
+Claude Code / Codex + codegraph + context7 + zcf:git-commit
+```
+
+#### 复杂项目开发
+
+```
+GSD 工作流 (gsd-plan-phase → gsd-execute-phase → gsd-verify-work)
++ code-review + verify
++ codegraph 分析影响范围
+```
+
+#### 前端 UI 开发
+
+```
+Playwright / Chrome DevTools 截图验证
++ OpenWebSearch 获取组件文档
++ verify 验证交互效果
+```
+
+#### 数据库相关开发
+
+```
+MySQL MCP 工具进行数据验证
++ codegraph 分析数据访问层代码
++ verify 验证数据操作结果
+```
+
+## 6. 工作流产物文档的 Git 管理规范
+
+在使用 AI Coding 工作流的过程中，会产生大量文档产物：需求分析、规划文档、规格说明、任务拆分、检查点记录等。这些产物的管理质量直接影响协作效率和版本追溯。以下是一套实践中总结的 Git 管理规范。
+
+### 输入分析与类型判断
+
+每次收到用户输入时，首先进行类型判断并明确告知用户：
+
+- **需求规划类型**：用户提出新功能需求、项目构想或需要制定计划
+- **讨论迭代类型**：用户要求继续讨论、修改或完善已有规划
+- **执行实施类型**：用户确认规划完成，要求开始具体实施工作
+
+### 分类处理与文档规范
+
+#### A. 需求规划处理
+
+**触发条件**：识别为功能需求输入
+
+**执行动作**：
+- 启用 Planner Agent 生成详细的规划文档
+- 将文档存储至 `./.claude/plan` 目录，以 `plan/xxx.md` 格式命名
+- 包含：目标定义、功能分解、实施步骤、验收标准
+
+#### B. 讨论迭代处理
+
+**触发条件**：用户要求继续讨论或修改规划
+
+**执行动作**：
+- 检索并分析上次生成的规划文件
+- 识别用户反馈和确认内容，启用 Planner Agent
+- 生成新版本文档，命名格式：`plan/xxx.md` → `plan/xxx-1.md` → `plan/xxx-2.md` 以此类推
+- 重新组织待实施任务优先级
+
+#### C. 执行实施处理
+
+**触发条件**：用户确认规划完成，要求开始执行
+
+**执行动作**：
+- 按规划文档顺序启动任务执行
+- 每个子任务开始前进行任务类型识别
+- 前端任务需检查 UI 设计，存在依赖关系时先完成设计再实施
+
+### 强制响应与状态管理
+
+- **每次交互必须首先说明**：`我判断此次操作类型为：[具体类型]`
+- 任务执行严格按照文档化规划执行
+- 子任务启动前必须明确任务性质和依赖关系
+- 维护任务完成状态跟踪，及时更新规划文档状态
+
+### Git 提交规范建议
+
+- 使用语义化提交信息：`feat:` `fix:` `docs:` `refactor:` 等前缀
+- 每个规划版本作为独立提交，保留完整的版本历史
+- 避免在规划文档中包含敏感信息或硬编码密钥
+
+## 7. 三种常见工作模式：Vibe、Plan、Spec
 
 学习 AI Coding 时，很多争论其实是在混用不同工作模式。
 
@@ -208,7 +368,7 @@ Spec 模式会把需求、边界、用户故事、数据结构、接口、验收
 
 Spec 的价值是减少“看起来写完了，其实方向错了”的风险。它让 Agent 从“猜测需求”变成“执行已确认的契约”。
 
-## 6. 编程范式、工作流与方法论
+## 8. 编程范式、工作流与方法论
 
 当你开始频繁使用 AI Coding，真正决定效率的不是模型，而是工作流。下面这些方法论入口值得系统学习。
 
@@ -275,7 +435,7 @@ GSD 关注的是长任务、上下文工程、阶段推进和自动化执行。�
 
 这类对比文章适合在你已经试过一两个工具后再看。不要一开始就陷入框架选型。先做一个真实项目，再回来比较它们解决的到底是哪类问题。
 
-## 7. 推荐学习路线
+## 9. 推荐学习路线
 
 如果你是初学者，可以按这个顺序走。
 
@@ -335,7 +495,7 @@ GSD 关注的是长任务、上下文工程、阶段推进和自动化执行。�
 
 这一阶段最重要的习惯是：让 Agent 执行决策，而不是替你偷偷做产品决策。
 
-## 8. 我的个人选择建议
+## 10. 我的个人选择建议
 
 如果只能从少数几个入口开始，我会这样选：
 
@@ -352,7 +512,7 @@ GSD 关注的是长任务、上下文工程、阶段推进和自动化执行。�
 
 不要一次全学。AI Coding 的学习方式更像练手艺：先找到一个真实任务，用一个工具完成它；再把中间反复出现的问题抽象成流程；最后才需要比较框架。
 
-## 9. 最后提醒
+## 11. 最后提醒
 
 AI Coding 的核心不是“谁的模型最强”，而是你能不能把意图、上下文、约束和验证交代清楚。
 

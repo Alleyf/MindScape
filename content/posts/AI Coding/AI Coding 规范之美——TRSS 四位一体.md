@@ -394,103 +394,429 @@ GSD 通过一套完整的工作流，让 AI 始终在「新鲜」的上下文中
 
 ![S-Skill 能力层](/images/illustrations/AIC-001-4.png)
 
-Tools 提供了基础设施，Rules 建立了约束，Spec 定义了流程，而 [Trae SOLO](https://mp.weixin.qq.com/s/BfU_rPP6pNszGACl0TRmqw) Skill 则是按需增强的能力扩展包。
+Tools 提供了基础设施，Rules 建立了约束，Spec 定义了流程，而 Skill 则是按需增强的能力扩展包。无论是 Trae SOLO 技能市场还是 Claude Code Skills 体系，都是为了将最佳实践固化为可复用模块，稳定输出高质量结果。
 
-### Trae SOLO 技能市场
+### 技能体系全景
 
-![Trae SOLO Skills](https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80)
+当前主流的 AI Coding 技能体系主要分为两大类：
 
-Trae SOLO 的技能市场为不同使用场景提供了多种技能，涵盖开发工具、效率提升、界面设计、数据分析与内容创作领域。
+| 体系 | 代表产品 | 特点 |
+|------|---------|------|
+| **Trae SOLO** | Trae IDE 内置技能市场 | 开箱即用，覆盖 IDE 集成场景 |
+| **Claude Code Skills** | 第三方社区技能市场 | 生态丰富，按需扩展 |
+| **Anthropic 官方 Skills** | Claude Code 官方认证 | 质量保证，持续更新 |
 
-### 核心技能推荐
+### 界面设计类 Skills
 
-#### 开发工具类
-
-**git-commit**
-
-基于 Conventional Commits 规范的代码提交辅助工具：
-
-- **生成规范的提交信息**：分析变更类型（feat、fix、docs）并生成结构化提交
-- **按逻辑拆分与暂存变更**：支持文件路径、通配符或交互式暂存
-- **安全执行 Git 提交流程**：严格遵守安全准则，不提交 `.env` 等机密文件
-
-**react-best-practices**
-
-面向 React 和 Next.js 项目的代码质量审查与性能优化工具：
-
-- **核心性能瓶颈诊断**：Promise.all 并行请求、next/dynamic 动态加载
-- **UI 架构审查**：检测传统 CSS-in-JS 并建议迁移
-- **组件渲染优化**：规范 React Server Components、useTransition 使用
-
-**webapp-testing**
-
-基于 Playwright 的 Web 应用测试工具集：
-
-- **前端功能验证**：模拟用户操作并返回结果
-- **UI 行为调试**：截图、DOM 结构检查
-- **多服务应用测试**：统一管理服务器生命周期
-
-**composition-patterns**
-
-面向 React 组件组合模式与架构设计的代码审查与重构工具：
-
-- **重构臃肿组件**：消除 props 膨胀问题
-- **设计可复用组件库**：Tabs、Modal、Select 等复合组件
-- **适配 React 19 API**：forwardRef 移除、use() hook 使用
-
-#### 效率提升类
-
-**agent-browser**
-
-面向 AI 智能体的浏览器自动化 CLI 工具：
-
-- **测试复杂交互**：snapshot + batch 命令自动化操作
-- **抓取网页数据**：提取链接和指定元素内容
-- **视觉回归验证**：动态调整视口分辨率、生成截图对比
-
-**brainstorming**
-
-强制性的前置设计与需求分析技能：
-
-- **引入全新功能**：明确新需求、梳理耦合度
-- **修改或重构现有逻辑**：探索现有结构和瓶颈
-- **拆解大型项目**：确定 MVP、拆分独立任务
-- **涉及 UI/UX 的视觉辅助决策**：提供线框图、架构图可视化
-
-#### 界面设计类
-
-**figma**
-
-基于 Figma MCP Server 的设计到代码转换工具：
-
-- **将 Figma 设计稿实现为代码**：高视觉还原度
-- **用现有组件实现设计**：优先复用项目已有组件
-- **按节点实现或修改**：局部调整或增量迭代
-
-**frontend-design**
+#### 🌟🔥 frontend-design
+**Anthropic 官方前端设计技能**
 
 生成具备独特风格和高质量的前端界面：
 
 - **避免「AI 风格」同质化**：选择大胆、明确的美学主题
 - **注重排版、色彩、动效、空间布局**：打造具有辨识度的界面
 - **构建生产级 UI**：简约、独特、深邃、神秘
+- **响应式布局最佳实践**：适配多端设备
 
-**frontend-skill**
+> 安装：`npx skills add anthropics/skills@frontend-design`
 
-打造视觉冲击力强的落地页、网站、应用界面：
+#### 🌟 frontend-slides
+**零依赖 HTML 演示文稿构建技能**
 
-- **强调克制的构图**：图像主导的层级、统一的内容结构
-- **精致动效**：明确的视觉焦点和设计意图
-- **现代审美**：类似 Linear 的设计语言
+按照严格的视口适配规则生成单文件 HTML 幻灯片，并提供 PPTX 转换指导，无需安装额外依赖即可制作专业演示文稿。
+
+- **使用场景**：生成产品展示、技术分享、项目汇报的演示文稿页面
+- **特点**：零依赖、轻量级、高度可定制
+
+> 安装：`npx skills add affaan-m/everything-claude-code@frontend-slides`
+
+#### 🌟🔥 frontend-patterns
+**前端开发模式技能**
+
+提供组件化设计思路、状态管理最佳实践、性能优化策略等前端工程化规范，帮助 AI 生成可维护、可扩展的前端代码。
+
+- **组件设计**：复合组件模式、props 设计
+- **状态管理**：状态提升、Context、状态机
+- **性能优化**：懒加载、缓存策略、渲染优化
+- **前端架构**：模块化、依赖管理、微前端
+
+> 安装：`npx skills add affaan-m/everything-claude-code@frontend-patterns`
+
+#### ui-ux-pro-max
+**综合型 UI/UX 设计智能技能**
+
+内置 50+ UI 风格、97 种配色方案、57 组字体搭配、99 条 UX 规则和 25 种图表类型，覆盖 React、Next.js、Vue、Svelte、SwiftUI、React Native、Flutter、Tailwind、shadcn/ui 共 9 种技术栈。
+
+- **通过 --design-system 命令一键生成完整设计系统**
+- **包含风格、配色、字体、互动动画等全要素**
+- **提供交付前核查清单保障专业 UI 品质**
+
+> 安装：`npx skills add davila7/claude-code-templates@ui-ux-pro-max`
+
+#### canvas-design
+**视觉艺术设计技能**
+
+采用哲学先行的两步创作流程：先生成设计哲学宣言（极简文字、空间构图、色彩语言等），再将其转化为博物馆级别的设计作品。
+
+- **创作海报、视觉艺术品、品牌设计稿**
+- **强调如同大师作品般的精工细作**
+
+> 安装：`npx skills add anthropics/skills@canvas-design`
+
+#### theme-factory
+**演示文稿与 Artifact 主题样式工具**
+
+内置 10 套精心搭配的主题（含配色方案和字体组合），展示主题画册供用户选择后自动应用到目标 Artifact。
+
+- **主题库**：Ocean Depths、Midnight Galaxy、Tech Innovation 等
+- **支持即时生成自定义主题**
+
+> 安装：`npx skills add anthropics/skills@theme-factory`
+
+### 测试与质量保障类 Skills
+
+#### 🌟 e2e-testing
+**端到端测试模式技能**
+
+内置 Playwright 测试框架最佳实践，涵盖 Page Object Model 设计模式、测试文件组织结构、CI/CD 集成配置。
+
+- **Page Object Model 设计模式**：页面对象封装
+- **处理不稳定测试（flaky tests）策略**
+- **Artifact 管理与测试报告**
+
+> 安装：`npx skills add affaan-m/everything-claude-code@frontend-patterns`
+
+#### webapp-testing
+**本地 Web 应用测试工具包**
+
+内置基于 Playwright 的原生 Python 自动化脚本及服务器生命周期管理工具（with_server.py）。
+
+- **支持静态 HTML 和动态 Web 应用两种测试路径**
+- **通过侦察优先（Reconnaissance-then-Action）模式精准定位 UI 元素**
+- **捕获浏览器截图与控制台日志**
+
+> 安装：`npx skills add anthropics/skills@webapp-testing`
+
+#### 🌟 playwright-cli
+**微软官方 Playwright CLI 工具**
+
+专为 AI 编码代理设计的浏览器自动化命令行接口。相比 Playwright MCP，CLI 方式更加 Token 高效。
+
+- **网页导航、点击、输入、截图**
+- **网络请求拦截与 Mock**
+- **多会话并行浏览器管理**
+- **生成 Playwright 测试代码**
+
+> 安装：`npm install -g @playwright/cli@latest` 或 `playwright-cli install --skills`
+
+### 开发工具类 Skills
+
+#### mcp-builder
+**MCP 服务器开发指南技能**
+
+提供完整的四阶段开发流程：深度研究与规划 → 实现 → 审查测试 → 评估。
+
+- **内置 TypeScript（推荐）和 Python（FastMCP）两种实现路径**
+- **设计工具命名与描述规范**
+- **实现工具输入输出 Schema**
+- **编写 MCP 评估测试集**
+
+> 安装：`npx skills add anthropics/skills@mcp-builder`
+
+#### skill-creator
+**Anthropic 官方技能创建工具**
+
+通过访谈式分析帮助用户将重复工作流提炼为可复用的标准技能。
+
+- **支持完整的 draft → test → evaluate → improve 循环**
+- **自动生成 SKILL.md 结构**
+- **并行运行测试用例（对照实验对比有无技能的效果差异）**
+- **提供描述优化模块以提升技能触发准确率**
+
+> 安装：`npx skills add anthropics/skills@skill-creator`（适合全局安装）
+
+#### 🌟🔥 find-skills
+**技能发现与推荐工具**
+
+当用户提问"有没有能做 X 的工具"或"如何完成 X"时，自动搜索技能库中最匹配的技能并给出安装命令。
+
+- **扩展 AI 能力边界的入口工具**
+- **快速了解技能生态**
+
+> 安装：`npx skills add vercel-labs/skills@find-skills`（适合全局安装）
+
+### 文档处理类 Skills
+
+#### doc-coauthoring
+**结构化文档协作写作工作流**
+
+全程引导用户完成三阶段流程：上下文收集 → 逐节细化精炼 → 读者视角测试。
+
+- **通过访谈式问答收集背景信息**
+- **逐节进行头脑风暴、筛选、起草和迭代**
+- **用新会话验证文档是否对读者清晰易懂**
+
+> 安装：`npx skills add anthropics/skills@doc-coauthoring`
+
+#### xlsx / docx / pdf / pptx
+**Anthropic 官方办公文档操作技能集**
+
+分别处理 Excel（含财务模型颜色规范、公式校验）、Word、PDF 和 PowerPoint 四种格式。
+
+- **xlsx**：数据读写、公式计算、表格格式化、图表生成
+- **docx**：Word 文档创建与编辑
+- **pdf**：PDF 阅读与分析
+- **pptx**：演示文稿制作
+
+> 安装：`npx skills add anthropics/skills@xlsx`（按需安装对应格式）
+
+### MCP 工具全景
+
+MCP（Model Context Protocol）是 AI 连接外部工具和数据源的桥梁，以下是常用 MCP 工具分类。
+
+#### 🌟🔥 Playwright MCP
+**微软官方浏览器自动化 MCP**
+
+允许 AI 通过可访问性树（Accessibility Tree）和截图的方式操控真实浏览器。
+
+- **网页导航、表单填写、按钮点击**
+- **内容抓取、截图**
+- **AI 自主完成浏览器任务的核心工具**
+
+> 安装：MCP 工具 `@playwright/mcp`
+
+#### Chrome DevTools MCP
+**基于 Chrome DevTools Protocol 的调试 MCP**
+
+允许 AI 实时读取浏览器控制台日志、网络请求、页面截图、DOM 结构等调试信息。
+
+- **读取控制台错误与警告**
+- **抓取网络请求与响应**
+- **辅助前端 Bug 定位与分析**
+
+> 安装：MCP 工具 `@agentdeskai/browser-tools-mcp`
+
+#### GitHub MCP
+**GitHub 官方 MCP 服务器**
+
+允许 AI 直接操作 GitHub 仓库，涵盖文件读取、Issue 管理、PR 创建与查看、代码搜索、分支操作。
+
+- **查看与创建 Issue**
+- **提交 Pull Request**
+- **搜索仓库代码、读取文件内容**
+
+> 安装：MCP 工具 `github-mcp-server`，需配置 `GITHUB_PERSONAL_ACCESS_TOKEN`
+
+#### 🌟🔥 Context7
+**实时文档查询工具**
+
+专为 LLM 优化了各主流开源库和框架的文档索引，使 AI 能够查询到最新版本的 API 文档。
+
+- **查询 React、Next.js、Prisma、Tailwind 等最新 API**
+- **避免因训练数据截止日期导致的接口过时问题**
+
+> 安装：MCP 工具 `@context7/mcp-server`
+
+#### Markitdown
+**微软开源的多格式文档转 Markdown 工具**
+
+支持将 PDF、Word（docx）、Excel（xlsx）、PowerPoint（pptx）、图片、HTML、CSV 等转换为 Markdown。
+
+- **批量文档内容提取**
+- **本地文档 AI 读取处理**
+
+> 安装：MCP 工具 `markitdown-mcp`
+
+#### MCP Doc Forge
+**多格式文档读取与处理 MCP**
+
+支持读取 PDF、DOCX、TXT、HTML、CSV 等格式，并提供格式转换、PDF 合并/拆分等功能。
+
+- **合同审核、资料提取**
+- **DOCX → HTML/PDF、HTML → Markdown**
+
+> 安装：MCP 工具 `@cablate/mcp-doc-forge`
+
+#### Sequential Thinking
+**结构化链式推理工具**
+
+引导 AI 将复杂问题拆解为一系列可管理的思考步骤，每步可修正、回溯或分叉出新的推理分支。
+
+- **战略规划决策、代码架构分析**
+- **Bug Debug、法律/合规案例分析**
+- **多步迭代推导的复杂技术方案**
+
+> 安装：MCP 工具 `@modelcontextprotocol/server-sequential-thinking`
+
+#### 飞书/Lark OpenAPI MCP
+**飞书官方 OpenAPI MCP 工具（Beta）**
+
+将飞书开放平台的 API 接口封装为 MCP 工具，实现即时通讯、云文档、多维表格、日历、任务管理等自动化场景。
+
+- **AI 自动发送飞书消息与群通知**
+- **批量操作多维表格数据**
+- **搜索与读取飞书文档和知识库内容**
+
+> 安装：MCP 工具 `@larksuiteoapi/lark-mcp`
+
+### 工具组合建议
+
+| 场景 | 推荐工具组合 |
+|------|-------------|
+| 前端界面开发 | frontend-design + frontend-patterns + ui-ux-pro-max + Playwright MCP |
+| 演示文稿制作 | frontend-slides + theme-factory + canvas-design |
+| 端到端测试 | e2e-testing + webapp-testing + playwright-cli + Playwright MCP |
+| 文档协作写作 | doc-coauthoring + xlsx + docx + pdf |
+| MCP 开发 | mcp-builder + skill-creator + Context7 |
+| 前端调试 | Chrome DevTools MCP + Playwright MCP + Sequential Thinking |
+| GitHub 集成 | GitHub MCP + codegraph 系列 |
+| 飞书自动化 | 飞书/Lark OpenAPI MCP |
 
 ### 技能使用建议
 
 | 场景 | 推荐技能组合 |
 |------|-------------|
-| 前端新项目 | brainstorming + figma + frontend-design + react-best-practices |
+| 前端新项目 | brainstorming + figma + frontend-design + frontend-patterns |
 | 代码质量保障 | git-commit + react-best-practices + composition-patterns |
-| 自动化测试 | webapp-testing + agent-browser |
-| 快速迭代 | gsd-quick + frontend-skill |
+| 自动化测试 | e2e-testing + webapp-testing + playwright-cli + Playwright MCP |
+| 快速迭代 | gsd-quick + frontend-design |
+| 复杂项目调试 | Sequential Thinking + Chrome DevTools MCP + codegraph |
+
+## 工作流产物文档的 Git 管理规范
+
+在使用 TRSS 四位一体方案进行 AI Coding 时，会产生大量文档产物。这些产物的管理质量直接影响协作效率和版本追溯。以下是一套统一的 Git 管理规范，适用于 GSD 工作流乃至未来切换不同工作流的场景。
+
+### 资料分层与提交边界
+
+借鉴 OpenSpec 资料分层思想，将工作流产物分为三个层级：
+
+| 层级 | 典型位置 | 是否提交到 Git | 说明 |
+|------|---------|--------------|------|
+| **私有探索层** | 本地草稿、AI 原始对话 | 否 | 只服务于个人思考，不应污染团队视野 |
+| **变更协作层** | `.planning/` 或 `.claude/plans/` | 是 | 跟随功能 PR 提交，工作流核心产物 |
+| **规范沉淀层** | `SPEC.md`、`ARCHITECTURE.md` | 是 | 通过受控归档统一维护，跨项目共享 |
+
+**核心原则**：把自动化用在"搬运和校验"上，把最终裁决权留给负责人。
+
+### GSD 工作流产物结构
+
+GSD 的所有状态和产出保存在 `.planning/` 目录下（OMC 体系使用 `.omc/`）：
+
+**项目级文件**
+| 文件 | 作用 | 创建时机 |
+|------|------|---------|
+| `PROJECT.md` | 项目愿景和范围定义 | new-project |
+| `REQUIREMENTS.md` | 分版本的需求文档，带阶段追溯 | new-project |
+| `ROADMAP.md` | 阶段规划和进度 | new-project |
+| `STATE.md` | 当前状态——决策、阻碍、位置 | new-project，持续更新 |
+
+**阶段级文件**（以阶段 1 为例）
+| 文件 | 作用 | 创建时机 |
+|------|------|---------|
+| `01-CONTEXT.md` | 讨论阶段的决策记录 | discuss-phase 1 |
+| `01-RESEARCH.md` | 研究发现和技术调查 | plan-phase 1 |
+| `01-01-PLAN.md` | 第一个原子任务计划 | plan-phase 1 |
+| `01-02-PLAN.md` | 第二个原子任务计划 | plan-phase 1 |
+| `01-01-SUMMARY.md` | 第一个计划的执行记录 | execute-phase 1 |
+| `01-02-SUMMARY.md` | 第二个计划的执行记录 | execute-phase 1 |
+| `01-VERIFICATION.md` | 自动验证结果 | execute-phase 1 |
+| `01-UAT.md` | 用户验收测试记录 | verify-work 1 |
+
+**目录结构示例**
+```
+.planning/
+├── PROJECT.md
+├── REQUIREMENTS.md
+├── ROADMAP.md
+├── STATE.md
+├── research/
+│   ├── tech-stack.md
+│   ├── features.md
+│   ├── architecture.md
+│   └── pitfalls.md
+├── 01-CONTEXT.md
+├── 01-RESEARCH.md
+├── 01-01-PLAN.md
+├── 01-02-PLAN.md
+├── 01-01-SUMMARY.md
+├── 01-02-SUMMARY.md
+├── 01-VERIFICATION.md
+├── 01-UAT.md
+├── 02-CONTEXT.md
+├── 02-RESEARCH.md
+├── 02-01-PLAN.md
+└── todos.md
+```
+
+### 应提交与不应提交的内容
+
+**应提交到 Git 的正式工件**
+- `.planning/` 下的所有阶段产物文件
+- `.omc/plans/` 下的规划文档
+- 归档后的 `SPEC.md`、`ARCHITECTURE.md`
+- 每个原子任务的 `SUMMARY.md` 执行记录
+- `VERIFICATION.md` 验证结果
+
+**不应提交的内容**
+- AI 原始长对话记录（除非有价值被提炼）
+- 临时探索笔记和调试中间报告
+- 缓存产物和构建产物
+- 包含敏感信息或硬编码密钥的文件
+
+### Git 提交规范
+
+**语义化提交前缀**
+
+| 前缀 | 适用场景 |
+|------|---------|
+| `feat:` | 新功能开发 |
+| `fix:` | Bug 修复 |
+| `docs:` | 文档更新 |
+| `refactor:` | 重构（不改变功能） |
+| `chore:` | 辅助工具、构建脚本 |
+| `planning:` | GSD/OMC 规划文档更新 |
+
+**规划文档提交时机**
+- `planning: [阶段名] 初始化项目结构` — new-project 创建项目骨架
+- `planning: [阶段名] 完成 discuss-phase` — discuss-phase 结束
+- `planning: [阶段名] 完成 plan-phase` — plan-phase 结束
+- `planning: [阶段名] 完成 execute-phase` — execute-phase 结束
+- `planning: [阶段名] 完成 verify-work` — verify-work 结束
+
+**原子提交原则**
+- 每个原子任务（PLAN）对应一个独立提交
+- 提交信息需能追溯到对应的 `XX-0X-PLAN.md`
+- 不在规划文档中包含敏感信息或硬编码密钥
+
+### 归档审核流程
+
+对于规范沉淀层的变更（如 `SPEC.md`、`ARCHITECTURE.md`），推荐采用**独立归档 PR** 流程：
+
+**推荐模式：Bot PR 归档**
+1. CI 检测到已合并变更涉及规范层
+2. CI 自动创建单独归档 PR
+3. 负责人审核后合并到主分支
+
+**直推主分支模式**（适用于小团队、变更边界清晰）
+- CI 串行执行归档并直接提交到 main
+- 冲突时明确停止，避免"旧世界观覆盖新世界观"
+
+### 降低冲突的最佳实践
+
+- **change-id 统一命名规则**：`phase-01-plan-01` 或 `gh-128-user-auth`
+- **一个阶段只有一个明确负责人**
+- **不要把 tasks/plan 当成实时协作面板** — 使用状态跟踪工具
+- **给小改动保留快速通道** — 拼写修正、格式化变更可跳过完整流程
+
+### 工作流切换的兼容性
+
+当从 GSD 切换到其他工作流时，只需：
+
+1. **保留 `.planning/` 结构** — 新工作流可复用相同目录
+2. **映射核心产物** — 将原阶段的 `CONTEXT.md`、`PLAN.md` 映射到新格式
+3. **统一提交约定** — 保持 `planning:` 前缀便于追溯
+
+---
 
 ## TRSS 集成实践
 
