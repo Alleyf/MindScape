@@ -11,6 +11,7 @@ import python from 'highlight.js/lib/languages/python';
 import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
 import { ImageViewer } from './ImageViewer';
+import { TableViewer } from './TableViewer';
 
 hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('sh', bash);
@@ -165,6 +166,9 @@ function MarkdownImage({ src, alt, onImageClick, imageIndex }: { src?: string; a
 export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
+  const [tableViewerOpen, setTableViewerOpen] = useState(false);
+  const [tableHtml, setTableHtml] = useState('');
+  const [tableCaption, setTableCaption] = useState('');
   const images = useMemo<ImageEntry[]>(() => {
     const imgMatches = content.matchAll(/!\[([^\]]*)\]\(([^)\s]+)\)/g);
     return Array.from(imgMatches).map(match => ({
@@ -176,6 +180,15 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
   const handleImageClick = (index: number) => {
     setViewerIndex(index);
     setViewerOpen(true);
+  };
+
+  const handleTableClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const table = e.currentTarget.querySelector('table');
+    if (!table) return;
+    const caption = e.currentTarget.querySelector('caption');
+    setTableHtml(table.outerHTML);
+    setTableCaption(caption?.textContent || '');
+    setTableViewerOpen(true);
   };
 
   return (
@@ -260,9 +273,17 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
             hr: ({node, ...props}) => (
               <hr className="border-t border-purple-500/30 my-8" {...props} />
             ),
-            table: ({node, ...props}) => (
-              <div className="overflow-x-auto my-4">
-                <table className="w-full border-collapse" {...props} />
+            table: ({node, children, ...props}) => (
+              <div className="overflow-x-auto my-4 table-wrapper" onClick={handleTableClick}>
+                <table className="w-full border-collapse" {...props}>
+                  {children}
+                </table>
+                <div className="table-expand-hint">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                  </svg>
+                  点击放大
+                </div>
               </div>
             ),
             th: ({node, ...props}) => (
@@ -282,6 +303,13 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
           currentIndex={viewerIndex}
           onClose={() => setViewerOpen(false)}
           onNavigate={setViewerIndex}
+        />
+      )}
+      {tableViewerOpen && (
+        <TableViewer
+          tableHtml={tableHtml}
+          tableCaption={tableCaption}
+          onClose={() => setTableViewerOpen(false)}
         />
       )}
     </>
